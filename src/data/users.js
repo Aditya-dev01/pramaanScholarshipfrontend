@@ -1,6 +1,8 @@
 export const USERS_KEY = "scholarship_users";
 
-
+// -----------------------------------------
+// Predefined accounts
+// -----------------------------------------
 export const defaultUsers = [
   {
     id: "user-001",
@@ -10,16 +12,21 @@ export const defaultUsers = [
     role: "student",
   },
 
+  // Officer account
+  // This account cannot be created from
+  // the public registration page.
   {
     id: "user-002",
-    name: "Demo Officer",
+    name: "Scholarship Officer",
     email: "officer@example.com",
     password: "officer123",
     role: "officer",
   },
 ];
 
-
+// -----------------------------------------
+// Get all users
+// -----------------------------------------
 export function getUsers() {
   const storedUsers = localStorage.getItem(USERS_KEY);
 
@@ -33,7 +40,14 @@ export function getUsers() {
   }
 
   try {
-    return JSON.parse(storedUsers);
+    const users = JSON.parse(storedUsers);
+
+    // Make sure stored data is actually an array
+    if (!Array.isArray(users)) {
+      throw new Error("Invalid users data");
+    }
+
+    return users;
   } catch (error) {
     console.error("Unable to read users:", error);
 
@@ -46,7 +60,9 @@ export function getUsers() {
   }
 }
 
-
+// -----------------------------------------
+// Save users
+// -----------------------------------------
 export function saveUsers(users) {
   localStorage.setItem(
     USERS_KEY,
@@ -54,40 +70,54 @@ export function saveUsers(users) {
   );
 }
 
-
+// -----------------------------------------
+// Find user by email + password + role
+// -----------------------------------------
 export function findUser(email, password, role) {
   const users = getUsers();
 
   return users.find(
     (user) =>
-      user.email.toLowerCase() === email.toLowerCase() &&
+      user.email.toLowerCase() ===
+        email.toLowerCase() &&
       user.password === password &&
       user.role === role
   );
 }
 
-
+// -----------------------------------------
+// Find user by email
+// -----------------------------------------
 export function findUserByEmail(email) {
   const users = getUsers();
 
   return users.find(
     (user) =>
-      user.email.toLowerCase() === email.toLowerCase()
+      user.email.toLowerCase() ===
+      email.toLowerCase()
   );
 }
 
-
+// -----------------------------------------
+// Create USER
+// IMPORTANT:
+// Public registration can ONLY create students.
+// -----------------------------------------
 export function createUser({
   name,
   email,
   password,
-  role,
 }) {
   const users = getUsers();
 
+  const normalizedEmail = email
+    .trim()
+    .toLowerCase();
+
   const existingUser = users.find(
     (user) =>
-      user.email.toLowerCase() === email.toLowerCase()
+      user.email.toLowerCase() ===
+      normalizedEmail
   );
 
   if (existingUser) {
@@ -98,10 +128,10 @@ export function createUser({
 
   const newUser = {
     id: `user-${Date.now()}`,
-    name,
-    email,
+    name: name.trim(),
+    email: normalizedEmail,
     password,
-    role,
+    role: "student",
   };
 
   const updatedUsers = [

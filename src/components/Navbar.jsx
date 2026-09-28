@@ -69,7 +69,7 @@ function Navbar() {
             </Link>
 
             <Link
-              to="/scholarships/sch-001"
+              to="/"
               className="text-sm font-medium text-slate-600 hover:text-blue-600"
             >
               Scholarships
