@@ -50,7 +50,7 @@ function ApplyProcess() {
   return (
     <div>
 
-      <section className="bg-[#185C2C] py-20 text-white">
+      <section className="bg-[#657A3F] py-20 text-white">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
 
           <p className="text-sm font-bold uppercase tracking-wider text-[#E5B84B]">
@@ -61,7 +61,7 @@ function ApplyProcess() {
             Scholarship application process
           </h1>
 
-          <p className="mt-6 text-lg leading-8 text-[#DDEBD8]">
+          <p className="mt-6 text-lg leading-8 text-[#E8EEDB]">
             Follow the complete workflow from scholarship discovery
             to application decision.
           </p>
@@ -81,23 +81,23 @@ function ApplyProcess() {
               return (
                 <div
                   key={step.title}
-                  className="flex gap-5 rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm"
+                  className="flex gap-5 rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm"
                 >
 
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#DDEBD8] text-[#24823F]">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#E8EEDB] text-[#9BB06D]">
                     <Icon size={23} />
                   </div>
 
                   <div>
-                    <div className="text-xs font-bold uppercase tracking-wider text-[#24823F]">
+                    <div className="text-xs font-bold uppercase tracking-wider text-[#9BB06D]">
                       Step {index + 1}
                     </div>
 
-                    <h2 className="mt-1 text-lg font-bold text-[#26332A]">
+                    <h2 className="mt-1 text-lg font-bold text-[#293127]">
                       {step.title}
                     </h2>
 
-                    <p className="mt-2 text-sm leading-6 text-[#26332A]/70">
+                    <p className="mt-2 text-sm leading-6 text-[#293127]/70">
                       {step.text}
                     </p>
                   </div>

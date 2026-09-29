@@ -9,7 +9,7 @@ function About() {
   return (
     <div>
 
-      <section className="bg-[#185C2C] py-20 text-white">
+      <section className="bg-[#657A3F] py-20 text-white">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
 
           <p className="text-sm font-bold uppercase tracking-wider text-[#E5B84B]">
@@ -20,7 +20,7 @@ function About() {
             Making scholarship applications simpler
           </h1>
 
-          <p className="mt-6 text-lg leading-8 text-[#DDEBD8]">
+          <p className="mt-6 text-lg leading-8 text-[#E8EEDB]">
             ScholarConnect provides a centralized digital workflow
             for students and scholarship officers.
           </p>
@@ -61,17 +61,17 @@ function About() {
               return (
                 <div
                   key={item.title}
-                  className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm"
+                  className="rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm"
                 >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#DDEBD8] text-[#24823F]">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#E8EEDB] text-[#9BB06D]">
                     <Icon size={23} />
                   </div>
 
-                  <h3 className="mt-5 text-lg font-bold text-[#26332A]">
+                  <h3 className="mt-5 text-lg font-bold text-[#293127]">
                     {item.title}
                   </h3>
 
-                  <p className="mt-2 text-sm leading-6 text-[#26332A]/70">
+                  <p className="mt-2 text-sm leading-6 text-[#293127]/70">
                     {item.text}
                   </p>
                 </div>

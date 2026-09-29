@@ -85,15 +85,15 @@ function Verification() {
 
       <div className="mb-8">
 
-        <p className="text-sm font-medium text-[#24823F]">
+        <p className="text-sm font-medium text-[#9BB06D]">
           Final Verification
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-[#26332A]">
+        <h1 className="mt-1 text-3xl font-bold text-[#293127]">
           Review & Submit
         </h1>
 
-        <p className="mt-2 text-[#26332A]/60">
+        <p className="mt-2 text-[#293127]/60">
           Review your information before submitting the application.
         </p>
 
@@ -102,20 +102,20 @@ function Verification() {
 
       <div className="space-y-6">
 
-        <section className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm">
 
           <div className="flex items-center gap-3">
 
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#DDEBD8] text-[#24823F]">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E8EEDB] text-[#9BB06D]">
               <ShieldCheck size={22} />
             </div>
 
             <div>
-              <h2 className="font-bold text-[#26332A]">
+              <h2 className="font-bold text-[#293127]">
                 Document Verification
               </h2>
 
-              <p className="text-sm text-[#26332A]/60">
+              <p className="text-sm text-[#293127]/60">
                 Verification results for your uploaded documents.
               </p>
             </div>
@@ -132,11 +132,11 @@ function Verification() {
                   className="flex items-center justify-between rounded-xl bg-[#FFF8E7] p-4"
                 >
                   <div>
-                    <p className="font-medium text-[#26332A]">
+                    <p className="font-medium text-[#293127]">
                       {document.type}
                     </p>
 
-                    <p className="text-xs text-[#26332A]/50">
+                    <p className="text-xs text-[#293127]/50">
                       {document.name}
                     </p>
                   </div>
@@ -153,9 +153,9 @@ function Verification() {
         </section>
 
 
-        <section className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm">
 
-          <h2 className="font-bold text-[#26332A]">
+          <h2 className="font-bold text-[#293127]">
             Applicant Information
           </h2>
 
@@ -187,7 +187,7 @@ function Verification() {
 
 
         {!allVerified && (
-          <div className="flex items-start gap-3 rounded-xl bg-[#FBE8DF] p-5 text-[#C76B45]">
+          <div className="flex items-start gap-3 rounded-xl bg-[#F7E7DF] p-5 text-[#B9684B]">
 
             <AlertCircle
               size={20}
@@ -209,16 +209,16 @@ function Verification() {
         )}
 
 
-        <div className="rounded-2xl border border-[#DDEBD8] bg-[#DDEBD8] p-6">
+        <div className="rounded-2xl border border-[#E8EEDB] bg-[#E8EEDB] p-6">
 
           <div className="flex items-start gap-3">
 
             <CheckCircle
               size={21}
-              className="mt-0.5 text-[#24823F]"
+              className="mt-0.5 text-[#9BB06D]"
             />
 
-            <p className="text-sm leading-6 text-[#26332A]/70">
+            <p className="text-sm leading-6 text-[#293127]/70">
               By submitting this application, you confirm that all
               information and documents provided are accurate.
             </p>
@@ -228,7 +228,7 @@ function Verification() {
           <button
             onClick={handleSubmit}
             disabled={!allVerified}
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#24823F] px-6 py-3.5 font-bold text-white hover:bg-[#185C2C] disabled:cursor-not-allowed disabled:bg-[#DDEBD8] disabled:text-[#26332A]/50"
+            className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#9BB06D] px-6 py-3.5 font-bold text-white hover:bg-[#657A3F] disabled:cursor-not-allowed disabled:bg-[#E8EEDB] disabled:text-[#293127]/50"
           >
             Submit Application
             <ArrowRight size={18} />
@@ -246,11 +246,11 @@ function Verification() {
 function Info({ label, value }) {
   return (
     <div className="rounded-xl bg-[#FFF8E7] p-4">
-      <p className="text-xs text-[#26332A]/50">
+      <p className="text-xs text-[#293127]/50">
         {label}
       </p>
 
-      <p className="mt-1 font-semibold text-[#26332A]">
+      <p className="mt-1 font-semibold text-[#293127]">
         {value || "-"}
       </p>
     </div>

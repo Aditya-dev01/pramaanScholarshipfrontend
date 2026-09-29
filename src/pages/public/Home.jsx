@@ -16,13 +16,13 @@ function Home() {
 
       {/* HERO */}
 
-      <section className="overflow-hidden bg-gradient-to-br from-[#185C2C] via-[#24823F] to-[#185C2C]">
+      <section className="overflow-hidden bg-gradient-to-br from-[#657A3F] via-[#9BB06D] to-[#657A3F]">
 
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
 
           <div className="max-w-3xl">
 
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-[#DDEBD8] ring-1 ring-white/20">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-[#E8EEDB] ring-1 ring-white/20">
               <ShieldCheck size={16} />
               Secure Scholarship Application Platform
             </div>
@@ -34,7 +34,7 @@ function Home() {
               </span>
             </h1>
 
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-[#DDEBD8]">
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-[#E8EEDB]">
               Discover scholarship opportunities, check eligibility,
               submit your documents and track your application from
               one simple platform.
@@ -44,7 +44,7 @@ function Home() {
 
               <Link
                 to="/login"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FFF8E7] px-6 py-3.5 font-bold text-[#185C2C] shadow-lg hover:bg-[#DDEBD8]"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#FFF8E7] px-6 py-3.5 font-bold text-[#657A3F] shadow-lg hover:bg-[#E8EEDB]"
               >
                 Apply Now
                 <ArrowRight size={18} />
@@ -77,21 +77,21 @@ function Home() {
           <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
 
             <div>
-              <span className="text-sm font-bold uppercase tracking-wider text-[#24823F]">
+              <span className="text-sm font-bold uppercase tracking-wider text-[#9BB06D]">
                 Opportunities
               </span>
 
-              <h2 className="mt-2 text-3xl font-bold text-[#26332A]">
+              <h2 className="mt-2 text-3xl font-bold text-[#293127]">
                 Available Scholarships
               </h2>
 
-              <p className="mt-3 max-w-2xl text-[#26332A]/70">
+              <p className="mt-3 max-w-2xl text-[#293127]/70">
                 Explore scholarship programs and find opportunities
                 that match your educational goals.
               </p>
             </div>
 
-            <div className="flex items-center gap-2 text-sm text-[#26332A]/70">
+            <div className="flex items-center gap-2 text-sm text-[#293127]/70">
               <Search size={17} />
               {scholarships.length} opportunities available
             </div>
@@ -116,15 +116,15 @@ function Home() {
 
             <div>
 
-              <span className="text-sm font-bold uppercase tracking-wider text-[#24823F]">
+              <span className="text-sm font-bold uppercase tracking-wider text-[#9BB06D]">
                 About ScholarConnect
               </span>
 
-              <h2 className="mt-3 text-3xl font-bold text-[#26332A] sm:text-4xl">
+              <h2 className="mt-3 text-3xl font-bold text-[#293127] sm:text-4xl">
                 One platform for your scholarship journey
               </h2>
 
-              <p className="mt-5 leading-7 text-[#26332A]/70">
+              <p className="mt-5 leading-7 text-[#293127]/70">
                 ScholarConnect brings scholarship discovery,
                 applications, document verification and application
                 tracking together in one place.
@@ -144,10 +144,10 @@ function Home() {
                   >
                     <CheckCircle
                       size={20}
-                      className="text-[#24823F]"
+                      className="text-[#9BB06D]"
                     />
 
-                    <span className="font-medium text-[#26332A]">
+                    <span className="font-medium text-[#293127]">
                       {item}
                     </span>
                   </div>
@@ -157,46 +157,46 @@ function Home() {
 
             </div>
 
-            <div className="rounded-3xl bg-[#DDEBD8] p-8">
+            <div className="rounded-3xl bg-[#E8EEDB] p-8">
 
               <div className="grid gap-5 sm:grid-cols-2">
 
                 <div className="rounded-2xl bg-white p-6 shadow-sm">
-                  <Search className="text-[#24823F]" />
-                  <h3 className="mt-4 font-bold text-[#26332A]">
+                  <Search className="text-[#9BB06D]" />
+                  <h3 className="mt-4 font-bold text-[#293127]">
                     Discover
                   </h3>
-                  <p className="mt-2 text-sm text-[#26332A]/70">
+                  <p className="mt-2 text-sm text-[#293127]/70">
                     Find scholarships that match your profile.
                   </p>
                 </div>
 
                 <div className="rounded-2xl bg-white p-6 shadow-sm">
-                  <FileText className="text-[#C76B45]" />
-                  <h3 className="mt-4 font-bold text-[#26332A]">
+                  <FileText className="text-[#B9684B]" />
+                  <h3 className="mt-4 font-bold text-[#293127]">
                     Apply
                   </h3>
-                  <p className="mt-2 text-sm text-[#26332A]/70">
+                  <p className="mt-2 text-sm text-[#293127]/70">
                     Complete your application online.
                   </p>
                 </div>
 
                 <div className="rounded-2xl bg-white p-6 shadow-sm">
-                  <ShieldCheck className="text-[#185C2C]" />
-                  <h3 className="mt-4 font-bold text-[#26332A]">
+                  <ShieldCheck className="text-[#657A3F]" />
+                  <h3 className="mt-4 font-bold text-[#293127]">
                     Verify
                   </h3>
-                  <p className="mt-2 text-sm text-[#26332A]/70">
+                  <p className="mt-2 text-sm text-[#293127]/70">
                     Verify your supporting documents.
                   </p>
                 </div>
 
                 <div className="rounded-2xl bg-white p-6 shadow-sm">
                   <CheckCircle className="text-[#E5B84B]" />
-                  <h3 className="mt-4 font-bold text-[#26332A]">
+                  <h3 className="mt-4 font-bold text-[#293127]">
                     Track
                   </h3>
-                  <p className="mt-2 text-sm text-[#26332A]/70">
+                  <p className="mt-2 text-sm text-[#293127]/70">
                     Follow your application status.
                   </p>
                 </div>
@@ -221,11 +221,11 @@ function Home() {
 
           <div className="mx-auto max-w-2xl text-center">
 
-            <span className="text-sm font-bold uppercase tracking-wider text-[#24823F]">
+            <span className="text-sm font-bold uppercase tracking-wider text-[#9BB06D]">
               Application Process
             </span>
 
-            <h2 className="mt-3 text-3xl font-bold text-[#26332A]">
+            <h2 className="mt-3 text-3xl font-bold text-[#293127]">
               Apply in five simple steps
             </h2>
 
@@ -242,17 +242,17 @@ function Home() {
             ].map(([number, title, description]) => (
               <div
                 key={number}
-                className="rounded-2xl border border-[#DDEBD8] bg-white p-6"
+                className="rounded-2xl border border-[#E8EEDB] bg-white p-6"
               >
-                <span className="text-sm font-bold text-[#24823F]">
+                <span className="text-sm font-bold text-[#9BB06D]">
                   {number}
                 </span>
 
-                <h3 className="mt-3 font-bold text-[#26332A]">
+                <h3 className="mt-3 font-bold text-[#293127]">
                   {title}
                 </h3>
 
-                <p className="mt-2 text-sm leading-6 text-[#26332A]/70">
+                <p className="mt-2 text-sm leading-6 text-[#293127]/70">
                   {description}
                 </p>
               </div>
@@ -263,7 +263,7 @@ function Home() {
           <div className="mt-10 text-center">
             <Link
               to="/apply-process"
-              className="inline-flex items-center gap-2 font-semibold text-[#24823F] hover:text-[#185C2C]"
+              className="inline-flex items-center gap-2 font-semibold text-[#9BB06D] hover:text-[#657A3F]"
             >
               View complete process
               <ArrowRight size={17} />

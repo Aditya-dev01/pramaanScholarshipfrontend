@@ -51,7 +51,7 @@ function ApplicationDetails() {
 
       <Link
         to="/student/applications"
-        className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-[#24823F]"
+        className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-[#9BB06D]"
       >
         <ArrowLeft size={17} />
         Back to Applications
@@ -61,15 +61,15 @@ function ApplicationDetails() {
       <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
 
         <div>
-          <p className="text-sm text-[#26332A]/60">
+          <p className="text-sm text-[#293127]/60">
             Application ID
           </p>
 
-          <h1 className="mt-1 text-2xl font-bold text-[#26332A]">
+          <h1 className="mt-1 text-2xl font-bold text-[#293127]">
             {application.id}
           </h1>
 
-          <p className="mt-2 text-[#26332A]/60">
+          <p className="mt-2 text-[#293127]/60">
             {application.scholarshipName}
           </p>
         </div>
@@ -83,15 +83,15 @@ function ApplicationDetails() {
 
         <div className="space-y-6 lg:col-span-2">
 
-          <section className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
+          <section className="rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm">
 
             <div className="flex items-center gap-3">
 
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#DDEBD8] text-[#24823F]">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#E8EEDB] text-[#9BB06D]">
                 <User size={20} />
               </div>
 
-              <h2 className="font-bold text-[#26332A]">
+              <h2 className="font-bold text-[#293127]">
                 Applicant Information
               </h2>
 
@@ -135,13 +135,13 @@ function ApplicationDetails() {
 
 
           {application.officerComment && (
-            <section className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
+            <section className="rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm">
 
-              <h2 className="font-bold text-[#26332A]">
+              <h2 className="font-bold text-[#293127]">
                 Officer Comment
               </h2>
 
-              <p className="mt-3 rounded-xl bg-[#FFF8E7] p-4 text-sm leading-6 text-[#26332A]/70">
+              <p className="mt-3 rounded-xl bg-[#FFF8E7] p-4 text-sm leading-6 text-[#293127]/70">
                 {application.officerComment}
               </p>
 
@@ -151,9 +151,9 @@ function ApplicationDetails() {
         </div>
 
 
-        <section className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm">
 
-          <h2 className="font-bold text-[#26332A]">
+          <h2 className="font-bold text-[#293127]">
             Application Timeline
           </h2>
 
@@ -204,11 +204,11 @@ function ApplicationDetails() {
 function Info({ label, value }) {
   return (
     <div className="rounded-xl bg-[#FFF8E7] p-4">
-      <p className="text-xs text-[#26332A]/50">
+      <p className="text-xs text-[#293127]/50">
         {label}
       </p>
 
-      <p className="mt-1 font-semibold text-[#26332A]">
+      <p className="mt-1 font-semibold text-[#293127]">
         {value || "-"}
       </p>
     </div>
@@ -228,8 +228,8 @@ function TimelineItem({
       <div
         className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
           active
-            ? "bg-[#DDEBD8] text-[#24823F]"
-            : "bg-[#DDEBD8] text-[#26332A]/50"
+            ? "bg-[#E8EEDB] text-[#9BB06D]"
+            : "bg-[#E8EEDB] text-[#293127]/50"
         }`}
       >
         <Icon size={17} />
@@ -239,8 +239,8 @@ function TimelineItem({
         <p
           className={`text-sm font-semibold ${
             active
-              ? "text-[#26332A]"
-              : "text-[#26332A]/50"
+              ? "text-[#293127]"
+              : "text-[#293127]/50"
           }`}
         >
           {title}
@@ -250,10 +250,10 @@ function TimelineItem({
           <p
             className={`mt-1 text-xs ${
               finalStatus === "Accepted"
-                ? "text-[#24823F]"
+                ? "text-[#9BB06D]"
                 : finalStatus === "Rejected"
-                ? "text-[#C76B45]"
-                : "text-[#26332A]/60"
+                ? "text-[#B9684B]"
+                : "text-[#293127]/60"
             }`}
           >
             {finalStatus}

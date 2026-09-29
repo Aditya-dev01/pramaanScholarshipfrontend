@@ -3,12 +3,12 @@ import ScholarshipCard from "./ScholarshipCard";
 function ScholarshipGrid({ scholarships }) {
   if (!scholarships?.length) {
     return (
-      <div className="rounded-2xl border border-dashed border-[#DDEBD8] bg-white p-12 text-center">
-        <h3 className="font-semibold text-[#26332A]">
+      <div className="rounded-2xl border border-dashed border-[#E8EEDB] bg-white p-12 text-center">
+        <h3 className="font-semibold text-[#293127]">
           No scholarships found
         </h3>
 
-        <p className="mt-2 text-sm text-[#26332A]/60">
+        <p className="mt-2 text-sm text-[#293127]/60">
           Try changing your search or filter.
         </p>
       </div>

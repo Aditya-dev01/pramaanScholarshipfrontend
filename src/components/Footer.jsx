@@ -3,14 +3,14 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 function Footer() {
   return (
-    <footer className="bg-[#185C2C] text-[#DDEBD8]">
+    <footer className="bg-[#657A3F] text-[#E8EEDB]">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
 
           <div>
             <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#24823F] font-bold text-white">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#9BB06D] font-bold text-white">
                 S
               </div>
 
@@ -18,13 +18,13 @@ function Footer() {
                 <h2 className="font-bold text-white">
                   ScholarConnect
                 </h2>
-                <p className="text-xs text-[#DDEBD8]">
+                <p className="text-xs text-[#E8EEDB]">
                   Scholarship Portal
                 </p>
               </div>
             </div>
 
-            <p className="text-sm leading-6 text-[#DDEBD8]">
+            <p className="text-sm leading-6 text-[#E8EEDB]">
               A digital platform for discovering scholarships,
               submitting applications and tracking scholarship
               decisions.
@@ -92,7 +92,7 @@ function Footer() {
               Contact
             </h3>
 
-            <div className="space-y-4 text-sm text-[#DDEBD8]">
+            <div className="space-y-4 text-sm text-[#E8EEDB]">
               <div className="flex gap-3">
                 <Mail size={18} className="text-[#E5B84B]" />
                 support@scholarconnect.com
@@ -112,7 +112,7 @@ function Footer() {
 
         </div>
 
-        <div className="mt-10 border-t border-[#24823F] pt-6 text-center text-sm text-[#DDEBD8]">
+        <div className="mt-10 border-t border-[#9BB06D] pt-6 text-center text-sm text-[#E8EEDB]">
           © {new Date().getFullYear()} ScholarConnect.
           All rights reserved.
         </div>

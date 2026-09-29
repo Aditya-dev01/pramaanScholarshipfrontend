@@ -61,15 +61,15 @@ function Applications() {
 
       <div className="mb-8">
 
-        <p className="text-sm font-medium text-[#24823F]">
+        <p className="text-sm font-medium text-[#9BB06D]">
           Applications
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-[#26332A]">
+        <h1 className="mt-1 text-3xl font-bold text-[#293127]">
           Application List
         </h1>
 
-        <p className="mt-2 text-[#26332A]/60">
+        <p className="mt-2 text-[#293127]/60">
           Review and manage scholarship applications.
         </p>
 
@@ -82,7 +82,7 @@ function Applications() {
 
           <Search
             size={18}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-[#26332A]/50"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-[#293127]/50"
           />
 
           <input
@@ -91,7 +91,7 @@ function Applications() {
               setSearch(e.target.value)
             }
             placeholder="Search applicant or scholarship..."
-            className="w-full rounded-xl border border-[#DDEBD8] bg-white py-3 pl-10 pr-4 text-sm focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8]"
+            className="w-full rounded-xl border border-[#E8EEDB] bg-white py-3 pl-10 pr-4 text-sm focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB]"
           />
 
         </div>
@@ -101,7 +101,7 @@ function Applications() {
           onChange={(e) =>
             setStatus(e.target.value)
           }
-          className="rounded-xl border border-[#DDEBD8] bg-white px-4 py-3 text-sm font-medium focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8]"
+          className="rounded-xl border border-[#E8EEDB] bg-white px-4 py-3 text-sm font-medium focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB]"
         >
           <option value="all">
             All Statuses
@@ -123,33 +123,33 @@ function Applications() {
       </div>
 
 
-      <div className="overflow-hidden rounded-2xl border border-[#DDEBD8] bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-[#E8EEDB] bg-white shadow-sm">
 
         <div className="overflow-x-auto">
 
           <table className="w-full min-w-[800px] text-left">
 
-            <thead className="border-b border-[#DDEBD8] bg-[#FFF8E7]">
+            <thead className="border-b border-[#E8EEDB] bg-[#FFF8E7]">
 
               <tr>
 
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#26332A]/60">
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#293127]/60">
                   Applicant
                 </th>
 
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#26332A]/60">
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#293127]/60">
                   Scholarship
                 </th>
 
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#26332A]/60">
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#293127]/60">
                   Submitted
                 </th>
 
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#26332A]/60">
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#293127]/60">
                   Status
                 </th>
 
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#26332A]/60">
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#293127]/60">
                   Action
                 </th>
 
@@ -157,7 +157,7 @@ function Applications() {
 
             </thead>
 
-            <tbody className="divide-y divide-[#DDEBD8]">
+            <tbody className="divide-y divide-[#E8EEDB]">
 
               {filtered.map(
                 (application) => (
@@ -168,11 +168,11 @@ function Applications() {
 
                     <td className="px-6 py-5">
 
-                      <p className="font-semibold text-[#26332A]">
+                      <p className="font-semibold text-[#293127]">
                         {application.studentName}
                       </p>
 
-                      <p className="mt-1 text-xs text-[#26332A]/60">
+                      <p className="mt-1 text-xs text-[#293127]/60">
                         {application.studentEmail}
                       </p>
 
@@ -180,17 +180,17 @@ function Applications() {
 
                     <td className="px-6 py-5">
 
-                      <p className="text-sm font-medium text-[#26332A]">
+                      <p className="text-sm font-medium text-[#293127]">
                         {application.scholarshipName}
                       </p>
 
-                      <p className="mt-1 text-xs text-[#26332A]/50">
+                      <p className="mt-1 text-xs text-[#293127]/50">
                         {application.id}
                       </p>
 
                     </td>
 
-                    <td className="px-6 py-5 text-sm text-[#26332A]/60">
+                    <td className="px-6 py-5 text-sm text-[#293127]/60">
                       {application.submittedAt || "-"}
                     </td>
 
@@ -204,7 +204,7 @@ function Applications() {
 
                       <Link
                         to={`/officer/applications/${application.id}`}
-                        className="inline-flex items-center gap-2 rounded-lg bg-[#DDEBD8] px-3 py-2 text-sm font-semibold text-[#185C2C] hover:bg-[#FFF8E7]"
+                        className="inline-flex items-center gap-2 rounded-lg bg-[#E8EEDB] px-3 py-2 text-sm font-semibold text-[#657A3F] hover:bg-[#FFF8E7]"
                       >
                         <Eye size={16} />
                         Review
@@ -224,7 +224,7 @@ function Applications() {
 
 
         {!filtered.length && (
-          <div className="p-12 text-center text-sm text-[#26332A]/60">
+          <div className="p-12 text-center text-sm text-[#293127]/60">
             No applications match your search.
           </div>
         )}

@@ -138,15 +138,15 @@ function Documents() {
 
       <div className="mb-8">
 
-        <p className="text-sm font-medium text-[#24823F]">
+        <p className="text-sm font-medium text-[#9BB06D]">
           Step 3
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-[#26332A]">
+        <h1 className="mt-1 text-3xl font-bold text-[#293127]">
           Upload Documents
         </h1>
 
-        <p className="mt-2 text-[#26332A]/60">
+        <p className="mt-2 text-[#293127]/60">
           Upload the documents required for{" "}
           <span className="font-semibold">
             {scholarship?.title}
@@ -159,32 +159,32 @@ function Documents() {
 
       <div className="mb-7 grid gap-4 sm:grid-cols-3">
 
-        <div className="rounded-2xl border border-[#DDEBD8] bg-white p-5">
-          <p className="text-sm text-[#26332A]/60">
+        <div className="rounded-2xl border border-[#E8EEDB] bg-white p-5">
+          <p className="text-sm text-[#293127]/60">
             Required
           </p>
 
-          <p className="mt-1 text-2xl font-bold text-[#26332A]">
+          <p className="mt-1 text-2xl font-bold text-[#293127]">
             {scholarship?.requiredDocuments?.length || 0}
           </p>
         </div>
 
-        <div className="rounded-2xl border border-[#DDEBD8] bg-[#DDEBD8] p-5">
-          <p className="text-sm text-[#24823F]">
+        <div className="rounded-2xl border border-[#E8EEDB] bg-[#E8EEDB] p-5">
+          <p className="text-sm text-[#9BB06D]">
             Verified
           </p>
 
-          <p className="mt-1 text-2xl font-bold text-[#185C2C]">
+          <p className="mt-1 text-2xl font-bold text-[#657A3F]">
             {verifiedCount}
           </p>
         </div>
 
-        <div className="rounded-2xl border border-[#C76B45] bg-[#FBE8DF] p-5">
-          <p className="text-sm text-[#C76B45]">
+        <div className="rounded-2xl border border-[#B9684B] bg-[#F7E7DF] p-5">
+          <p className="text-sm text-[#B9684B]">
             Rejected
           </p>
 
-          <p className="mt-1 text-2xl font-bold text-[#C76B45]">
+          <p className="mt-1 text-2xl font-bold text-[#B9684B]">
             {rejectedCount}
           </p>
         </div>
@@ -223,7 +223,7 @@ function Documents() {
 
 
       {rejectedCount > 0 && (
-        <div className="mt-6 flex items-start gap-3 rounded-2xl bg-[#FBE8DF] p-5 text-[#C76B45]">
+        <div className="mt-6 flex items-start gap-3 rounded-2xl bg-[#F7E7DF] p-5 text-[#B9684B]">
 
           <AlertCircle
             size={20}
@@ -245,21 +245,21 @@ function Documents() {
       )}
 
 
-      <div className="mt-8 flex items-center justify-between rounded-2xl border border-[#DDEBD8] bg-[#DDEBD8] p-6">
+      <div className="mt-8 flex items-center justify-between rounded-2xl border border-[#E8EEDB] bg-[#E8EEDB] p-6">
 
         <div className="flex items-start gap-3">
 
           <ShieldCheck
             size={22}
-            className="mt-0.5 text-[#24823F]"
+            className="mt-0.5 text-[#9BB06D]"
           />
 
           <div>
-            <p className="font-semibold text-[#26332A]">
+            <p className="font-semibold text-[#293127]">
               AI/OCR Document Verification
             </p>
 
-            <p className="mt-1 text-sm text-[#26332A]/60">
+            <p className="mt-1 text-sm text-[#293127]/60">
               Uploaded documents are checked before submission.
             </p>
           </div>
@@ -273,7 +273,7 @@ function Documents() {
               `/student/verification/${applicationId}`
             )
           }
-          className="hidden items-center gap-2 rounded-xl bg-[#24823F] px-5 py-3 text-sm font-bold text-white hover:bg-[#185C2C] disabled:cursor-not-allowed disabled:bg-[#DDEBD8] disabled:text-[#26332A]/50 sm:flex"
+          className="hidden items-center gap-2 rounded-xl bg-[#9BB06D] px-5 py-3 text-sm font-bold text-white hover:bg-[#657A3F] disabled:cursor-not-allowed disabled:bg-[#E8EEDB] disabled:text-[#293127]/50 sm:flex"
         >
           Continue
           <ArrowRight size={17} />
@@ -288,7 +288,7 @@ function Documents() {
             `/student/verification/${applicationId}`
           )
         }
-        className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#24823F] px-5 py-3.5 font-bold text-white hover:bg-[#185C2C] disabled:cursor-not-allowed disabled:bg-[#DDEBD8] disabled:text-[#26332A]/50 sm:hidden"
+        className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#9BB06D] px-5 py-3.5 font-bold text-white hover:bg-[#657A3F] disabled:cursor-not-allowed disabled:bg-[#E8EEDB] disabled:text-[#293127]/50 sm:hidden"
       >
         Continue
         <ArrowRight size={17} />

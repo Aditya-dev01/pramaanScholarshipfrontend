@@ -55,15 +55,15 @@ function OfficerDashboard() {
 
       <div className="mb-8">
 
-        <p className="text-sm font-medium text-[#24823F]">
+        <p className="text-sm font-medium text-[#9BB06D]">
           Officer Dashboard
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-[#26332A]">
+        <h1 className="mt-1 text-3xl font-bold text-[#293127]">
           Application Overview
         </h1>
 
-        <p className="mt-2 text-[#26332A]/60">
+        <p className="mt-2 text-[#293127]/60">
           Monitor scholarship applications and review decisions.
         </p>
 
@@ -89,14 +89,14 @@ function OfficerDashboard() {
           title="Accepted"
           value={accepted}
           icon={CheckCircle}
-          iconClass="bg-[#DDEBD8] text-[#24823F]"
+          iconClass="bg-[#E8EEDB] text-[#9BB06D]"
         />
 
         <DashboardCard
           title="Rejected"
           value={rejected}
           icon={XCircle}
-          iconClass="bg-[#FBE8DF] text-[#C76B45]"
+          iconClass="bg-[#F7E7DF] text-[#B9684B]"
         />
 
       </div>
@@ -112,23 +112,23 @@ function OfficerDashboard() {
           }}
         />
 
-        <div className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
+        <div className="rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm">
 
           <div className="flex items-center justify-between">
 
             <div>
-              <h2 className="font-bold text-[#26332A]">
+              <h2 className="font-bold text-[#293127]">
                 Pending Reviews
               </h2>
 
-              <p className="mt-1 text-sm text-[#26332A]/60">
+              <p className="mt-1 text-sm text-[#293127]/60">
                 Applications waiting for a decision.
               </p>
             </div>
 
             <Link
               to="/officer/applications"
-              className="text-sm font-semibold text-[#24823F]"
+              className="text-sm font-semibold text-[#9BB06D]"
             >
               View All
             </Link>
@@ -149,14 +149,14 @@ function OfficerDashboard() {
                 <Link
                   key={application.id}
                   to={`/officer/applications/${application.id}`}
-                  className="flex items-center justify-between rounded-xl bg-[#FFF8E7] p-4 hover:bg-[#DDEBD8]"
+                  className="flex items-center justify-between rounded-xl bg-[#FFF8E7] p-4 hover:bg-[#E8EEDB]"
                 >
                   <div>
-                    <p className="text-sm font-semibold text-[#26332A]">
+                    <p className="text-sm font-semibold text-[#293127]">
                       {application.studentName}
                     </p>
 
-                    <p className="mt-1 text-xs text-[#26332A]/60">
+                    <p className="mt-1 text-xs text-[#293127]/60">
                       {application.scholarshipName}
                     </p>
                   </div>
@@ -168,7 +168,7 @@ function OfficerDashboard() {
               ))}
 
             {!pending && (
-              <div className="py-8 text-center text-sm text-[#26332A]/50">
+              <div className="py-8 text-center text-sm text-[#293127]/50">
                 No pending applications.
               </div>
             )}
@@ -180,7 +180,7 @@ function OfficerDashboard() {
       </div>
 
 
-      <div className="mt-8 rounded-2xl bg-gradient-to-r from-[#185C2C] to-[#24823F] p-7 text-white">
+      <div className="mt-8 rounded-2xl bg-gradient-to-r from-[#657A3F] to-[#9BB06D] p-7 text-white">
 
         <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
 
@@ -189,7 +189,7 @@ function OfficerDashboard() {
               Review applications
             </h2>
 
-            <p className="mt-2 text-sm text-[#DDEBD8]">
+            <p className="mt-2 text-sm text-[#E8EEDB]">
               Open the application list to review submitted information
               and documents.
             </p>
@@ -197,7 +197,7 @@ function OfficerDashboard() {
 
           <Link
             to="/officer/applications"
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-bold text-[#185C2C]"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-bold text-[#657A3F]"
           >
             View Applications
             <ArrowRight size={17} />

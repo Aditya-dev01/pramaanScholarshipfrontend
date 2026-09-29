@@ -17,13 +17,13 @@ function ScholarshipDetails() {
   if (!scholarship) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-20 text-center">
-        <h1 className="text-3xl font-bold text-[#26332A]">
+        <h1 className="text-3xl font-bold text-[#293127]">
           Scholarship not found
         </h1>
 
         <Link
           to="/"
-          className="mt-6 inline-flex items-center gap-2 text-[#24823F]"
+          className="mt-6 inline-flex items-center gap-2 text-[#9BB06D]"
         >
           <ArrowLeft size={17} />
           Back to Home
@@ -35,12 +35,12 @@ function ScholarshipDetails() {
   return (
     <div className="bg-[#FFF8E7]">
 
-      <section className="bg-[#185C2C] py-14 text-white">
+      <section className="bg-[#657A3F] py-14 text-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
           <Link
             to="/"
-            className="mb-8 inline-flex items-center gap-2 text-sm text-[#DDEBD8] hover:text-white"
+            className="mb-8 inline-flex items-center gap-2 text-sm text-[#E8EEDB] hover:text-white"
           >
             <ArrowLeft size={17} />
             Back to scholarships
@@ -54,7 +54,7 @@ function ScholarshipDetails() {
             {scholarship.title}
           </h1>
 
-          <p className="mt-4 text-[#DDEBD8]">
+          <p className="mt-4 text-[#E8EEDB]">
             Provided by {scholarship.provider}
           </p>
 
@@ -67,22 +67,22 @@ function ScholarshipDetails() {
 
           <div className="space-y-8 lg:col-span-2">
 
-            <div className="rounded-2xl border border-[#DDEBD8] bg-white p-7 shadow-sm">
+            <div className="rounded-2xl border border-[#E8EEDB] bg-white p-7 shadow-sm">
 
-              <h2 className="text-xl font-bold text-[#26332A]">
+              <h2 className="text-xl font-bold text-[#293127]">
                 About the Scholarship
               </h2>
 
-              <p className="mt-4 leading-7 text-[#26332A]/70">
+              <p className="mt-4 leading-7 text-[#293127]/70">
                 {scholarship.description}
               </p>
 
             </div>
 
 
-            <div className="rounded-2xl border border-[#DDEBD8] bg-white p-7 shadow-sm">
+            <div className="rounded-2xl border border-[#E8EEDB] bg-white p-7 shadow-sm">
 
-              <h2 className="text-xl font-bold text-[#26332A]">
+              <h2 className="text-xl font-bold text-[#293127]">
                 Eligibility Criteria
               </h2>
 
@@ -96,10 +96,10 @@ function ScholarshipDetails() {
                     >
                       <CheckCircle
                         size={19}
-                        className="mt-0.5 shrink-0 text-[#24823F]"
+                        className="mt-0.5 shrink-0 text-[#9BB06D]"
                       />
 
-                      <p className="text-sm leading-6 text-[#26332A]/70">
+                      <p className="text-sm leading-6 text-[#293127]/70">
                         {item}
                       </p>
                     </div>
@@ -111,9 +111,9 @@ function ScholarshipDetails() {
             </div>
 
 
-            <div className="rounded-2xl border border-[#DDEBD8] bg-white p-7 shadow-sm">
+            <div className="rounded-2xl border border-[#E8EEDB] bg-white p-7 shadow-sm">
 
-              <h2 className="text-xl font-bold text-[#26332A]">
+              <h2 className="text-xl font-bold text-[#293127]">
                 Required Documents
               </h2>
 
@@ -123,14 +123,14 @@ function ScholarshipDetails() {
                   (document) => (
                     <div
                       key={document}
-                      className="flex items-center gap-3 rounded-xl bg-[#DDEBD8] p-4"
+                      className="flex items-center gap-3 rounded-xl bg-[#E8EEDB] p-4"
                     >
                       <FileText
                         size={18}
-                        className="text-[#24823F]"
+                        className="text-[#9BB06D]"
                       />
 
-                      <span className="text-sm font-medium text-[#26332A]">
+                      <span className="text-sm font-medium text-[#293127]">
                         {document}
                       </span>
                     </div>
@@ -146,25 +146,25 @@ function ScholarshipDetails() {
 
           <div>
 
-            <div className="sticky top-24 rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
+            <div className="sticky top-24 rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm">
 
-              <h3 className="text-lg font-bold text-[#26332A]">
+              <h3 className="text-lg font-bold text-[#293127]">
                 Scholarship Summary
               </h3>
 
               <div className="mt-6 space-y-5">
 
                 <div className="flex items-center gap-3">
-                  <div className="rounded-lg bg-[#DDEBD8] p-2 text-[#24823F]">
+                  <div className="rounded-lg bg-[#E8EEDB] p-2 text-[#9BB06D]">
                     <IndianRupee size={20} />
                   </div>
 
                   <div>
-                    <p className="text-xs text-[#26332A]/50">
+                    <p className="text-xs text-[#293127]/50">
                       Award Amount
                     </p>
 
-                    <p className="font-bold text-[#26332A]">
+                    <p className="font-bold text-[#293127]">
                       ₹
                       {Number(
                         scholarship.amount
@@ -174,16 +174,16 @@ function ScholarshipDetails() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="rounded-lg bg-[#FFF8E7] p-2 text-[#C76B45]">
+                  <div className="rounded-lg bg-[#FFF8E7] p-2 text-[#B9684B]">
                     <CalendarDays size={20} />
                   </div>
 
                   <div>
-                    <p className="text-xs text-[#26332A]/50">
+                    <p className="text-xs text-[#293127]/50">
                       Deadline
                     </p>
 
-                    <p className="font-bold text-[#26332A]">
+                    <p className="font-bold text-[#293127]">
                       {scholarship.deadline}
                     </p>
                   </div>
@@ -193,7 +193,7 @@ function ScholarshipDetails() {
 
               <Link
                 to={`/login?scholarship=${scholarship.id}`}
-                className="mt-8 flex items-center justify-center gap-2 rounded-xl bg-[#24823F] px-5 py-3.5 font-bold text-white hover:bg-[#185C2C]"
+                className="mt-8 flex items-center justify-center gap-2 rounded-xl bg-[#9BB06D] px-5 py-3.5 font-bold text-white hover:bg-[#657A3F]"
               >
                 Apply Now
                 <ArrowRight size={18} />

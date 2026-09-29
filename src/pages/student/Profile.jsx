@@ -6,42 +6,42 @@ export default function Profile() {
   return (
     <div className="profile-page">
       <div className="dashboard-header">
-        <span className="text-[#24823F]">Account</span>
+        <span className="text-[#9BB06D]">Account</span>
 
-        <h1 className="text-[#26332A]">My Profile</h1>
+        <h1 className="text-[#293127]">My Profile</h1>
 
-        <p className="text-[#26332A]/60">
+        <p className="text-[#293127]/60">
           Manage your profile information.
         </p>
       </div>
 
-      <div className="profile-card border-[#DDEBD8] bg-white">
-        <div className="profile-avatar bg-[#24823F] text-white">
+      <div className="profile-card border-[#E8EEDB] bg-white">
+        <div className="profile-avatar bg-[#9BB06D] text-white">
           {user?.name?.charAt(0)}
         </div>
 
-        <h2 className="text-[#26332A]">{user?.name}</h2>
+        <h2 className="text-[#293127]">{user?.name}</h2>
 
-        <p className="text-[#26332A]/60">{user?.email}</p>
+        <p className="text-[#293127]/60">{user?.email}</p>
 
         <div className="profile-info">
           <div>
-            <span className="text-[#26332A]/50">Full Name</span>
-            <strong className="text-[#26332A]">{user?.name}</strong>
+            <span className="text-[#293127]/50">Full Name</span>
+            <strong className="text-[#293127]">{user?.name}</strong>
           </div>
 
           <div>
-            <span className="text-[#26332A]/50">Email</span>
-            <strong className="text-[#26332A]">{user?.email}</strong>
+            <span className="text-[#293127]/50">Email</span>
+            <strong className="text-[#293127]">{user?.email}</strong>
           </div>
 
           <div>
-            <span className="text-[#26332A]/50">Role</span>
-            <strong className="text-[#26332A]">Student</strong>
+            <span className="text-[#293127]/50">Role</span>
+            <strong className="text-[#293127]">Student</strong>
           </div>
         </div>
 
-        <button className="secondary-btn border-[#24823F] text-[#24823F] hover:bg-[#DDEBD8]">
+        <button className="secondary-btn border-[#9BB06D] text-[#9BB06D] hover:bg-[#E8EEDB]">
           Edit Profile
         </button>
       </div>

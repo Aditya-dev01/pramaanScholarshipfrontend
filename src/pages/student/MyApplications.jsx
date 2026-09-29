@@ -39,15 +39,15 @@ function MyApplications() {
 
       <div className="mb-8">
 
-        <p className="text-sm font-medium text-[#24823F]">
+        <p className="text-sm font-medium text-[#9BB06D]">
           Applications
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-[#26332A]">
+        <h1 className="mt-1 text-3xl font-bold text-[#293127]">
           My Applications
         </h1>
 
-        <p className="mt-2 text-[#26332A]/60">
+        <p className="mt-2 text-[#293127]/60">
           Track every scholarship application you have submitted.
         </p>
 
@@ -68,18 +68,18 @@ function MyApplications() {
 
         </div>
       ) : (
-        <div className="rounded-2xl border border-dashed border-[#DDEBD8] bg-white p-12 text-center">
+        <div className="rounded-2xl border border-dashed border-[#E8EEDB] bg-white p-12 text-center">
 
           <FileText
             size={42}
-            className="mx-auto text-[#26332A]/30"
+            className="mx-auto text-[#293127]/30"
           />
 
-          <h2 className="mt-4 text-lg font-bold text-[#26332A]">
+          <h2 className="mt-4 text-lg font-bold text-[#293127]">
             No applications found
           </h2>
 
-          <p className="mt-2 text-sm text-[#26332A]/60">
+          <p className="mt-2 text-sm text-[#293127]/60">
             Your submitted applications will appear here.
           </p>
 

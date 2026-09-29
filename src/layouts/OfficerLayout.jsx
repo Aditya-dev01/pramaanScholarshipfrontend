@@ -34,20 +34,20 @@ function OfficerLayout() {
 
       <div className="flex min-w-0 flex-1 flex-col">
 
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-[#DDEBD8] bg-white px-4 sm:px-6">
+        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-[#E8EEDB] bg-white px-4 sm:px-6">
 
           {/* Mobile menu */}
           <button
             type="button"
             onClick={() => setSidebarOpen(true)}
-            className="rounded-lg p-2 text-[#26332A]/70 hover:bg-[#DDEBD8] lg:hidden"
+            className="rounded-lg p-2 text-[#293127]/70 hover:bg-[#E8EEDB] lg:hidden"
           >
             <Menu size={22} />
           </button>
 
           {/* Desktop title */}
           <div className="hidden lg:block">
-            <p className="text-sm font-medium text-[#26332A]/60">
+            <p className="text-sm font-medium text-[#293127]/60">
               Officer Portal
             </p>
           </div>
@@ -57,11 +57,11 @@ function OfficerLayout() {
             {/* Notifications */}
             <button
               type="button"
-              className="relative rounded-lg p-2 text-[#26332A]/60 hover:bg-[#DDEBD8]"
+              className="relative rounded-lg p-2 text-[#293127]/60 hover:bg-[#E8EEDB]"
             >
               <Bell size={20} />
 
-              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#24823F]" />
+              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#9BB06D]" />
             </button>
 
             {/* Profile */}
@@ -69,11 +69,11 @@ function OfficerLayout() {
 
               <button
                 type="button"
-                className="flex items-center gap-3 rounded-xl p-1.5 transition hover:bg-[#DDEBD8]"
+                className="flex items-center gap-3 rounded-xl p-1.5 transition hover:bg-[#E8EEDB]"
               >
 
                 {/* Avatar */}
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#185C2C] text-sm font-bold text-white">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#657A3F] text-sm font-bold text-white">
                   {user?.name
                     ? user.name.charAt(0).toUpperCase()
                     : "O"}
@@ -81,11 +81,11 @@ function OfficerLayout() {
 
                 {/* User info */}
                 <div className="hidden text-left sm:block">
-                  <p className="text-sm font-semibold text-[#26332A]">
+                  <p className="text-sm font-semibold text-[#293127]">
                     {user?.name || "Officer"}
                   </p>
 
-                  <p className="text-xs text-[#26332A]/60">
+                  <p className="text-xs text-[#293127]/60">
                     Scholarship Officer
                   </p>
                 </div>
@@ -93,20 +93,20 @@ function OfficerLayout() {
               </button>
 
               {/* Hover dropdown */}
-              <div className="invisible absolute right-0 top-full mt-2 w-64 translate-y-2 rounded-2xl border border-[#DDEBD8] bg-white p-2 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+              <div className="invisible absolute right-0 top-full mt-2 w-64 translate-y-2 rounded-2xl border border-[#E8EEDB] bg-white p-2 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
 
                 {/* Account information */}
-                <div className="border-b border-[#DDEBD8] px-3 py-3">
+                <div className="border-b border-[#E8EEDB] px-3 py-3">
 
-                  <p className="font-semibold text-[#26332A]">
+                  <p className="font-semibold text-[#293127]">
                     {user?.name || "Officer"}
                   </p>
 
-                  <p className="mt-1 truncate text-xs text-[#26332A]/60">
+                  <p className="mt-1 truncate text-xs text-[#293127]/60">
                     {user?.email || ""}
                   </p>
 
-                  <p className="mt-1 text-xs text-[#26332A]/50">
+                  <p className="mt-1 text-xs text-[#293127]/50">
                     Scholarship Officer
                   </p>
 
@@ -116,7 +116,7 @@ function OfficerLayout() {
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-[#C76B45] transition hover:bg-[#FBE8DF]"
+                  className="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-[#B9684B] transition hover:bg-[#F7E7DF]"
                 >
                   <LogOut size={18} />
 

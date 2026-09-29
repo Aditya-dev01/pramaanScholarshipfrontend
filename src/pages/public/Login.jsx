@@ -92,19 +92,19 @@ function Login() {
   return (
     <div className="flex min-h-[calc(100vh-128px)] items-center justify-center bg-[#FFF8E7] px-4 py-12">
 
-      <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl border border-[#DDEBD8] bg-white shadow-xl lg:grid-cols-2">
+      <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl border border-[#E8EEDB] bg-white shadow-xl lg:grid-cols-2">
 
         {/* =====================================
             LEFT PANEL
         ===================================== */}
 
-        <div className="hidden bg-[#185C2C] p-10 text-white lg:block">
+        <div className="hidden bg-[#657A3F] p-10 text-white lg:block">
 
           <div className="flex h-full flex-col justify-between">
 
             <div>
 
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#FFF8E7] font-bold text-[#185C2C]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#FFF8E7] font-bold text-[#657A3F]">
                 S
               </div>
 
@@ -112,7 +112,7 @@ function Login() {
                 Welcome back.
               </h1>
 
-              <p className="mt-5 leading-7 text-[#DDEBD8]">
+              <p className="mt-5 leading-7 text-[#E8EEDB]">
                 Sign in to continue your scholarship
                 journey, submit applications and track
                 decisions.
@@ -153,11 +153,11 @@ function Login() {
 
           <div className="mx-auto max-w-md">
 
-            <h2 className="text-2xl font-bold text-[#26332A]">
+            <h2 className="text-2xl font-bold text-[#293127]">
               Sign in
             </h2>
 
-            <p className="mt-2 text-sm text-[#26332A]/70">
+            <p className="mt-2 text-sm text-[#293127]/70">
               Choose your account type and enter
               your credentials.
             </p>
@@ -178,8 +178,8 @@ function Login() {
                 }}
                 className={`rounded-xl border p-4 text-left transition ${
                   role === "student"
-                    ? "border-[#24823F] bg-[#DDEBD8] text-[#185C2C]"
-                    : "border-[#DDEBD8] text-[#26332A]/70 hover:border-[#24823F]"
+                    ? "border-[#9BB06D] bg-[#E8EEDB] text-[#657A3F]"
+                    : "border-[#E8EEDB] text-[#293127]/70 hover:border-[#9BB06D]"
                 }`}
               >
 
@@ -205,8 +205,8 @@ function Login() {
                 }}
                 className={`rounded-xl border p-4 text-left transition ${
                   role === "officer"
-                    ? "border-[#24823F] bg-[#DDEBD8] text-[#185C2C]"
-                    : "border-[#DDEBD8] text-[#26332A]/70 hover:border-[#24823F]"
+                    ? "border-[#9BB06D] bg-[#E8EEDB] text-[#657A3F]"
+                    : "border-[#E8EEDB] text-[#293127]/70 hover:border-[#9BB06D]"
                 }`}
               >
 
@@ -248,7 +248,7 @@ function Login() {
               {/* Email */}
               <div>
 
-                <label className="mb-2 block text-sm font-semibold text-[#26332A]">
+                <label className="mb-2 block text-sm font-semibold text-[#293127]">
                   Email
                 </label>
 
@@ -256,7 +256,7 @@ function Login() {
 
                   <Mail
                     size={18}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-[#26332A]/40"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-[#293127]/40"
                   />
 
                   <input
@@ -272,7 +272,7 @@ function Login() {
                         ? "officer@example.com"
                         : "you@example.com"
                     }
-                    className="w-full rounded-xl border border-[#DDEBD8] py-3 pl-10 pr-4 text-sm outline-none transition focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8] disabled:bg-[#DDEBD8]/50"
+                    className="w-full rounded-xl border border-[#E8EEDB] py-3 pl-10 pr-4 text-sm outline-none transition focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB] disabled:bg-[#E8EEDB]/50"
                   />
 
                 </div>
@@ -283,7 +283,7 @@ function Login() {
               {/* Password */}
               <div>
 
-                <label className="mb-2 block text-sm font-semibold text-[#26332A]">
+                <label className="mb-2 block text-sm font-semibold text-[#293127]">
                   Password
                 </label>
 
@@ -291,7 +291,7 @@ function Login() {
 
                   <Lock
                     size={18}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-[#26332A]/40"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-[#293127]/40"
                   />
 
                   <input
@@ -303,7 +303,7 @@ function Login() {
                     required
                     disabled={loading}
                     placeholder="••••••••"
-                    className="w-full rounded-xl border border-[#DDEBD8] py-3 pl-10 pr-4 text-sm outline-none transition focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8] disabled:bg-[#DDEBD8]/50"
+                    className="w-full rounded-xl border border-[#E8EEDB] py-3 pl-10 pr-4 text-sm outline-none transition focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB] disabled:bg-[#E8EEDB]/50"
                   />
 
                 </div>
@@ -315,7 +315,7 @@ function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-xl bg-[#24823F] py-3.5 font-bold text-white transition hover:bg-[#185C2C] disabled:cursor-not-allowed disabled:opacity-60"
+                className="w-full rounded-xl bg-[#9BB06D] py-3.5 font-bold text-white transition hover:bg-[#657A3F] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading
                   ? "Signing in..."
@@ -331,11 +331,11 @@ function Login() {
                 DEMO CREDENTIALS
             ================================= */}
 
-            <div className="mt-6 rounded-xl bg-[#DDEBD8] p-4 text-xs text-[#26332A]/70">
+            <div className="mt-6 rounded-xl bg-[#E8EEDB] p-4 text-xs text-[#293127]/70">
 
               {role === "student" ? (
                 <>
-                  <p className="font-bold text-[#26332A]">
+                  <p className="font-bold text-[#293127]">
                     Demo Student
                   </p>
 
@@ -345,7 +345,7 @@ function Login() {
                 </>
               ) : (
                 <>
-                  <p className="font-bold text-[#26332A]">
+                  <p className="font-bold text-[#293127]">
                     Demo Officer
                   </p>
 
@@ -362,13 +362,13 @@ function Login() {
                 REGISTER
             ================================= */}
 
-            <p className="mt-7 text-center text-sm text-[#26332A]/70">
+            <p className="mt-7 text-center text-sm text-[#293127]/70">
 
               Don't have a student account?{" "}
 
               <Link
                 to="/register"
-                className="font-semibold text-[#24823F] hover:text-[#185C2C]"
+                className="font-semibold text-[#9BB06D] hover:text-[#657A3F]"
               >
                 Create one
               </Link>

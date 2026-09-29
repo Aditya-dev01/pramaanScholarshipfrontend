@@ -41,15 +41,15 @@ function Scholarships() {
 
       <div className="mb-8">
 
-        <p className="text-sm font-medium text-[#24823F]">
+        <p className="text-sm font-medium text-[#9BB06D]">
           Scholarships
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-[#26332A]">
+        <h1 className="mt-1 text-3xl font-bold text-[#293127]">
           Find your opportunity
         </h1>
 
-        <p className="mt-2 text-[#26332A]/60">
+        <p className="mt-2 text-[#293127]/60">
           Search and filter scholarships based on your needs.
         </p>
 
@@ -74,9 +74,9 @@ function Scholarships() {
       </div>
 
 
-      <div className="mb-5 text-sm text-[#26332A]/60">
+      <div className="mb-5 text-sm text-[#293127]/60">
         Showing{" "}
-        <span className="font-semibold text-[#26332A]">
+        <span className="font-semibold text-[#293127]">
           {filteredScholarships.length}
         </span>{" "}
         scholarships

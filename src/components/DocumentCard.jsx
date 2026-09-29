@@ -17,7 +17,7 @@ function DocumentCard({
     "Not Uploaded": {
       icon: Upload,
       text: "Not Uploaded",
-      style: "bg-[#DDEBD8] text-[#26332A]",
+      style: "bg-[#E8EEDB] text-[#293127]",
     },
 
     Checking: {
@@ -29,13 +29,13 @@ function DocumentCard({
     Verified: {
       icon: CheckCircle,
       text: "Verified",
-      style: "bg-[#DDEBD8] text-[#24823F]",
+      style: "bg-[#E8EEDB] text-[#9BB06D]",
     },
 
     Rejected: {
       icon: AlertCircle,
       text: "Rejected",
-      style: "bg-[#FBE8DF] text-[#C76B45]",
+      style: "bg-[#F7E7DF] text-[#B9684B]",
     },
   };
 
@@ -43,27 +43,27 @@ function DocumentCard({
   const StatusIcon = current.icon;
 
   return (
-    <div className="rounded-2xl border border-[#DDEBD8] bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-[#E8EEDB] bg-white p-5 shadow-sm">
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
         <div className="flex items-center gap-4">
 
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#DDEBD8] text-[#24823F]">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#E8EEDB] text-[#9BB06D]">
             <FileText size={22} />
           </div>
 
           <div>
-            <h3 className="font-semibold text-[#26332A]">
+            <h3 className="font-semibold text-[#293127]">
               {document}
             </h3>
 
             {uploadedFile?.name ? (
-              <p className="mt-1 text-xs text-[#26332A]/60">
+              <p className="mt-1 text-xs text-[#293127]/60">
                 {uploadedFile.name}
               </p>
             ) : (
-              <p className="mt-1 text-xs text-[#26332A]/50">
+              <p className="mt-1 text-xs text-[#293127]/50">
                 PDF, JPG or PNG
               </p>
             )}
@@ -80,10 +80,10 @@ function DocumentCard({
 
       </div>
 
-      <div className="mt-5 border-t border-[#DDEBD8] pt-4">
+      <div className="mt-5 border-t border-[#E8EEDB] pt-4">
 
         {status === "Verified" ? (
-          <div className="flex items-center gap-2 text-sm font-medium text-[#24823F]">
+          <div className="flex items-center gap-2 text-sm font-medium text-[#9BB06D]">
             <CheckCircle size={17} />
             Document successfully verified.
           </div>
@@ -93,7 +93,7 @@ function DocumentCard({
             AI/OCR is checking this document...
           </div>
         ) : (
-          <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg bg-[#24823F] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#185C2C]">
+          <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg bg-[#9BB06D] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#657A3F]">
             <Upload size={17} />
 
             {status === "Rejected"
@@ -116,7 +116,7 @@ function DocumentCard({
         )}
 
         {status === "Rejected" && (
-          <div className="mt-3 flex items-start gap-2 rounded-lg bg-[#FBE8DF] p-3 text-sm text-[#C76B45]">
+          <div className="mt-3 flex items-start gap-2 rounded-lg bg-[#F7E7DF] p-3 text-sm text-[#B9684B]">
             <AlertCircle
               size={17}
               className="mt-0.5 shrink-0"

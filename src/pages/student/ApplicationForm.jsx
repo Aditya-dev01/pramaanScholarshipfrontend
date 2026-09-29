@@ -114,20 +114,20 @@ function ApplicationForm() {
 
       <div className="mb-7">
 
-        <p className="text-sm font-medium text-[#24823F]">
+        <p className="text-sm font-medium text-[#9BB06D]">
           Scholarship Application
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-[#26332A]">
+        <h1 className="mt-1 text-3xl font-bold text-[#293127]">
           {scholarship.title}
         </h1>
 
       </div>
 
 
-      <div className="mb-7 rounded-2xl border border-[#DDEBD8] bg-[#DDEBD8] p-6">
+      <div className="mb-7 rounded-2xl border border-[#E8EEDB] bg-[#E8EEDB] p-6">
 
-        <h2 className="font-bold text-[#26332A]">
+        <h2 className="font-bold text-[#293127]">
           Eligibility Criteria
         </h2>
 
@@ -141,10 +141,10 @@ function ApplicationForm() {
               >
                 <CheckCircle
                   size={18}
-                  className="mt-0.5 text-[#24823F]"
+                  className="mt-0.5 text-[#9BB06D]"
                 />
 
-                <span className="text-sm text-[#26332A]/70">
+                <span className="text-sm text-[#293127]/70">
                   {item}
                 </span>
               </div>
@@ -157,7 +157,7 @@ function ApplicationForm() {
 
 
       {error && (
-        <div className="mb-6 flex items-start gap-3 rounded-xl bg-[#FBE8DF] p-4 text-sm text-[#C76B45]">
+        <div className="mb-6 flex items-start gap-3 rounded-xl bg-[#F7E7DF] p-4 text-sm text-[#B9684B]">
           <AlertCircle
             size={18}
             className="mt-0.5"
@@ -174,9 +174,9 @@ function ApplicationForm() {
 
         {/* Personal Information */}
 
-        <section className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm">
 
-          <h2 className="text-lg font-bold text-[#26332A]">
+          <h2 className="text-lg font-bold text-[#293127]">
             Personal Information
           </h2>
 
@@ -249,9 +249,9 @@ function ApplicationForm() {
 
         {/* Academic */}
 
-        <section className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm">
 
-          <h2 className="text-lg font-bold text-[#26332A]">
+          <h2 className="text-lg font-bold text-[#293127]">
             Academic Information
           </h2>
 
@@ -304,9 +304,9 @@ function ApplicationForm() {
 
         {/* Address */}
 
-        <section className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm">
 
-          <h2 className="text-lg font-bold text-[#26332A]">
+          <h2 className="text-lg font-bold text-[#293127]">
             Address
           </h2>
 
@@ -317,7 +317,7 @@ function ApplicationForm() {
             required
             rows={4}
             placeholder="Enter your complete address"
-            className="mt-5 w-full rounded-xl border border-[#DDEBD8] px-4 py-3 text-sm focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8]"
+            className="mt-5 w-full rounded-xl border border-[#E8EEDB] px-4 py-3 text-sm focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB]"
           />
 
         </section>
@@ -325,9 +325,9 @@ function ApplicationForm() {
 
         {/* Statement */}
 
-        <section className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm">
 
-          <h2 className="text-lg font-bold text-[#26332A]">
+          <h2 className="text-lg font-bold text-[#293127]">
             Statement
           </h2>
 
@@ -338,7 +338,7 @@ function ApplicationForm() {
             required
             rows={5}
             placeholder="Why should you receive this scholarship?"
-            className="mt-5 w-full rounded-xl border border-[#DDEBD8] px-4 py-3 text-sm focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8]"
+            className="mt-5 w-full rounded-xl border border-[#E8EEDB] px-4 py-3 text-sm focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB]"
           />
 
         </section>
@@ -346,17 +346,17 @@ function ApplicationForm() {
 
         {/* Confirmation */}
 
-        <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-[#DDEBD8] bg-white p-5">
+        <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-[#E8EEDB] bg-white p-5">
 
           <input
             type="checkbox"
             name="eligibilityConfirmed"
             checked={formData.eligibilityConfirmed}
             onChange={handleChange}
-            className="mt-1 h-4 w-4 rounded border-[#DDEBD8] text-[#24823F]"
+            className="mt-1 h-4 w-4 rounded border-[#E8EEDB] text-[#9BB06D]"
           />
 
-          <span className="text-sm leading-6 text-[#26332A]/70">
+          <span className="text-sm leading-6 text-[#293127]/70">
             I confirm that the information provided is accurate
             and that I meet the eligibility criteria for this
             scholarship.
@@ -369,7 +369,7 @@ function ApplicationForm() {
 
           <button
             type="submit"
-            className="rounded-xl bg-[#24823F] px-7 py-3.5 font-bold text-white hover:bg-[#185C2C]"
+            className="rounded-xl bg-[#9BB06D] px-7 py-3.5 font-bold text-white hover:bg-[#657A3F]"
           >
             Save & Continue
           </button>
@@ -394,7 +394,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-sm font-semibold text-[#26332A]/80">
+      <label className="mb-2 block text-sm font-semibold text-[#293127]/80">
         {label}
       </label>
 
@@ -405,7 +405,7 @@ function Field({
         onChange={onChange}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-[#DDEBD8] px-4 py-3 text-sm focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8]"
+        className="w-full rounded-xl border border-[#E8EEDB] px-4 py-3 text-sm focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB]"
       />
     </div>
   );
@@ -421,7 +421,7 @@ function SelectField({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-sm font-semibold text-[#26332A]/80">
+      <label className="mb-2 block text-sm font-semibold text-[#293127]/80">
         {label}
       </label>
 
@@ -430,7 +430,7 @@ function SelectField({
         value={value}
         onChange={onChange}
         required
-        className="w-full rounded-xl border border-[#DDEBD8] bg-white px-4 py-3 text-sm focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8]"
+        className="w-full rounded-xl border border-[#E8EEDB] bg-white px-4 py-3 text-sm focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB]"
       >
         <option value="">
           Select {label}

@@ -8,12 +8,12 @@ function AnalyticsChart({ data }) {
     {
       label: "Accepted",
       value: data.accepted,
-      className: "bg-[#24823F]",
+      className: "bg-[#9BB06D]",
     },
     {
       label: "Rejected",
       value: data.rejected,
-      className: "bg-[#C76B45]",
+      className: "bg-[#B9684B]",
     },
   ];
 
@@ -23,14 +23,14 @@ function AnalyticsChart({ data }) {
   );
 
   return (
-    <div className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
+    <div className="rounded-2xl border border-[#E8EEDB] bg-white p-6 shadow-sm">
 
       <div className="mb-6">
-        <h3 className="text-lg font-bold text-[#26332A]">
+        <h3 className="text-lg font-bold text-[#293127]">
           Application Analytics
         </h3>
 
-        <p className="mt-1 text-sm text-[#26332A]/60">
+        <p className="mt-1 text-sm text-[#293127]/60">
           Current application distribution
         </p>
       </div>
@@ -50,16 +50,16 @@ function AnalyticsChart({ data }) {
             <div key={item.label}>
 
               <div className="mb-2 flex justify-between text-sm">
-                <span className="font-medium text-[#26332A]/70">
+                <span className="font-medium text-[#293127]/70">
                   {item.label}
                 </span>
 
-                <span className="font-bold text-[#26332A]">
+                <span className="font-bold text-[#293127]">
                   {item.value}
                 </span>
               </div>
 
-              <div className="h-3 overflow-hidden rounded-full bg-[#DDEBD8]">
+              <div className="h-3 overflow-hidden rounded-full bg-[#E8EEDB]">
                 <div
                   className={`h-full rounded-full ${item.className}`}
                   style={{ width: `${width}%` }}
