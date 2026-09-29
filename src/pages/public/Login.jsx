@@ -33,66 +33,74 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+
   // -----------------------------------------
   // LOGIN
   // -----------------------------------------
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setError("");
     setLoading(true);
 
-    let result;
+    try {
+      let result;
 
-    // Student login
-    if (role === "student") {
-      result = studentLogin(
-        email.trim(),
-        password
-      );
-    }
+      if (role === "student") {
+        result = await studentLogin(
+          email.trim(),
+          password
+        );
+      } else {
+        result = await officerLogin(
+          email.trim(),
+          password
+        );
+      }
 
-    // Officer login
-    if (role === "officer") {
-      result = officerLogin(
-        email.trim(),
-        password
-      );
-    }
+      if (!result?.success) {
+        setError(
+          result?.message || "Login failed."
+        );
+        return;
+      }
 
-    setLoading(false);
+      // --------------------------------------------
+      // STUDENT
+      // --------------------------------------------
 
-    // Login failed
-    if (!result.success) {
-      setError(result.message);
-      return;
-    }
+      if (role === "student") {
+        if (scholarshipId) {
+          navigate(
+            `/student/apply/${scholarshipId}`
+          );
+        } else {
+          navigate("/student");
+        }
 
-    // ---------------------------------------
-    // STUDENT REDIRECT
-    // ---------------------------------------
-    if (role === "student") {
-      navigate(
-        scholarshipId
-          ? `/student/apply/${scholarshipId}`
-          : "/student"
-      );
+        return;
+      }
 
-      return;
-    }
+      // --------------------------------------------
+      // OFFICER
+      // --------------------------------------------
 
-    // ---------------------------------------
-    // OFFICER REDIRECT
-    // ---------------------------------------
-    if (role === "officer") {
-      navigate("/officer");
+      if (role === "officer") {
+        navigate("/officer");
+      }
+    } finally {
+      setLoading(false);
     }
   };
+
+
 
   return (
     <div className="flex min-h-[calc(100vh-128px)] items-center justify-center bg-[#FFF8E7] px-4 py-12">
 
       <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl border border-[#E8EEDB] bg-white shadow-xl lg:grid-cols-2">
+
 
         {/* =====================================
             LEFT PANEL
@@ -119,6 +127,7 @@ function Login() {
               </p>
 
             </div>
+
 
             <div className="space-y-4">
 
@@ -169,6 +178,7 @@ function Login() {
 
             <div className="mt-7 grid grid-cols-2 gap-3">
 
+
               {/* Student */}
               <button
                 type="button"
@@ -176,11 +186,11 @@ function Login() {
                   setRole("student");
                   setError("");
                 }}
-                className={`rounded-xl border p-4 text-left transition ${
-                  role === "student"
+                disabled={loading}
+                className={`rounded-xl border p-4 text-left transition ${role === "student"
                     ? "border-[#9BB06D] bg-[#E8EEDB] text-[#657A3F]"
                     : "border-[#E8EEDB] text-[#293127]/70 hover:border-[#9BB06D]"
-                }`}
+                  }`}
               >
 
                 <GraduationCap size={21} />
@@ -203,11 +213,11 @@ function Login() {
                   setRole("officer");
                   setError("");
                 }}
-                className={`rounded-xl border p-4 text-left transition ${
-                  role === "officer"
+                disabled={loading}
+                className={`rounded-xl border p-4 text-left transition ${role === "officer"
                     ? "border-[#9BB06D] bg-[#E8EEDB] text-[#657A3F]"
                     : "border-[#E8EEDB] text-[#293127]/70 hover:border-[#9BB06D]"
-                }`}
+                  }`}
               >
 
                 <ShieldCheck size={21} />
@@ -244,6 +254,7 @@ function Login() {
               onSubmit={handleSubmit}
               className="mt-6 space-y-5"
             >
+
 
               {/* Email */}
               <div>
@@ -317,11 +328,13 @@ function Login() {
                 disabled={loading}
                 className="w-full rounded-xl bg-[#9BB06D] py-3.5 font-bold text-white transition hover:bg-[#657A3F] disabled:cursor-not-allowed disabled:opacity-60"
               >
+
                 {loading
                   ? "Signing in..."
                   : role === "student"
-                  ? "Sign in as Student"
-                  : "Sign in as Officer"}
+                    ? "Sign in as Student"
+                    : "Sign in as Officer"}
+
               </button>
 
             </form>

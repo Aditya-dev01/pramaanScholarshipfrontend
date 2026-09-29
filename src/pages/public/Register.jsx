@@ -16,37 +16,60 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+
+  // -----------------------------------------
+  // REGISTER
+  // -----------------------------------------
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setError("");
     setSuccess("");
+    setLoading(true);
 
-    // Registration is always for a student
-    const result = register(
-      name,
-      email,
-      password
-    );
+    try {
 
-    if (!result.success) {
-      setError(result.message);
-      return;
+      // Registration is always for a student
+      const result = await register(
+        name,
+        email,
+        password
+      );
+
+
+      // -----------------------------------------
+      // REGISTRATION FAILED
+      // -----------------------------------------
+      if (!result.success) {
+        setError(result.message);
+        return;
+      }
+
+
+      // -----------------------------------------
+      // REGISTRATION SUCCESS
+      // -----------------------------------------
+      setSuccess(
+        result.message ||
+          "Account created successfully! Redirecting to login..."
+      );
+
+
+      // Redirect to login after 1.5 seconds
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+
+    } finally {
+      setLoading(false);
     }
-
-    // Account successfully created
-    setSuccess(
-      "Account created successfully! Redirecting to home..."
-    );
-
-    // Redirect to home page after 1.5 seconds
-    setTimeout(() => {
-      navigate("/");
-    }, 1500);
   };
+
 
   return (
     <div className="flex min-h-[calc(100vh-128px)] items-center justify-center bg-[#FFF8E7] px-4 py-12">
@@ -70,6 +93,7 @@ function Register() {
 
         </div>
 
+
         {/* Error Message */}
         {error && (
           <div className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
@@ -77,12 +101,14 @@ function Register() {
           </div>
         )}
 
+
         {/* Success Message */}
         {success && (
           <div className="mt-6 rounded-xl border border-[#E8EEDB] bg-[#E8EEDB] p-4 text-sm font-medium text-[#657A3F]">
             {success}
           </div>
         )}
+
 
         {/* Form */}
         <form
@@ -92,11 +118,13 @@ function Register() {
 
           {/* Full Name */}
           <div>
+
             <label className="mb-2 block text-sm font-semibold text-[#293127]">
               Full Name
             </label>
 
             <div className="relative">
+
               <User
                 size={18}
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-[#293127]/40"
@@ -107,19 +135,24 @@ function Register() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your full name"
-                disabled={!!success}
+                disabled={loading || !!success}
                 className="w-full rounded-xl border border-[#E8EEDB] py-3 pl-10 pr-4 text-sm outline-none focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB] disabled:bg-[#E8EEDB]/50"
               />
+
             </div>
+
           </div>
+
 
           {/* Email */}
           <div>
+
             <label className="mb-2 block text-sm font-semibold text-[#293127]">
               Email
             </label>
 
             <div className="relative">
+
               <Mail
                 size={18}
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-[#293127]/40"
@@ -131,19 +164,24 @@ function Register() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                disabled={!!success}
+                disabled={loading || !!success}
                 className="w-full rounded-xl border border-[#E8EEDB] py-3 pl-10 pr-4 text-sm outline-none focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB] disabled:bg-[#E8EEDB]/50"
               />
+
             </div>
+
           </div>
+
 
           {/* Password */}
           <div>
+
             <label className="mb-2 block text-sm font-semibold text-[#293127]">
               Password
             </label>
 
             <div className="relative">
+
               <Lock
                 size={18}
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-[#293127]/40"
@@ -156,11 +194,14 @@ function Register() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Minimum 6 characters"
-                disabled={!!success}
+                disabled={loading || !!success}
                 className="w-full rounded-xl border border-[#E8EEDB] py-3 pl-10 pr-4 text-sm outline-none focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB] disabled:bg-[#E8EEDB]/50"
               />
+
             </div>
+
           </div>
+
 
           {/* Account Information */}
           <div className="rounded-xl border border-[#E8EEDB] bg-[#E8EEDB] p-4">
@@ -173,6 +214,7 @@ function Register() {
               />
 
               <div>
+
                 <p className="font-semibold text-[#293127]">
                   Student Account
                 </p>
@@ -182,27 +224,35 @@ function Register() {
                   for students. Officer accounts are created
                   separately.
                 </p>
+
               </div>
 
             </div>
 
           </div>
 
+
           {/* Submit */}
           <button
             type="submit"
-            disabled={!!success}
+            disabled={loading || !!success}
             className="w-full rounded-xl bg-[#9BB06D] py-3.5 font-bold text-white transition hover:bg-[#657A3F] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {success
+
+            {loading
+              ? "Creating Account..."
+              : success
               ? "Account Created"
               : "Create Student Account"}
+
           </button>
 
         </form>
 
+
         {/* Login */}
         <p className="mt-7 text-center text-sm text-[#293127]/70">
+
           Already have an account?{" "}
 
           <Link
@@ -211,10 +261,13 @@ function Register() {
           >
             Sign in
           </Link>
+
         </p>
+
 
         {/* Officer Login */}
         <p className="mt-3 text-center text-sm text-[#293127]/70">
+
           Are you an officer?{" "}
 
           <Link
@@ -223,9 +276,11 @@ function Register() {
           >
             Officer Login
           </Link>
+
         </p>
 
       </div>
+
     </div>
   );
 }

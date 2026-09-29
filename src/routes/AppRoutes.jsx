@@ -27,6 +27,7 @@ import ApplicationDetails from "../pages/student/ApplicationDetails";
 import OfficerDashboard from "../pages/officer/OfficerDashboard";
 import Applications from "../pages/officer/Applications";
 import ApplicationReview from "../pages/officer/ApplicationReview";
+import OfficerAnalytics from "../pages/officer/OfficerAnalytics";
 
 
 function ProtectedRoute({ role, children }) {
@@ -155,6 +156,8 @@ function AppRoutes() {
           OFFICER ROUTES
       ========================================= */}
 
+
+
       <Route
         element={
           <ProtectedRoute role="officer">
@@ -162,7 +165,6 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       >
-
         <Route
           path="/officer"
           element={<OfficerDashboard />}
@@ -178,7 +180,12 @@ function AppRoutes() {
           element={<ApplicationReview />}
         />
 
+        <Route
+          path="/officer/analytics"
+          element={<OfficerAnalytics />}
+        />
       </Route>
+
 
 
       {/* =========================================

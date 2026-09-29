@@ -26,52 +26,73 @@ function OfficerLayout() {
   return (
     <div className="flex min-h-screen bg-[#FFF8E7]">
 
+      {/* =========================================
+          OFFICER SIDEBAR
+      ========================================= */}
       <Sidebar
-        role="officer"
         mobileOpen={sidebarOpen}
         setMobileOpen={setSidebarOpen}
       />
 
+      {/* =========================================
+          MAIN AREA
+      ========================================= */}
       <div className="flex min-w-0 flex-1 flex-col">
 
+        {/* =========================================
+            HEADER
+        ========================================= */}
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-[#E8EEDB] bg-white px-4 sm:px-6">
 
-          {/* Mobile menu */}
-          <button
-            type="button"
-            onClick={() => setSidebarOpen(true)}
-            className="rounded-lg p-2 text-[#293127]/70 hover:bg-[#E8EEDB] lg:hidden"
-          >
-            <Menu size={22} />
-          </button>
+          {/* Left Side */}
+          <div className="flex items-center gap-3">
 
-          {/* Desktop title */}
-          <div className="hidden lg:block">
-            <p className="text-sm font-medium text-[#293127]/60">
-              Officer Portal
-            </p>
+            {/* Mobile Menu */}
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(true)}
+              className="rounded-lg p-2 text-[#293127]/70 transition hover:bg-[#E8EEDB] lg:hidden"
+            >
+              <Menu size={22} />
+            </button>
+
+            {/* Portal Title */}
+            <div>
+              <h1 className="text-lg font-bold text-[#293127]">
+                Officer Dashboard
+              </h1>
+
+              <p className="hidden text-xs text-[#293127]/60 sm:block">
+                Manage scholarship applications
+              </p>
+            </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          {/* =========================================
+              RIGHT SIDE
+          ========================================= */}
+          <div className="flex items-center gap-3">
 
             {/* Notifications */}
             <button
               type="button"
-              className="relative rounded-lg p-2 text-[#293127]/60 hover:bg-[#E8EEDB]"
+              className="relative rounded-xl p-2.5 text-[#293127]/70 transition hover:bg-[#E8EEDB]"
             >
               <Bell size={20} />
 
-              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#9BB06D]" />
+              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#9BB06D]" />
             </button>
 
-            {/* Profile */}
+            {/* =====================================
+                USER PROFILE
+            ===================================== */}
             <div className="group relative">
 
+              {/* Profile Button */}
               <button
                 type="button"
                 className="flex items-center gap-3 rounded-xl p-1.5 transition hover:bg-[#E8EEDB]"
               >
-
                 {/* Avatar */}
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#657A3F] text-sm font-bold text-white">
                   {user?.name
@@ -79,7 +100,7 @@ function OfficerLayout() {
                     : "O"}
                 </div>
 
-                {/* User info */}
+                {/* User Info */}
                 <div className="hidden text-left sm:block">
                   <p className="text-sm font-semibold text-[#293127]">
                     {user?.name || "Officer"}
@@ -89,13 +110,14 @@ function OfficerLayout() {
                     Scholarship Officer
                   </p>
                 </div>
-
               </button>
 
-              {/* Hover dropdown */}
+              {/* ===================================
+                  PROFILE DROPDOWN
+              =================================== */}
               <div className="invisible absolute right-0 top-full mt-2 w-64 translate-y-2 rounded-2xl border border-[#E8EEDB] bg-white p-2 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
 
-                {/* Account information */}
+                {/* Account Information */}
                 <div className="border-b border-[#E8EEDB] px-3 py-3">
 
                   <p className="font-semibold text-[#293127]">
@@ -112,7 +134,7 @@ function OfficerLayout() {
 
                 </div>
 
-                {/* Sign out */}
+                {/* Sign Out */}
                 <button
                   type="button"
                   onClick={handleLogout}
@@ -120,25 +142,22 @@ function OfficerLayout() {
                 >
                   <LogOut size={18} />
 
-                  <span>
-                    Sign out
-                  </span>
+                  <span>Sign out</span>
                 </button>
 
               </div>
-
             </div>
-
           </div>
-
         </header>
 
+        {/* =========================================
+            PAGE CONTENT
+        ========================================= */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8">
           <Outlet />
         </main>
 
       </div>
-
     </div>
   );
 }

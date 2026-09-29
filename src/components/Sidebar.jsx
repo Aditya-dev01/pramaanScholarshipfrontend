@@ -1,14 +1,18 @@
-import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
-  GraduationCap,
   FileText,
-  ClipboardList,
   BarChart3,
   X,
 } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
-function Sidebar({ role, mobileOpen, setMobileOpen }) {
+import { useAuth } from "../context/AuthContext";
+
+function Sidebar({ mobileOpen, setMobileOpen }) {
+  const { user } = useAuth();
+
+  const role = user?.role;
+
   const studentLinks = [
     {
       label: "Dashboard",
@@ -16,12 +20,7 @@ function Sidebar({ role, mobileOpen, setMobileOpen }) {
       icon: LayoutDashboard,
     },
     {
-      label: "Scholarships",
-      path: "/student/scholarships",
-      icon: GraduationCap,
-    },
-    {
-      label: "My Applications",
+      label: "Applications",
       path: "/student/applications",
       icon: FileText,
     },
@@ -36,11 +35,11 @@ function Sidebar({ role, mobileOpen, setMobileOpen }) {
     {
       label: "Applications",
       path: "/officer/applications",
-      icon: ClipboardList,
+      icon: FileText,
     },
     {
       label: "Analytics",
-      path: "/officer",
+      path: "/officer/analytics",
       icon: BarChart3,
     },
   ];
@@ -48,81 +47,86 @@ function Sidebar({ role, mobileOpen, setMobileOpen }) {
   const links =
     role === "student"
       ? studentLinks
-      : officerLinks;
+      : role === "officer"
+        ? officerLinks
+        : [];
 
   return (
     <>
+      {/* Mobile Overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-[#657A3F]/40 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/30 lg:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
+      {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 transform border-r border-[#E8EEDB] bg-white transition-transform lg:static lg:z-auto lg:translate-x-0 ${
-          mobileOpen
-            ? "translate-x-0"
-            : "-translate-x-full"
-        }`}
+        className={`
+          fixed inset-y-0 left-0 z-50 w-64
+          transform border-r border-[#E8EEDB]
+          bg-white transition-transform duration-300
+          lg:static lg:translate-x-0
+          ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
       >
-
+        {/* Header */}
         <div className="flex h-16 items-center justify-between border-b border-[#E8EEDB] px-5">
+          <div>
+            <h2 className="text-lg font-bold text-[#293127]">
+              {role === "student"
+                ? "Student Portal"
+                : "Officer Portal"}
+            </h2>
 
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#9BB06D] font-bold text-white">
-              S
-            </div>
-
-            <span className="font-bold text-[#293127]">
-              ScholarConnect
-            </span>
+            <p className="text-xs text-[#293127]/50">
+              Scholarship Management
+            </p>
           </div>
 
+          {/* Mobile close */}
           <button
+            type="button"
             onClick={() => setMobileOpen(false)}
-            className="rounded-lg p-2 hover:bg-[#E8EEDB] lg:hidden"
+            className="rounded-lg p-2 text-[#293127]/60 hover:bg-[#E8EEDB] lg:hidden"
           >
             <X size={20} />
           </button>
-
         </div>
 
-        <div className="p-4">
+        {/* Navigation */}
+        <nav className="space-y-2 p-4">
 
-          <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-[#293127]/50">
-            {role === "student"
-              ? "Student Portal"
-              : "Officer Portal"}
-          </p>
+          {links.map((link) => {
+            const Icon = link.icon;
 
-          <nav className="space-y-1">
-
-            {links.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <NavLink
-                  key={item.label}
-                  to={item.path}
-                  end={item.path === "/student" || item.path === "/officer"}
-                  onClick={() => setMobileOpen(false)}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition ${
-                      isActive
-                        ? "bg-[#E8EEDB] text-[#657A3F]"
-                        : "text-[#293127]/70 hover:bg-[#FFF8E7] hover:text-[#293127]"
-                    }`
+            return (
+              <NavLink
+                key={link.path}
+                to={link.path}
+                end={link.path === "/student" || link.path === "/officer"}
+                onClick={() => setMobileOpen(false)}
+                className={({ isActive }) =>
+                  `
+                  flex items-center gap-3 rounded-xl px-4 py-3
+                  text-sm font-semibold transition
+                  ${
+                    isActive
+                      ? "bg-[#E8EEDB] text-[#657A3F]"
+                      : "text-[#293127]/70 hover:bg-[#E8EEDB] hover:text-[#657A3F]"
                   }
-                >
-                  <Icon size={19} />
-                  {item.label}
-                </NavLink>
-              );
-            })}
+                  `
+                }
+              >
+                <Icon size={20} />
 
-          </nav>
-        </div>
+                <span>{link.label}</span>
+              </NavLink>
+            );
+          })}
+
+        </nav>
       </aside>
     </>
   );

@@ -5,24 +5,40 @@ import {
   useState,
 } from "react";
 
-import {
-  findUser,
-  createUser,
-} from "../data/users";
-
 const AuthContext = createContext(null);
 
 const CURRENT_USER_KEY = "scholarship_current_user";
 
-export function AuthProvider({ children }) {
+const API_URL =
+  "https://scholarship-management-system-0hfy.onrender.com";
 
-  // -----------------------------------------
-  // CURRENT LOGGED-IN USER
-  // -----------------------------------------
+// --------------------------------------------------
+// DEMO ACCOUNTS
+// --------------------------------------------------
+
+const DEMO_STUDENT = {
+  id: "demo-student",
+  name: "Demo Student",
+  email: "student@example.com",
+  password: "student123",
+  role: "student",
+};
+
+const DEMO_OFFICER = {
+  id: "demo-officer",
+  name: "Demo Officer",
+  email: "officer@example.com",
+  password: "officer123",
+  role: "officer",
+};
+
+// --------------------------------------------------
+// AUTH PROVIDER
+// --------------------------------------------------
+
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem(
-      CURRENT_USER_KEY
-    );
+    const storedUser = localStorage.getItem(CURRENT_USER_KEY);
 
     if (!storedUser) {
       return null;
@@ -31,21 +47,16 @@ export function AuthProvider({ children }) {
     try {
       return JSON.parse(storedUser);
     } catch (error) {
-      console.error(
-        "Unable to read current user:",
-        error
-      );
-
+      console.error("Unable to read current user:", error);
       localStorage.removeItem(CURRENT_USER_KEY);
-
       return null;
     }
   });
 
+  // ------------------------------------------------
+  // SAVE USER
+  // ------------------------------------------------
 
-  // -----------------------------------------
-  // SAVE / REMOVE CURRENT USER
-  // -----------------------------------------
   useEffect(() => {
     if (user) {
       localStorage.setItem(
@@ -57,164 +68,262 @@ export function AuthProvider({ children }) {
     }
   }, [user]);
 
+  // ------------------------------------------------
+  // REMOVE PASSWORD FROM USER OBJECT
+  // ------------------------------------------------
 
-  // -----------------------------------------
-  // SAFE USER OBJECT
-  // Never store password here
-  // -----------------------------------------
-  function createSafeUser(foundUser) {
+  function createSafeUser(foundUser, expectedRole) {
     return {
       id: foundUser.id,
       name: foundUser.name,
       email: foundUser.email,
-      role: foundUser.role,
+      role: expectedRole || foundUser.role,
     };
   }
 
+  // ------------------------------------------------
+  // BACKEND LOGIN
+  // ------------------------------------------------
 
-  // -----------------------------------------
-  // STUDENT LOGIN
-  // -----------------------------------------
-  function studentLogin(email, password) {
-    const foundUser = findUser(
-      email,
-      password,
-      "student"
-    );
-
-    if (!foundUser) {
-      return {
-        success: false,
-        message:
-          "Invalid student email or password.",
-      };
-    }
-
-    // Extra role protection
-    if (foundUser.role !== "student") {
-      return {
-        success: false,
-        message:
-          "This account is not a student account.",
-      };
-    }
-
-    const safeUser = createSafeUser(foundUser);
-
-    // Student is now logged in
-    setUser(safeUser);
-
-    return {
-      success: true,
-      user: safeUser,
-    };
-  }
-
-
-  // -----------------------------------------
-  // OFFICER LOGIN
-  // -----------------------------------------
-  function officerLogin(email, password) {
-    const foundUser = findUser(
-      email,
-      password,
-      "officer"
-    );
-
-    if (!foundUser) {
-      return {
-        success: false,
-        message:
-          "Invalid officer email or password.",
-      };
-    }
-
-    // Extra role protection
-    if (foundUser.role !== "officer") {
-      return {
-        success: false,
-        message:
-          "This account is not an officer account.",
-      };
-    }
-
-    const safeUser = createSafeUser(foundUser);
-
-    // Officer is now logged in
-    setUser(safeUser);
-
-    return {
-      success: true,
-      user: safeUser,
-    };
-  }
-
-
-  // -----------------------------------------
-  // STUDENT REGISTRATION ONLY
-  // -----------------------------------------
-  function register(name, email, password) {
+  async function loginFromBackend(email, password, role) {
     try {
-
-      // createUser() automatically assigns:
-      // role: "student"
-      //
-      // IMPORTANT:
-      // We DO NOT call setUser() here.
-      // Registration does NOT automatically log
-      // the student in.
-
-      const newUser = createUser({
-        name,
-        email,
-        password,
+      const response = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          role,
+        }),
       });
 
-      const safeUser = createSafeUser(newUser);
+      const text = await response.text();
+
+      let data;
+
+      try {
+        data = JSON.parse(text);
+      } catch {
+        return {
+          success: false,
+          message:
+            "The server returned an invalid response.",
+        };
+      }
+
+      if (!response.ok) {
+        return {
+          success: false,
+          message:
+            data.message ||
+            data.msg ||
+            "Invalid email or password.",
+        };
+      }
+
+      // Backend may return the user in different places.
+      const backendUser =
+        data.user ||
+        data.details?.user ||
+        data.details?.row ||
+        data.details;
+
+      if (!backendUser) {
+        return {
+          success: false,
+          message: "Login response did not contain user information.",
+        };
+      }
+
+      // IMPORTANT:
+      // Keep the role selected during login.
+      const safeUser = createSafeUser(
+        backendUser,
+        role
+      );
+
+      // Extra safety check.
+      if (safeUser.role !== role) {
+        return {
+          success: false,
+          message: "Account role does not match selected login role.",
+        };
+      }
+
+      setUser(safeUser);
 
       return {
         success: true,
         user: safeUser,
-        message:
-          "Student account created successfully.",
       };
-
     } catch (error) {
+      console.error("Backend login error:", error);
 
       return {
         success: false,
         message:
-          error.message ||
-          "Unable to create student account.",
+          "Unable to connect to the server. Please try again later.",
       };
     }
   }
 
+  // ------------------------------------------------
+  // STUDENT LOGIN
+  // ------------------------------------------------
 
-  // -----------------------------------------
-  // LOGOUT
-  // -----------------------------------------
-  function logout() {
-    setUser(null);
+  async function studentLogin(email, password) {
+    const cleanEmail = email.trim().toLowerCase();
+
+    // Demo student
+    if (
+      cleanEmail === DEMO_STUDENT.email &&
+      password === DEMO_STUDENT.password
+    ) {
+      const safeUser = createSafeUser(
+        DEMO_STUDENT,
+        "student"
+      );
+
+      setUser(safeUser);
+
+      return {
+        success: true,
+        user: safeUser,
+      };
+    }
+
+    // Real backend student
+    return await loginFromBackend(
+      cleanEmail,
+      password,
+      "student"
+    );
   }
 
+  // ------------------------------------------------
+  // OFFICER LOGIN
+  // ------------------------------------------------
 
-  // -----------------------------------------
-  // AUTH CONTEXT
-  // -----------------------------------------
+  async function officerLogin(email, password) {
+    const cleanEmail = email.trim().toLowerCase();
+
+    // Demo officer
+    if (
+      cleanEmail === DEMO_OFFICER.email &&
+      password === DEMO_OFFICER.password
+    ) {
+      const safeUser = createSafeUser(
+        DEMO_OFFICER,
+        "officer"
+      );
+
+      setUser(safeUser);
+
+      return {
+        success: true,
+        user: safeUser,
+      };
+    }
+
+    // Real backend officer
+    return await loginFromBackend(
+      cleanEmail,
+      password,
+      "officer"
+    );
+  }
+
+  // ------------------------------------------------
+  // UNIFIED LOGIN
+  // ------------------------------------------------
+
+  async function login(email, password, role) {
+    if (role === "officer") {
+      return await officerLogin(email, password);
+    }
+
+    return await studentLogin(email, password);
+  }
+
+  // ------------------------------------------------
+  // REGISTER
+  // ------------------------------------------------
+
+  async function register(name, email, password) {
+    try {
+      const response = await fetch(`${API_URL}/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+
+      const text = await response.text();
+
+      let data;
+
+      try {
+        data = JSON.parse(text);
+      } catch {
+        return {
+          success: false,
+          message:
+            "The server returned an invalid response.",
+        };
+      }
+
+      if (!response.ok) {
+        return {
+          success: false,
+          message:
+            data.message ||
+            data.msg ||
+            "Registration failed.",
+        };
+      }
+
+      return {
+        success: true,
+        message:
+          data.message ||
+          data.msg ||
+          "Student account created successfully.",
+      };
+    } catch (error) {
+      console.error("Registration error:", error);
+
+      return {
+        success: false,
+        message:
+          "Unable to connect to the server. Please try again later.",
+      };
+    }
+  }
+
+  // ------------------------------------------------
+  // LOGOUT
+  // ------------------------------------------------
+
+  function logout() {
+    setUser(null);
+    localStorage.removeItem(CURRENT_USER_KEY);
+  }
+
   return (
     <AuthContext.Provider
       value={{
         user,
-
-        // Login
+        login,
         studentLogin,
         officerLogin,
-
-        // Registration
         register,
-
-        // Logout
         logout,
       }}
     >
@@ -223,10 +332,10 @@ export function AuthProvider({ children }) {
   );
 }
 
+// --------------------------------------------------
+// HOOK
+// --------------------------------------------------
 
-// -----------------------------------------
-// useAuth Hook
-// -----------------------------------------
 export function useAuth() {
   const context = useContext(AuthContext);
 
