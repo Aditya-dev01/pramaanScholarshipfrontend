@@ -26,8 +26,8 @@ function Stepper({ currentStep }) {
                 <div
                   className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold ${
                     active
-                      ? "bg-blue-600 text-white"
-                      : "bg-slate-200 text-slate-500"
+                      ? "bg-[#24823F] text-white"
+                      : "bg-[#DDEBD8] text-[#26332A]/50"
                   }`}
                 >
                   {stepNumber}
@@ -36,8 +36,8 @@ function Stepper({ currentStep }) {
                 <span
                   className={`mt-2 text-xs font-medium ${
                     active
-                      ? "text-blue-600"
-                      : "text-slate-400"
+                      ? "text-[#24823F]"
+                      : "text-[#26332A]/50"
                   }`}
                 >
                   {step}
@@ -49,8 +49,8 @@ function Stepper({ currentStep }) {
                 <div
                   className={`mx-2 h-1 flex-1 rounded ${
                     stepNumber < currentStep
-                      ? "bg-blue-600"
-                      : "bg-slate-200"
+                      ? "bg-[#24823F]"
+                      : "bg-[#DDEBD8]"
                   }`}
                 />
               )}

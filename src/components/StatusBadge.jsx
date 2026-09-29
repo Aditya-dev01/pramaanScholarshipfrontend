@@ -1,18 +1,18 @@
 function StatusBadge({ status }) {
   const styles = {
-    Draft: "bg-slate-100 text-slate-700",
-    Pending: "bg-amber-100 text-amber-700",
-    "Under Review": "bg-blue-100 text-blue-700",
-    Accepted: "bg-green-100 text-green-700",
-    Rejected: "bg-red-100 text-red-700",
-    Verified: "bg-green-100 text-green-700",
-    Checking: "bg-amber-100 text-amber-700",
+    Draft: "bg-[#DDEBD8] text-[#26332A]",
+    Pending: "bg-[#FFF8E7] text-[#E5B84B]",
+    "Under Review": "bg-[#DDEBD8] text-[#24823F]",
+    Accepted: "bg-[#DDEBD8] text-[#24823F]",
+    Rejected: "bg-[#FBE8DF] text-[#C76B45]",
+    Verified: "bg-[#DDEBD8] text-[#24823F]",
+    Checking: "bg-[#FFF8E7] text-[#E5B84B]",
   };
 
   return (
     <span
       className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
-        styles[status] || "bg-slate-100 text-slate-700"
+        styles[status] || "bg-[#DDEBD8] text-[#26332A]"
       }`}
     >
       {status}

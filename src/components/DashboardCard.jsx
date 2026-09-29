@@ -3,24 +3,24 @@ function DashboardCard({
   value,
   icon: Icon,
   description,
-  iconClass = "bg-blue-50 text-blue-600",
+  iconClass = "bg-[#DDEBD8] text-[#24823F]",
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-[#DDEBD8] bg-white p-5 shadow-sm">
 
       <div className="flex items-start justify-between">
 
         <div>
-          <p className="text-sm font-medium text-slate-500">
+          <p className="text-sm font-medium text-[#26332A]/60">
             {title}
           </p>
 
-          <p className="mt-2 text-3xl font-bold text-slate-900">
+          <p className="mt-2 text-3xl font-bold text-[#26332A]">
             {value}
           </p>
 
           {description && (
-            <p className="mt-2 text-xs text-slate-400">
+            <p className="mt-2 text-xs text-[#26332A]/50">
               {description}
             </p>
           )}

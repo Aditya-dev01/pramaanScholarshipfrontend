@@ -54,34 +54,34 @@ function Sidebar({ role, mobileOpen, setMobileOpen }) {
     <>
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-slate-950/40 lg:hidden"
+          className="fixed inset-0 z-40 bg-[#185C2C]/40 lg:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 transform border-r border-slate-200 bg-white transition-transform lg:static lg:z-auto lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-72 transform border-r border-[#DDEBD8] bg-white transition-transform lg:static lg:z-auto lg:translate-x-0 ${
           mobileOpen
             ? "translate-x-0"
             : "-translate-x-full"
         }`}
       >
 
-        <div className="flex h-16 items-center justify-between border-b border-slate-200 px-5">
+        <div className="flex h-16 items-center justify-between border-b border-[#DDEBD8] px-5">
 
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 font-bold text-white">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#24823F] font-bold text-white">
               S
             </div>
 
-            <span className="font-bold text-slate-900">
+            <span className="font-bold text-[#26332A]">
               ScholarConnect
             </span>
           </div>
 
           <button
             onClick={() => setMobileOpen(false)}
-            className="rounded-lg p-2 hover:bg-slate-100 lg:hidden"
+            className="rounded-lg p-2 hover:bg-[#DDEBD8] lg:hidden"
           >
             <X size={20} />
           </button>
@@ -90,7 +90,7 @@ function Sidebar({ role, mobileOpen, setMobileOpen }) {
 
         <div className="p-4">
 
-          <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <p className="mb-3 px-3 text-xs font-semibold uppercase tracking-wider text-[#26332A]/50">
             {role === "student"
               ? "Student Portal"
               : "Officer Portal"}
@@ -110,8 +110,8 @@ function Sidebar({ role, mobileOpen, setMobileOpen }) {
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition ${
                       isActive
-                        ? "bg-blue-50 text-blue-700"
-                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                        ? "bg-[#DDEBD8] text-[#185C2C]"
+                        : "text-[#26332A]/70 hover:bg-[#FFF8E7] hover:text-[#26332A]"
                     }`
                   }
                 >

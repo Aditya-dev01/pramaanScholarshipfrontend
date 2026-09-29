@@ -91,7 +91,7 @@ function ApplicationReview() {
 
       <Link
         to="/officer/applications"
-        className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-blue-600"
+        className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-[#24823F]"
       >
         <ArrowLeft size={17} />
         Back to Applications
@@ -101,15 +101,15 @@ function ApplicationReview() {
       <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
 
         <div>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-[#26332A]/60">
             Application Review
           </p>
 
-          <h1 className="mt-1 text-2xl font-bold text-slate-900">
+          <h1 className="mt-1 text-2xl font-bold text-[#26332A]">
             {application.scholarshipName}
           </h1>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-[#26332A]/60">
             {application.id}
           </p>
         </div>
@@ -127,15 +127,15 @@ function ApplicationReview() {
 
           {/* Applicant */}
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
 
             <div className="flex items-center gap-3">
 
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#DDEBD8] text-[#24823F]">
                 <User size={20} />
               </div>
 
-              <h2 className="font-bold text-slate-900">
+              <h2 className="font-bold text-[#26332A]">
                 Applicant Information
               </h2>
 
@@ -200,13 +200,13 @@ function ApplicationReview() {
 
           {/* Statement */}
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
 
-            <h2 className="font-bold text-slate-900">
+            <h2 className="font-bold text-[#26332A]">
               Student Statement
             </h2>
 
-            <p className="mt-4 rounded-xl bg-slate-50 p-5 text-sm leading-7 text-slate-600">
+            <p className="mt-4 rounded-xl bg-[#FFF8E7] p-5 text-sm leading-7 text-[#26332A]/70">
               {application.formData?.statement || "-"}
             </p>
 
@@ -215,20 +215,20 @@ function ApplicationReview() {
 
           {/* Documents */}
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
 
             <div className="flex items-center gap-3">
 
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#DDEBD8] text-[#24823F]">
                 <FileText size={20} />
               </div>
 
               <div>
-                <h2 className="font-bold text-slate-900">
+                <h2 className="font-bold text-[#26332A]">
                   Uploaded Documents
                 </h2>
 
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-[#26332A]/60">
                   Review document verification results.
                 </p>
               </div>
@@ -241,15 +241,15 @@ function ApplicationReview() {
                 (document) => (
                   <div
                     key={document.type}
-                    className="flex items-center justify-between rounded-xl bg-slate-50 p-4"
+                    className="flex items-center justify-between rounded-xl bg-[#FFF8E7] p-4"
                   >
 
                     <div>
-                      <p className="font-semibold text-slate-800">
+                      <p className="font-semibold text-[#26332A]">
                         {document.type}
                       </p>
 
-                      <p className="mt-1 text-xs text-slate-400">
+                      <p className="mt-1 text-xs text-[#26332A]/50">
                         {document.name}
                       </p>
                     </div>
@@ -273,13 +273,13 @@ function ApplicationReview() {
 
         <div>
 
-          <div className="sticky top-24 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="sticky top-24 rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm">
 
-            <h2 className="text-lg font-bold text-slate-900">
+            <h2 className="text-lg font-bold text-[#26332A]">
               Application Decision
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-slate-500">
+            <p className="mt-2 text-sm leading-6 text-[#26332A]/60">
               Review the student's information and verified documents
               before making a decision.
             </p>
@@ -292,7 +292,7 @@ function ApplicationReview() {
                   application.status === "Accepted" ||
                   application.status === "Rejected"
                 }
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 px-5 py-3.5 font-bold text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:bg-slate-300"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#24823F] px-5 py-3.5 font-bold text-white hover:bg-[#185C2C] disabled:cursor-not-allowed disabled:bg-[#DDEBD8] disabled:text-[#26332A]/50"
               >
                 <CheckCircle size={18} />
                 Accept Application
@@ -304,7 +304,7 @@ function ApplicationReview() {
                   application.status === "Accepted" ||
                   application.status === "Rejected"
                 }
-                className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-5 py-3.5 font-bold text-red-700 hover:bg-red-100 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#C76B45] bg-[#FBE8DF] px-5 py-3.5 font-bold text-[#C76B45] hover:bg-[#F3D5C8] disabled:cursor-not-allowed disabled:bg-[#DDEBD8] disabled:text-[#26332A]/50"
               >
                 <XCircle size={18} />
                 Reject Application
@@ -313,13 +313,13 @@ function ApplicationReview() {
             </div>
 
             {application.officerComment && (
-              <div className="mt-6 rounded-xl bg-slate-50 p-4">
+              <div className="mt-6 rounded-xl bg-[#FFF8E7] p-4">
 
-                <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                <p className="text-xs font-bold uppercase tracking-wider text-[#26332A]/50">
                   Decision Comment
                 </p>
 
-                <p className="mt-2 text-sm leading-6 text-slate-600">
+                <p className="mt-2 text-sm leading-6 text-[#26332A]/70">
                   {application.officerComment}
                 </p>
 
@@ -339,7 +339,7 @@ function ApplicationReview() {
         title="Reject Application"
       >
 
-        <p className="text-sm leading-6 text-slate-500">
+        <p className="text-sm leading-6 text-[#26332A]/60">
           Please provide a reason for rejecting this application.
           The student will be able to see this comment.
         </p>
@@ -351,14 +351,14 @@ function ApplicationReview() {
           }
           rows={5}
           placeholder="Enter rejection reason..."
-          className="mt-5 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-red-500 focus:ring-4 focus:ring-red-100"
+          className="mt-5 w-full rounded-xl border border-[#DDEBD8] px-4 py-3 text-sm focus:border-[#C76B45] focus:ring-4 focus:ring-[#FBE8DF]"
         />
 
         <div className="mt-5 flex justify-end gap-3">
 
           <button
             onClick={() => setRejectOpen(false)}
-            className="rounded-lg px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-100"
+            className="rounded-lg px-4 py-2.5 text-sm font-semibold text-[#26332A]/70 hover:bg-[#DDEBD8]"
           >
             Cancel
           </button>
@@ -366,7 +366,7 @@ function ApplicationReview() {
           <button
             onClick={handleReject}
             disabled={!comment.trim()}
-            className="rounded-lg bg-red-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-red-700 disabled:bg-slate-300"
+            className="rounded-lg bg-[#C76B45] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#A95232] disabled:bg-[#DDEBD8] disabled:text-[#26332A]/50"
           >
             Confirm Rejection
           </button>
@@ -382,12 +382,12 @@ function ApplicationReview() {
 
 function Info({ label, value }) {
   return (
-    <div className="rounded-xl bg-slate-50 p-4">
-      <p className="text-xs text-slate-400">
+    <div className="rounded-xl bg-[#FFF8E7] p-4">
+      <p className="text-xs text-[#26332A]/50">
         {label}
       </p>
 
-      <p className="mt-1 font-semibold text-slate-800">
+      <p className="mt-1 font-semibold text-[#26332A]">
         {value || "-"}
       </p>
     </div>

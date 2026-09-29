@@ -61,15 +61,15 @@ function Applications() {
 
       <div className="mb-8">
 
-        <p className="text-sm font-medium text-blue-600">
+        <p className="text-sm font-medium text-[#24823F]">
           Applications
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-slate-900">
+        <h1 className="mt-1 text-3xl font-bold text-[#26332A]">
           Application List
         </h1>
 
-        <p className="mt-2 text-slate-500">
+        <p className="mt-2 text-[#26332A]/60">
           Review and manage scholarship applications.
         </p>
 
@@ -82,7 +82,7 @@ function Applications() {
 
           <Search
             size={18}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-[#26332A]/50"
           />
 
           <input
@@ -91,7 +91,7 @@ function Applications() {
               setSearch(e.target.value)
             }
             placeholder="Search applicant or scholarship..."
-            className="w-full rounded-xl border border-slate-300 bg-white py-3 pl-10 pr-4 text-sm focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+            className="w-full rounded-xl border border-[#DDEBD8] bg-white py-3 pl-10 pr-4 text-sm focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8]"
           />
 
         </div>
@@ -101,7 +101,7 @@ function Applications() {
           onChange={(e) =>
             setStatus(e.target.value)
           }
-          className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+          className="rounded-xl border border-[#DDEBD8] bg-white px-4 py-3 text-sm font-medium focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8]"
         >
           <option value="all">
             All Statuses
@@ -123,33 +123,33 @@ function Applications() {
       </div>
 
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-[#DDEBD8] bg-white shadow-sm">
 
         <div className="overflow-x-auto">
 
           <table className="w-full min-w-[800px] text-left">
 
-            <thead className="border-b border-slate-200 bg-slate-50">
+            <thead className="border-b border-[#DDEBD8] bg-[#FFF8E7]">
 
               <tr>
 
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#26332A]/60">
                   Applicant
                 </th>
 
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#26332A]/60">
                   Scholarship
                 </th>
 
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#26332A]/60">
                   Submitted
                 </th>
 
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#26332A]/60">
                   Status
                 </th>
 
-                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#26332A]/60">
                   Action
                 </th>
 
@@ -157,22 +157,22 @@ function Applications() {
 
             </thead>
 
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#DDEBD8]">
 
               {filtered.map(
                 (application) => (
                   <tr
                     key={application.id}
-                    className="hover:bg-slate-50"
+                    className="hover:bg-[#FFF8E7]"
                   >
 
                     <td className="px-6 py-5">
 
-                      <p className="font-semibold text-slate-900">
+                      <p className="font-semibold text-[#26332A]">
                         {application.studentName}
                       </p>
 
-                      <p className="mt-1 text-xs text-slate-500">
+                      <p className="mt-1 text-xs text-[#26332A]/60">
                         {application.studentEmail}
                       </p>
 
@@ -180,17 +180,17 @@ function Applications() {
 
                     <td className="px-6 py-5">
 
-                      <p className="text-sm font-medium text-slate-800">
+                      <p className="text-sm font-medium text-[#26332A]">
                         {application.scholarshipName}
                       </p>
 
-                      <p className="mt-1 text-xs text-slate-400">
+                      <p className="mt-1 text-xs text-[#26332A]/50">
                         {application.id}
                       </p>
 
                     </td>
 
-                    <td className="px-6 py-5 text-sm text-slate-500">
+                    <td className="px-6 py-5 text-sm text-[#26332A]/60">
                       {application.submittedAt || "-"}
                     </td>
 
@@ -204,7 +204,7 @@ function Applications() {
 
                       <Link
                         to={`/officer/applications/${application.id}`}
-                        className="inline-flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-100"
+                        className="inline-flex items-center gap-2 rounded-lg bg-[#DDEBD8] px-3 py-2 text-sm font-semibold text-[#185C2C] hover:bg-[#FFF8E7]"
                       >
                         <Eye size={16} />
                         Review
@@ -224,7 +224,7 @@ function Applications() {
 
 
         {!filtered.length && (
-          <div className="p-12 text-center text-sm text-slate-500">
+          <div className="p-12 text-center text-sm text-[#26332A]/60">
             No applications match your search.
           </div>
         )}

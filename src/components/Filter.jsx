@@ -5,13 +5,13 @@ function Filter({ value, onChange, options = [] }) {
     <div className="flex items-center gap-2">
       <SlidersHorizontal
         size={18}
-        className="text-slate-400"
+        className="text-[#26332A]/50"
       />
 
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-700 shadow-sm focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+        className="rounded-xl border border-[#DDEBD8] bg-white px-4 py-3 text-sm font-medium text-[#26332A] shadow-sm focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8]"
       >
         <option value="all">All Types</option>
 

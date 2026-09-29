@@ -61,15 +61,15 @@ function StudentDashboard() {
 
       <div className="mb-8">
 
-        <p className="text-sm font-medium text-blue-600">
+        <p className="text-sm font-medium text-[#24823F]">
           Student Dashboard
         </p>
 
-        <h1 className="mt-1 text-3xl font-bold text-slate-900">
+        <h1 className="mt-1 text-3xl font-bold text-[#26332A]">
           Welcome, {user.name}
         </h1>
 
-        <p className="mt-2 text-slate-500">
+        <p className="mt-2 text-[#26332A]/60">
           Manage your scholarship applications and track their status.
         </p>
 
@@ -88,21 +88,21 @@ function StudentDashboard() {
           title="Pending"
           value={pending}
           icon={Clock}
-          iconClass="bg-amber-50 text-amber-600"
+          iconClass="bg-[#FFF8E7] text-[#E5B84B]"
         />
 
         <DashboardCard
           title="Accepted"
           value={accepted}
           icon={CheckCircle}
-          iconClass="bg-green-50 text-green-600"
+          iconClass="bg-[#DDEBD8] text-[#24823F]"
         />
 
         <DashboardCard
           title="Rejected"
           value={rejected}
           icon={XCircle}
-          iconClass="bg-red-50 text-red-600"
+          iconClass="bg-[#FBE8DF] text-[#C76B45]"
         />
 
       </div>
@@ -115,18 +115,18 @@ function StudentDashboard() {
           <div className="mb-4 flex items-center justify-between">
 
             <div>
-              <h2 className="text-xl font-bold text-slate-900">
+              <h2 className="text-xl font-bold text-[#26332A]">
                 Recent Applications
               </h2>
 
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm text-[#26332A]/60">
                 Your latest scholarship applications
               </p>
             </div>
 
             <Link
               to="/student/applications"
-              className="flex items-center gap-2 text-sm font-semibold text-blue-600"
+              className="flex items-center gap-2 text-sm font-semibold text-[#24823F]"
             >
               View All
               <ArrowRight size={16} />
@@ -146,24 +146,24 @@ function StudentDashboard() {
                   />
                 ))
             ) : (
-              <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center">
+              <div className="rounded-2xl border border-dashed border-[#DDEBD8] bg-white p-10 text-center">
 
                 <FileText
-                  className="mx-auto text-slate-300"
+                  className="mx-auto text-[#26332A]/30"
                   size={40}
                 />
 
-                <h3 className="mt-4 font-bold text-slate-900">
+                <h3 className="mt-4 font-bold text-[#26332A]">
                   No applications yet
                 </h3>
 
-                <p className="mt-2 text-sm text-slate-500">
+                <p className="mt-2 text-sm text-[#26332A]/60">
                   Start by exploring available scholarships.
                 </p>
 
                 <Link
                   to="/student/scholarships"
-                  className="mt-5 inline-flex rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white"
+                  className="mt-5 inline-flex rounded-lg bg-[#24823F] px-5 py-2.5 text-sm font-semibold text-white"
                 >
                   Browse Scholarships
                 </Link>
@@ -176,20 +176,20 @@ function StudentDashboard() {
         </div>
 
 
-        <div className="rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 p-7 text-white">
+        <div className="rounded-2xl bg-gradient-to-br from-[#185C2C] to-[#24823F] p-7 text-white">
 
           <h2 className="text-xl font-bold">
             Find a scholarship
           </h2>
 
-          <p className="mt-3 text-sm leading-6 text-blue-100">
+          <p className="mt-3 text-sm leading-6 text-[#DDEBD8]">
             Explore available opportunities and start your next
             application.
           </p>
 
           <Link
             to="/student/scholarships"
-            className="mt-7 inline-flex items-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-bold text-blue-700"
+            className="mt-7 inline-flex items-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-bold text-[#24823F]"
           >
             Explore Scholarships
             <ArrowRight size={16} />

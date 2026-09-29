@@ -50,10 +50,10 @@ function ApplyProcess() {
   return (
     <div>
 
-      <section className="bg-slate-950 py-20 text-white">
+      <section className="bg-[#185C2C] py-20 text-white">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
 
-          <p className="text-sm font-bold uppercase tracking-wider text-blue-400">
+          <p className="text-sm font-bold uppercase tracking-wider text-[#E5B84B]">
             How It Works
           </p>
 
@@ -61,7 +61,7 @@ function ApplyProcess() {
             Scholarship application process
           </h1>
 
-          <p className="mt-6 text-lg leading-8 text-slate-300">
+          <p className="mt-6 text-lg leading-8 text-[#DDEBD8]">
             Follow the complete workflow from scholarship discovery
             to application decision.
           </p>
@@ -70,7 +70,7 @@ function ApplyProcess() {
       </section>
 
 
-      <section className="py-20">
+      <section className="bg-[#FFF8E7] py-20">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
 
           <div className="space-y-5">
@@ -81,23 +81,23 @@ function ApplyProcess() {
               return (
                 <div
                   key={step.title}
-                  className="flex gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+                  className="flex gap-5 rounded-2xl border border-[#DDEBD8] bg-white p-6 shadow-sm"
                 >
 
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#DDEBD8] text-[#24823F]">
                     <Icon size={23} />
                   </div>
 
                   <div>
-                    <div className="text-xs font-bold uppercase tracking-wider text-blue-600">
+                    <div className="text-xs font-bold uppercase tracking-wider text-[#24823F]">
                       Step {index + 1}
                     </div>
 
-                    <h2 className="mt-1 text-lg font-bold text-slate-900">
+                    <h2 className="mt-1 text-lg font-bold text-[#26332A]">
                       {step.title}
                     </h2>
 
-                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                    <p className="mt-2 text-sm leading-6 text-[#26332A]/70">
                       {step.text}
                     </p>
                   </div>

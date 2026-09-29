@@ -27,20 +27,20 @@ function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-[#DDEBD8] bg-white/95 backdrop-blur">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
 
           <Link to="/" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 font-bold text-white">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#24823F] font-bold text-white">
               S
             </div>
 
             <div>
-              <div className="text-lg font-bold text-slate-900">
-                Scholar<span className="text-blue-600">Connect</span>
+              <div className="text-lg font-bold text-[#26332A]">
+                Scholar<span className="text-[#24823F]">Connect</span>
               </div>
-              <div className="hidden text-[10px] font-medium uppercase tracking-wider text-slate-500 sm:block">
+              <div className="hidden text-[10px] font-medium uppercase tracking-wider text-[#26332A]/50 sm:block">
                 Scholarship Portal
               </div>
             </div>
@@ -49,28 +49,28 @@ function Navbar() {
           <nav className="hidden items-center gap-7 md:flex">
             <Link
               to="/"
-              className="text-sm font-medium text-slate-600 hover:text-blue-600"
+              className="text-sm font-medium text-[#26332A]/70 hover:text-[#24823F]"
             >
               Home
             </Link>
 
             <Link
               to="/about"
-              className="text-sm font-medium text-slate-600 hover:text-blue-600"
+              className="text-sm font-medium text-[#26332A]/70 hover:text-[#24823F]"
             >
               About
             </Link>
 
             <Link
               to="/apply-process"
-              className="text-sm font-medium text-slate-600 hover:text-blue-600"
+              className="text-sm font-medium text-[#26332A]/70 hover:text-[#24823F]"
             >
               Apply Process
             </Link>
 
             <Link
               to="/"
-              className="text-sm font-medium text-slate-600 hover:text-blue-600"
+              className="text-sm font-medium text-[#26332A]/70 hover:text-[#24823F]"
             >
               Scholarships
             </Link>
@@ -81,7 +81,7 @@ function Navbar() {
               <>
                 <Link
                   to="/login"
-                  className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+                  className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-[#26332A] hover:bg-[#DDEBD8]"
                 >
                   <LogIn size={17} />
                   Login
@@ -89,24 +89,17 @@ function Navbar() {
 
                 <Link
                   to="/register"
-                  className="flex items-center gap-2 rounded-lg border border-blue-600 px-4 py-2 text-sm font-semibold text-blue-600 hover:bg-blue-50"
+                  className="flex items-center gap-2 rounded-lg border border-[#24823F] px-4 py-2 text-sm font-semibold text-[#24823F] hover:bg-[#DDEBD8]"
                 >
                   <UserPlus size={17} />
                   Register
-                </Link>
-
-                <Link
-                  to="/login"
-                  className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700"
-                >
-                  Apply Now
                 </Link>
               </>
             ) : (
               <>
                 <Link
                   to={dashboardPath}
-                  className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+                  className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-[#26332A] hover:bg-[#DDEBD8]"
                 >
                   <LayoutDashboard size={17} />
                   Dashboard
@@ -114,7 +107,7 @@ function Navbar() {
 
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+                  className="flex items-center gap-2 rounded-lg bg-[#185C2C] px-4 py-2 text-sm font-semibold text-white hover:bg-[#24823F]"
                 >
                   <LogOut size={17} />
                   Logout
@@ -125,20 +118,20 @@ function Navbar() {
 
           <button
             onClick={() => setOpen(!open)}
-            className="rounded-lg p-2 text-slate-700 hover:bg-slate-100 md:hidden"
+            className="rounded-lg p-2 text-[#26332A] hover:bg-[#DDEBD8] md:hidden"
           >
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
         {open && (
-          <div className="border-t border-slate-200 py-4 md:hidden">
+          <div className="border-t border-[#DDEBD8] py-4 md:hidden">
             <div className="flex flex-col gap-1">
 
               <Link
                 to="/"
                 onClick={closeMenu}
-                className="rounded-lg px-4 py-3 text-sm font-medium hover:bg-slate-100"
+                className="rounded-lg px-4 py-3 text-sm font-medium hover:bg-[#DDEBD8]"
               >
                 Home
               </Link>
@@ -146,7 +139,7 @@ function Navbar() {
               <Link
                 to="/about"
                 onClick={closeMenu}
-                className="rounded-lg px-4 py-3 text-sm font-medium hover:bg-slate-100"
+                className="rounded-lg px-4 py-3 text-sm font-medium hover:bg-[#DDEBD8]"
               >
                 About
               </Link>
@@ -154,7 +147,7 @@ function Navbar() {
               <Link
                 to="/apply-process"
                 onClick={closeMenu}
-                className="rounded-lg px-4 py-3 text-sm font-medium hover:bg-slate-100"
+                className="rounded-lg px-4 py-3 text-sm font-medium hover:bg-[#DDEBD8]"
               >
                 Apply Process
               </Link>
@@ -162,7 +155,7 @@ function Navbar() {
               <Link
                 to="/scholarships/sch-001"
                 onClick={closeMenu}
-                className="rounded-lg px-4 py-3 text-sm font-medium hover:bg-slate-100"
+                className="rounded-lg px-4 py-3 text-sm font-medium hover:bg-[#DDEBD8]"
               >
                 Scholarships
               </Link>
@@ -172,7 +165,7 @@ function Navbar() {
                   <Link
                     to="/login"
                     onClick={closeMenu}
-                    className="mt-2 rounded-lg px-4 py-3 font-semibold text-blue-600 hover:bg-blue-50"
+                    className="mt-2 rounded-lg px-4 py-3 font-semibold text-[#24823F] hover:bg-[#DDEBD8]"
                   >
                     Login
                   </Link>
@@ -180,17 +173,9 @@ function Navbar() {
                   <Link
                     to="/register"
                     onClick={closeMenu}
-                    className="rounded-lg px-4 py-3 font-semibold text-blue-600 hover:bg-blue-50"
+                    className="rounded-lg px-4 py-3 font-semibold text-[#24823F] hover:bg-[#DDEBD8]"
                   >
                     Register
-                  </Link>
-
-                  <Link
-                    to="/login"
-                    onClick={closeMenu}
-                    className="rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white"
-                  >
-                    Apply Now
                   </Link>
                 </>
               ) : (
@@ -198,14 +183,14 @@ function Navbar() {
                   <Link
                     to={dashboardPath}
                     onClick={closeMenu}
-                    className="mt-2 rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white"
+                    className="mt-2 rounded-lg bg-[#24823F] px-4 py-3 font-semibold text-white hover:bg-[#185C2C]"
                   >
                     Dashboard
                   </Link>
 
                   <button
                     onClick={handleLogout}
-                    className="rounded-lg px-4 py-3 text-left font-semibold text-red-600 hover:bg-red-50"
+                    className="rounded-lg px-4 py-3 text-left font-semibold text-[#C76B45] hover:bg-[#FBE8DF]"
                   >
                     Logout
                   </button>

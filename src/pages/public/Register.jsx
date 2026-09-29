@@ -49,22 +49,22 @@ function Register() {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-128px)] items-center justify-center bg-slate-50 px-4 py-12">
+    <div className="flex min-h-[calc(100vh-128px)] items-center justify-center bg-[#FFF8E7] px-4 py-12">
 
-      <div className="w-full max-w-xl rounded-3xl border border-slate-200 bg-white p-6 shadow-xl sm:p-10">
+      <div className="w-full max-w-xl rounded-3xl border border-[#DDEBD8] bg-white p-6 shadow-xl sm:p-10">
 
         {/* Header */}
         <div className="text-center">
 
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 font-bold text-white">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-[#24823F] font-bold text-white">
             S
           </div>
 
-          <h1 className="mt-5 text-2xl font-bold text-slate-900">
+          <h1 className="mt-5 text-2xl font-bold text-[#26332A]">
             Create Student Account
           </h1>
 
-          <p className="mt-2 text-sm text-slate-500">
+          <p className="mt-2 text-sm text-[#26332A]/70">
             Register as a student to discover and apply for scholarships.
           </p>
 
@@ -79,7 +79,7 @@ function Register() {
 
         {/* Success Message */}
         {success && (
-          <div className="mt-6 rounded-xl border border-green-200 bg-green-50 p-4 text-sm font-medium text-green-700">
+          <div className="mt-6 rounded-xl border border-[#DDEBD8] bg-[#DDEBD8] p-4 text-sm font-medium text-[#185C2C]">
             {success}
           </div>
         )}
@@ -92,14 +92,14 @@ function Register() {
 
           {/* Full Name */}
           <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
+            <label className="mb-2 block text-sm font-semibold text-[#26332A]">
               Full Name
             </label>
 
             <div className="relative">
               <User
                 size={18}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#26332A]/40"
               />
 
               <input
@@ -108,21 +108,21 @@ function Register() {
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your full name"
                 disabled={!!success}
-                className="w-full rounded-xl border border-slate-300 py-3 pl-10 pr-4 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 disabled:bg-slate-100"
+                className="w-full rounded-xl border border-[#DDEBD8] py-3 pl-10 pr-4 text-sm outline-none focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8] disabled:bg-[#DDEBD8]/50"
               />
             </div>
           </div>
 
           {/* Email */}
           <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
+            <label className="mb-2 block text-sm font-semibold text-[#26332A]">
               Email
             </label>
 
             <div className="relative">
               <Mail
                 size={18}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#26332A]/40"
               />
 
               <input
@@ -132,21 +132,21 @@ function Register() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 disabled={!!success}
-                className="w-full rounded-xl border border-slate-300 py-3 pl-10 pr-4 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 disabled:bg-slate-100"
+                className="w-full rounded-xl border border-[#DDEBD8] py-3 pl-10 pr-4 text-sm outline-none focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8] disabled:bg-[#DDEBD8]/50"
               />
             </div>
           </div>
 
           {/* Password */}
           <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
+            <label className="mb-2 block text-sm font-semibold text-[#26332A]">
               Password
             </label>
 
             <div className="relative">
               <Lock
                 size={18}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#26332A]/40"
               />
 
               <input
@@ -157,27 +157,27 @@ function Register() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Minimum 6 characters"
                 disabled={!!success}
-                className="w-full rounded-xl border border-slate-300 py-3 pl-10 pr-4 text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 disabled:bg-slate-100"
+                className="w-full rounded-xl border border-[#DDEBD8] py-3 pl-10 pr-4 text-sm outline-none focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8] disabled:bg-[#DDEBD8]/50"
               />
             </div>
           </div>
 
           {/* Account Information */}
-          <div className="rounded-xl border border-blue-100 bg-blue-50 p-4">
+          <div className="rounded-xl border border-[#DDEBD8] bg-[#DDEBD8] p-4">
 
             <div className="flex items-start gap-3">
 
               <GraduationCap
-                className="mt-0.5 text-blue-600"
+                className="mt-0.5 text-[#24823F]"
                 size={22}
               />
 
               <div>
-                <p className="font-semibold text-slate-900">
+                <p className="font-semibold text-[#26332A]">
                   Student Account
                 </p>
 
-                <p className="mt-1 text-sm text-slate-600">
+                <p className="mt-1 text-sm text-[#26332A]/70">
                   This registration form is only available
                   for students. Officer accounts are created
                   separately.
@@ -192,7 +192,7 @@ function Register() {
           <button
             type="submit"
             disabled={!!success}
-            className="w-full rounded-xl bg-blue-600 py-3.5 font-bold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-xl bg-[#24823F] py-3.5 font-bold text-white transition hover:bg-[#185C2C] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {success
               ? "Account Created"
@@ -202,24 +202,24 @@ function Register() {
         </form>
 
         {/* Login */}
-        <p className="mt-7 text-center text-sm text-slate-500">
+        <p className="mt-7 text-center text-sm text-[#26332A]/70">
           Already have an account?{" "}
 
           <Link
             to="/login"
-            className="font-semibold text-blue-600 hover:text-blue-700"
+            className="font-semibold text-[#24823F] hover:text-[#185C2C]"
           >
             Sign in
           </Link>
         </p>
 
         {/* Officer Login */}
-        <p className="mt-3 text-center text-sm text-slate-500">
+        <p className="mt-3 text-center text-sm text-[#26332A]/70">
           Are you an officer?{" "}
 
           <Link
             to="/officer/login"
-            className="font-semibold text-slate-700 hover:text-blue-600"
+            className="font-semibold text-[#26332A] hover:text-[#24823F]"
           >
             Officer Login
           </Link>

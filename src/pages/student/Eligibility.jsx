@@ -41,49 +41,55 @@ export default function Eligibility() {
       <Stepper currentStep={1} />
 
       <div className="eligibility-page">
-        <h1>Eligibility Check</h1>
+        <h1 className="text-[#26332A]">
+          Eligibility Check
+        </h1>
 
-        <p>
+        <p className="text-[#26332A]/60">
           Check whether you meet the requirements for
-          <strong> {scholarship.name}</strong>.
+          <strong className="text-[#26332A]"> {scholarship.name}</strong>.
         </p>
 
         <div className="eligibility-list">
           {criteria.map((item) => (
             <div
-              className="eligibility-item"
+              className="eligibility-item border-[#DDEBD8] bg-white"
               key={item.title}
             >
               <div>
-                <h3>{item.title}</h3>
+                <h3 className="text-[#26332A]">
+                  {item.title}
+                </h3>
 
-                <p>
-                  Your value: <strong>{item.value}</strong>
+                <p className="text-[#26332A]/60">
+                  Your value: <strong className="text-[#26332A]">{item.value}</strong>
                 </p>
 
-                <p>
+                <p className="text-[#26332A]/60">
                   Required: {item.required}
                 </p>
               </div>
 
               {item.eligible ? (
                 <CheckCircle
-                  className="eligible-icon"
+                  className="eligible-icon text-[#24823F]"
                 />
               ) : (
-                <XCircle className="not-eligible-icon" />
+                <XCircle className="not-eligible-icon text-[#C76B45]" />
               )}
             </div>
           ))}
         </div>
 
-        <div className="eligible-message">
-          <CheckCircle />
+        <div className="eligible-message border-[#DDEBD8] bg-[#DDEBD8]">
+          <CheckCircle className="text-[#24823F]" />
 
           <div>
-            <h3>You are eligible to apply!</h3>
+            <h3 className="text-[#185C2C]">
+              You are eligible to apply!
+            </h3>
 
-            <p>
+            <p className="text-[#26332A]/70">
               You meet the basic eligibility
               requirements.
             </p>
@@ -91,7 +97,7 @@ export default function Eligibility() {
         </div>
 
         <button
-          className="primary-btn"
+          className="primary-btn bg-[#24823F] text-white hover:bg-[#185C2C]"
           onClick={() =>
             navigate(
               `/student/apply/${id}/form`

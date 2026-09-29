@@ -5,20 +5,20 @@ function SearchBar({ value, onChange, placeholder = "Search scholarships..." }) 
     <div className="relative w-full">
       <Search
         size={19}
-        className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+        className="absolute left-4 top-1/2 -translate-y-1/2 text-[#26332A]/50"
       />
 
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-slate-300 bg-white py-3 pl-11 pr-10 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+        className="w-full rounded-xl border border-[#DDEBD8] bg-white py-3 pl-11 pr-10 text-sm text-[#26332A] shadow-sm placeholder:text-[#26332A]/50 focus:border-[#24823F] focus:ring-4 focus:ring-[#DDEBD8]"
       />
 
       {value && (
         <button
           onClick={() => onChange("")}
-          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+          className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-[#26332A]/50 hover:bg-[#DDEBD8] hover:text-[#26332A]"
         >
           <X size={17} />
         </button>

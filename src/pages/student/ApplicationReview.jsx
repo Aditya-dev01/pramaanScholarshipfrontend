@@ -34,11 +34,11 @@ export default function ApplicationReview() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-6 md:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#FFF8E7] px-4 py-6 md:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
 
         {/* Stepper */}
-        <div className="mb-8 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:p-6">
+        <div className="mb-8 rounded-2xl border border-[#DDEBD8] bg-white p-4 shadow-sm md:p-6">
           <Stepper currentStep={5} />
         </div>
 
@@ -49,35 +49,35 @@ export default function ApplicationReview() {
             onClick={() =>
               navigate(`/student/apply/${id}/documents`)
             }
-            className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition hover:text-indigo-600"
+            className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-[#26332A]/70 transition hover:text-[#24823F]"
           >
             <ArrowLeft size={17} />
             Back to Documents
           </button>
 
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+          <h1 className="text-2xl font-bold tracking-tight text-[#26332A] md:text-3xl">
             Review Application
           </h1>
 
-          <p className="mt-2 text-sm text-slate-500 md:text-base">
+          <p className="mt-2 text-sm text-[#26332A]/60 md:text-base">
             Review all the information and documents carefully before
             submitting your scholarship application.
           </p>
         </div>
 
         {/* Application ID */}
-        <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-indigo-100 bg-indigo-50 p-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-[#DDEBD8] bg-[#DDEBD8] p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600">
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#24823F]">
               Application
             </p>
 
-            <p className="mt-1 text-lg font-bold text-indigo-950">
+            <p className="mt-1 text-lg font-bold text-[#185C2C]">
               SCH-NEW-001
             </p>
           </div>
 
-          <div className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-indigo-700 shadow-sm">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#24823F] shadow-sm">
             <ShieldCheck size={17} />
             Ready for Review
           </div>
@@ -86,18 +86,18 @@ export default function ApplicationReview() {
         <div className="space-y-6">
 
           {/* Personal Information */}
-          <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="flex items-center gap-4 border-b border-slate-100 px-5 py-5 md:px-6">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
+          <section className="overflow-hidden rounded-2xl border border-[#DDEBD8] bg-white shadow-sm">
+            <div className="flex items-center gap-4 border-b border-[#DDEBD8] px-5 py-5 md:px-6">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#DDEBD8] text-[#24823F]">
                 <User size={21} />
               </div>
 
               <div>
-                <h2 className="text-lg font-bold text-slate-900">
+                <h2 className="text-lg font-bold text-[#26332A]">
                   Personal Information
                 </h2>
 
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-[#26332A]/60">
                   Your basic personal details
                 </p>
               </div>
@@ -127,18 +127,18 @@ export default function ApplicationReview() {
           </section>
 
           {/* Education */}
-          <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="flex items-center gap-4 border-b border-slate-100 px-5 py-5 md:px-6">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-purple-100 text-purple-600">
+          <section className="overflow-hidden rounded-2xl border border-[#DDEBD8] bg-white shadow-sm">
+            <div className="flex items-center gap-4 border-b border-[#DDEBD8] px-5 py-5 md:px-6">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#DDEBD8] text-[#24823F]">
                 <GraduationCap size={21} />
               </div>
 
               <div>
-                <h2 className="text-lg font-bold text-slate-900">
+                <h2 className="text-lg font-bold text-[#26332A]">
                   Education
                 </h2>
 
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-[#26332A]/60">
                   Your academic information
                 </p>
               </div>
@@ -163,25 +163,25 @@ export default function ApplicationReview() {
           </section>
 
           {/* Documents */}
-          <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="flex items-center justify-between border-b border-slate-100 px-5 py-5 md:px-6">
+          <section className="overflow-hidden rounded-2xl border border-[#DDEBD8] bg-white shadow-sm">
+            <div className="flex items-center justify-between border-b border-[#DDEBD8] px-5 py-5 md:px-6">
               <div className="flex items-center gap-4">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-100 text-green-600">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#DDEBD8] text-[#24823F]">
                   <FileText size={21} />
                 </div>
 
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900">
+                  <h2 className="text-lg font-bold text-[#26332A]">
                     Documents
                   </h2>
 
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-[#26332A]/60">
                     Documents uploaded for verification
                   </p>
                 </div>
               </div>
 
-              <div className="hidden items-center gap-2 rounded-full bg-green-100 px-3 py-1.5 text-xs font-semibold text-green-700 sm:flex">
+              <div className="hidden items-center gap-2 rounded-full bg-[#DDEBD8] px-3 py-1.5 text-xs font-semibold text-[#24823F] sm:flex">
                 <CheckCircle size={15} />
                 Verified
               </div>
@@ -196,7 +196,7 @@ export default function ApplicationReview() {
           </section>
 
           {/* Confirmation */}
-          <section className="rounded-2xl border border-amber-200 bg-amber-50 p-5 md:p-6">
+          <section className="rounded-2xl border border-[#E5B84B] bg-[#FFF8E7] p-5 md:p-6">
             <div className="flex items-start gap-4">
               <input
                 id="confirmation"
@@ -205,18 +205,18 @@ export default function ApplicationReview() {
                 onChange={(e) =>
                   setConfirmed(e.target.checked)
                 }
-                className="mt-1 h-5 w-5 cursor-pointer rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                className="mt-1 h-5 w-5 cursor-pointer rounded border-[#DDEBD8] text-[#24823F] focus:ring-[#DDEBD8]"
               />
 
               <label
                 htmlFor="confirmation"
                 className="cursor-pointer"
               >
-                <p className="font-semibold text-amber-900">
+                <p className="font-semibold text-[#26332A]">
                   Declaration & Confirmation
                 </p>
 
-                <p className="mt-1 text-sm leading-6 text-amber-800">
+                <p className="mt-1 text-sm leading-6 text-[#26332A]/70">
                   I confirm that all information provided in this
                   application is true and correct to the best of my
                   knowledge. I understand that providing incorrect or
@@ -228,7 +228,7 @@ export default function ApplicationReview() {
           </section>
 
           {/* Actions */}
-          <div className="flex flex-col-reverse gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col-reverse gap-3 border-t border-[#DDEBD8] pt-6 sm:flex-row sm:items-center sm:justify-between">
             <button
               type="button"
               onClick={() =>
@@ -236,7 +236,7 @@ export default function ApplicationReview() {
                   `/student/apply/${id}/documents`
                 )
               }
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 hover:border-slate-400"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#DDEBD8] bg-white px-5 py-3 text-sm font-semibold text-[#26332A]/70 shadow-sm transition hover:bg-[#FFF8E7] hover:border-[#24823F]"
             >
               <ArrowLeft size={17} />
               Back
@@ -248,8 +248,8 @@ export default function ApplicationReview() {
               disabled={!confirmed}
               className={`inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-sm transition ${
                 confirmed
-                  ? "bg-indigo-600 hover:bg-indigo-700 hover:shadow-md"
-                  : "cursor-not-allowed bg-slate-300"
+                  ? "bg-[#24823F] hover:bg-[#185C2C] hover:shadow-md"
+                  : "cursor-not-allowed bg-[#DDEBD8] text-[#26332A]/50"
               }`}
             >
               Submit Application
@@ -269,12 +269,12 @@ export default function ApplicationReview() {
 
 function InfoItem({ label, value }) {
   return (
-    <div className="rounded-xl bg-slate-50 p-4">
-      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+    <div className="rounded-xl bg-[#FFF8E7] p-4">
+      <p className="text-xs font-semibold uppercase tracking-wide text-[#26332A]/60">
         {label}
       </p>
 
-      <p className="mt-2 break-words text-sm font-semibold text-slate-900">
+      <p className="mt-2 break-words text-sm font-semibold text-[#26332A]">
         {value}
       </p>
     </div>
@@ -287,24 +287,24 @@ function InfoItem({ label, value }) {
 
 function DocumentItem({ title }) {
   return (
-    <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-4 transition hover:border-green-200 hover:bg-green-50/50">
+    <div className="flex items-center justify-between rounded-xl border border-[#DDEBD8] bg-[#FFF8E7] p-4 transition hover:border-[#24823F] hover:bg-[#DDEBD8]">
       <div className="flex min-w-0 items-center gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white text-green-600 shadow-sm">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white text-[#24823F] shadow-sm">
           <FileText size={19} />
         </div>
 
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-slate-800">
+          <p className="truncate text-sm font-semibold text-[#26332A]">
             {title}
           </p>
 
-          <p className="mt-0.5 text-xs text-slate-500">
+          <p className="mt-0.5 text-xs text-[#26332A]/60">
             Document verified successfully
           </p>
         </div>
       </div>
 
-      <div className="ml-3 flex shrink-0 items-center gap-1.5 rounded-full bg-green-100 px-2.5 py-1.5 text-xs font-semibold text-green-700">
+      <div className="ml-3 flex shrink-0 items-center gap-1.5 rounded-full bg-[#DDEBD8] px-2.5 py-1.5 text-xs font-semibold text-[#24823F]">
         <CheckCircle size={14} />
         <span className="hidden sm:inline">
           Verified
