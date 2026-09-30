@@ -112,11 +112,11 @@ function Login() {
 
             <div>
 
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#FFF8E7] font-bold text-[#657A3F]">
-                S
+              <div className="flex h-35 w-35 items-center justify-center rounded-xl font-bold text-[#657A3F]">
+                <img src="logo.jpg" alt="logo" />
               </div>
 
-              <h1 className="mt-8 text-4xl font-bold">
+              <h1 className="text-4xl font-bold">
                 Welcome back.
               </h1>
 

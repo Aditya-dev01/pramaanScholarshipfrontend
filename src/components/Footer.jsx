@@ -10,16 +10,13 @@ function Footer() {
 
           <div>
             <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#9BB06D] font-bold text-white">
-                S
+              <div className="flex h-35 w-35 items-center justify-center rounded-xl font-bold text-white">
+                <img src="logo.jpg" alt="" />
               </div>
 
               <div>
-                <h2 className="font-bold text-white">
-                  ScholarConnect
-                </h2>
                 <p className="text-xs text-[#E8EEDB]">
-                  Scholarship Portal
+                  Rooted in heritage, Empowered by Learning
                 </p>
               </div>
             </div>
@@ -95,7 +92,7 @@ function Footer() {
             <div className="space-y-4 text-sm text-[#E8EEDB]">
               <div className="flex gap-3">
                 <Mail size={18} className="text-[#E5B84B]" />
-                support@scholarconnect.com
+                support@aadividya.com
               </div>
 
               <div className="flex gap-3">
@@ -113,7 +110,7 @@ function Footer() {
         </div>
 
         <div className="mt-10 border-t border-[#9BB06D] pt-6 text-center text-sm text-[#E8EEDB]">
-          © {new Date().getFullYear()} ScholarConnect.
+          © {new Date().getFullYear()} AadiVidya.
           All rights reserved.
         </div>
 

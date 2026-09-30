@@ -32,16 +32,12 @@ function Navbar() {
         <div className="flex h-16 items-center justify-between">
 
           <Link to="/" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#9BB06D] font-bold text-white">
-              S
+            <div className="flex h-35 w-35 items-center justify-center rounded-xl font-bold text-white">
+              <img src="logo.jpg" alt="" />
             </div>
-
             <div>
-              <div className="text-lg font-bold text-[#293127]">
-                Scholar<span className="text-[#9BB06D]">Connect</span>
-              </div>
               <div className="hidden text-[10px] font-medium uppercase tracking-wider text-[#293127]/50 sm:block">
-                Scholarship Portal
+                Rooted in heritage, Empowered by Learning
               </div>
             </div>
           </Link>

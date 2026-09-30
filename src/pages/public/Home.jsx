@@ -117,7 +117,7 @@ function Home() {
             <div>
 
               <span className="text-sm font-bold uppercase tracking-wider text-[#9BB06D]">
-                About ScholarConnect
+                About AadiVidya
               </span>
 
               <h2 className="mt-3 text-3xl font-bold text-[#293127] sm:text-4xl">
@@ -125,7 +125,7 @@ function Home() {
               </h2>
 
               <p className="mt-5 leading-7 text-[#293127]/70">
-                ScholarConnect brings scholarship discovery,
+                AadiVidya brings scholarship discovery,
                 applications, document verification and application
                 tracking together in one place.
               </p>
