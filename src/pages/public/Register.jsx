@@ -79,11 +79,11 @@ function Register() {
         {/* Header */}
         <div className="text-center">
 
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-[#9BB06D] font-bold text-white">
-            S
+          <div className="mx-auto flex items-center justify-center rounded-xl font-bold text-white">
+            <img src="/logo.jpg" alt="logo" className="h-30 w-50"/>
           </div>
 
-          <h1 className="mt-5 text-2xl font-bold text-[#293127]">
+          <h1 className="text-2xl font-bold text-[#293127]">
             Create Student Account
           </h1>
 
