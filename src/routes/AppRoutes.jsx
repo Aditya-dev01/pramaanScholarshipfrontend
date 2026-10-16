@@ -28,9 +28,10 @@ import OfficerDashboard from "../pages/officer/OfficerDashboard";
 import Applications from "../pages/officer/Applications";
 import ApplicationReview from "../pages/officer/ApplicationReview";
 import OfficerAnalytics from "../pages/officer/OfficerAnalytics";
+import AddScholarship from "../pages/officer/AddScholarship";
 
 
-function ProtectedRoute({ role, children }) {
+function ProtectedRoute({ role, adminOnly = false, children }) {
   const { user } = useAuth();
   const location = useLocation();
 
@@ -56,6 +57,10 @@ function ProtectedRoute({ role, children }) {
     }
 
     return <Navigate to="/" replace />;
+  }
+
+  if (adminOnly && user.isAdmin !== true) {
+    return <Navigate to="/officer" replace />;
   }
 
   return children;
@@ -183,6 +188,15 @@ function AppRoutes() {
         <Route
           path="/officer/analytics"
           element={<OfficerAnalytics />}
+        />
+
+        <Route
+          path="/officer/scholarships/new"
+          element={
+            <ProtectedRoute role="officer" adminOnly>
+              <AddScholarship />
+            </ProtectedRoute>
+          }
         />
       </Route>
 

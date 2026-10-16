@@ -3,9 +3,10 @@ import { useMemo, useState } from "react";
 import SearchBar from "../../components/SearchBar";
 import Filter from "../../components/Filter";
 import ScholarshipGrid from "../../components/ScholarshipGrid";
-import { scholarships } from "../../data/scholarships";
+import { useScholarships } from "../../context/ScholarshipContext";
 
 function Scholarships() {
+  const { scholarships } = useScholarships();
   const [search, setSearch] = useState("");
   const [type, setType] = useState("all");
 
@@ -34,7 +35,7 @@ function Scholarships() {
 
       return matchesSearch && matchesType;
     });
-  }, [search, type]);
+  }, [search, type, scholarships]);
 
   return (
     <div className="mx-auto max-w-7xl">

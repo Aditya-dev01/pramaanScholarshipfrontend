@@ -1,4 +1,6 @@
-export const scholarships = [
+const CREATED_SCHOLARSHIPS_KEY = "scholarship_admin_created";
+
+const defaultScholarships = [
   {
     id: "sch-001",
     title: "National Merit Scholarship",
@@ -77,6 +79,46 @@ export const scholarships = [
     ],
   },
 ];
+
+function getCreatedScholarships() {
+  try {
+    const storedScholarships = localStorage.getItem(
+      CREATED_SCHOLARSHIPS_KEY
+    );
+
+    return storedScholarships
+      ? JSON.parse(storedScholarships)
+      : [];
+  } catch (error) {
+    console.error("Unable to read created scholarships:", error);
+    return [];
+  }
+}
+
+export const scholarships = [
+  ...defaultScholarships,
+  ...getCreatedScholarships(),
+];
+
+export function addScholarship(scholarship) {
+  scholarships.push(scholarship);
+
+  try {
+    localStorage.setItem(
+      CREATED_SCHOLARSHIPS_KEY,
+      JSON.stringify(
+        scholarships.filter((item) =>
+          item.id.startsWith("admin-")
+        )
+      )
+    );
+  } catch (error) {
+    console.error("Unable to save scholarship:", error);
+    throw new Error("Unable to save the scholarship on this device.");
+  }
+
+  return scholarship;
+}
 
 
 export function getScholarshipById(id) {

@@ -8,6 +8,7 @@ import {
 const AuthContext = createContext(null);
 
 const CURRENT_USER_KEY = "scholarship_current_user";
+const AUTH_TOKEN_KEY = "scholarship_auth_token";
 
 const API_URL =
   "https://scholarship-management-system-0hfy.onrender.com";
@@ -39,13 +40,21 @@ const DEMO_OFFICER = {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem(CURRENT_USER_KEY);
+    const token = localStorage.getItem(AUTH_TOKEN_KEY);
 
     if (!storedUser) {
       return null;
     }
 
     try {
-      return JSON.parse(storedUser);
+      const savedUser = JSON.parse(storedUser);
+      const tokenClaims = getJwtClaims(token);
+
+      return {
+        ...savedUser,
+        // Re-evaluate admin access from the persisted token at every reload.
+        isAdmin: tokenClaims.is_admin === true,
+      };
     } catch (error) {
       console.error("Unable to read current user:", error);
       localStorage.removeItem(CURRENT_USER_KEY);
@@ -58,6 +67,8 @@ export function AuthProvider({ children }) {
   // ------------------------------------------------
 
   useEffect(() => {
+    console.log("user data", user);
+    
     if (user) {
       localStorage.setItem(
         CURRENT_USER_KEY,
@@ -78,7 +89,23 @@ export function AuthProvider({ children }) {
       name: foundUser.name,
       email: foundUser.email,
       role: expectedRole || foundUser.role,
+      isAdmin: Boolean(foundUser.is_admin ?? foundUser.isAdmin),
     };
+  }
+
+  function getJwtClaims(token) {
+    if (!token) return {};
+
+    try {
+      const payload = token.split(".")[1];
+      if (!payload) return {};
+
+      const base64 = payload.replace(/-/g, "+").replace(/_/g, "/");
+      return JSON.parse(atob(base64));
+    } catch (error) {
+      console.error("Unable to read login token:", error);
+      return {};
+    }
   }
 
   // ------------------------------------------------
@@ -139,8 +166,26 @@ export function AuthProvider({ children }) {
 
       // IMPORTANT:
       // Keep the role selected during login.
+      const token =
+        data.token ||
+        data.access_token ||
+        data.accessToken ||
+        data.details?.token;
+      const tokenClaims = getJwtClaims(token);
+
+      if (token) {
+        localStorage.setItem(AUTH_TOKEN_KEY, token);
+      } else {
+        localStorage.removeItem(AUTH_TOKEN_KEY);
+      }
+
       const safeUser = createSafeUser(
-        backendUser,
+        {
+          ...backendUser,
+          // The admin UI is enabled only from the JWT claim, never from
+          // a mutable user object returned alongside the token.
+          is_admin: tokenClaims.is_admin == true,
+        },
         role
       );
 
@@ -151,7 +196,7 @@ export function AuthProvider({ children }) {
           message: "Account role does not match selected login role.",
         };
       }
-
+      console.log("safeUser", safeUser);
       setUser(safeUser);
 
       return {
@@ -314,6 +359,7 @@ export function AuthProvider({ children }) {
   function logout() {
     setUser(null);
     localStorage.removeItem(CURRENT_USER_KEY);
+    localStorage.removeItem(AUTH_TOKEN_KEY);
   }
 
   return (

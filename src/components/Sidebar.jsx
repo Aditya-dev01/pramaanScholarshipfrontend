@@ -2,6 +2,7 @@ import {
   LayoutDashboard,
   FileText,
   BarChart3,
+  PlusCircle,
   X,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
@@ -42,6 +43,15 @@ function Sidebar({ mobileOpen, setMobileOpen }) {
       path: "/officer/analytics",
       icon: BarChart3,
     },
+    ...(user?.isAdmin
+      ? [
+          {
+            label: "Add Scholarship",
+            path: "/officer/scholarships/new",
+            icon: PlusCircle,
+          },
+        ]
+      : []),
   ];
 
   const links =
