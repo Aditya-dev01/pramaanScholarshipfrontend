@@ -1,8 +1,8 @@
-Adivya – Empowering Tribal Education
+# Adivya – Empowering Tribal Education
 
-Adivya is a scholarship management portal designed to help Scheduled Tribe (ST) students discover scholarships, apply online, upload documents, and track their application status easily.
+### Adivya is a scholarship management portal designed to help Scheduled Tribe (ST) students discover scholarships, apply online, upload documents, and track their application status easily.
 
-Features
+## Features
 
 Student registration and login
 
