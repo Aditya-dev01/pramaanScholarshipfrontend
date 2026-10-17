@@ -9,6 +9,7 @@ import {
 
 import ScholarshipGrid from "../../components/ScholarshipGrid";
 import { scholarships } from "../../data/scholarships";
+import ScholarshipChatbot from "../../components/ScholarshipChatbot";
 
 function Home() {
   return (
@@ -272,7 +273,8 @@ function Home() {
 
         </div>
       </section>
-
+                  {/* AI SCHOLARSHIP CHATBOT */}
+      <ScholarshipChatbot />
     </div>
   );
 }
