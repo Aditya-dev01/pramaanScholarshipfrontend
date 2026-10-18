@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import {
   Bot,
@@ -9,10 +10,11 @@ import {
 } from "lucide-react";
 
 import ScholarshipCard from "./ScholarshipCard";
-import { scholarships as dummyScholarships } from "../data/scholarships";
 
+// Backend API URL
 const API_URL = (
-  import.meta.env.VITE_API_URL || "http://127.0.0.1:5000"
+  import.meta.env.VITE_API_URL ||
+  "https://scholarship-management-system-0hfy.onrender.com"
 ).replace(/\/+$/, "");
 
 const suggestions = [
@@ -21,139 +23,160 @@ const suggestions = [
   "How do I check my eligibility?",
 ];
 
-const initialMessages = [
+// Required chatbot profile fields
+const createInitialProfile = () => ({
+  _pending_question: null,
+  _last_results: [],
+  _last_offset: 0,
+  _last_total: 0,
+  _last_filters: {},
+});
+
+const createInitialMessages = () => [
   {
     role: "assistant",
-    text: "Hello! Welcome to AadiVidya. 🎓 Ask me about scholarships, eligibility, application documents, or financial assistance.",
+    text: "Hello! Welcome to Adivya. 🎓 Ask me about scholarships, eligibility, application documents, or financial assistance.",
+    scholarships: [],
   },
 ];
 
-// Search local dummy scholarship data.
-function searchDummyScholarships(query) {
-  const allScholarships = Array.isArray(dummyScholarships)
-    ? dummyScholarships
-    : [];
+// Extract scholarship results from different response formats
+function getScholarships(data, fallbackProfile) {
+  const candidates = [
+    data?.scholarships,
+    data?.results,
+    data?.data?.scholarships,
+    data?.data?.results,
+    data?.profile?._last_results,
+    fallbackProfile?._last_results,
+  ];
 
-  if (!allScholarships.length) return [];
-
-  const stopWords = new Set([
-    "the",
-    "a",
-    "an",
-    "is",
-    "are",
-    "for",
-    "me",
-    "my",
-    "i",
-    "to",
-    "of",
-    "and",
-    "in",
-    "on",
-    "how",
-    "what",
-    "do",
-    "can",
-    "you",
-    "find",
-    "show",
-    "please",
-    "about",
-  ]);
-
-  const words = query
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, " ")
-    .split(/\s+/)
-    .filter((word) => word.length > 1 && !stopWords.has(word));
-
-  // Rank scholarships according to matching words.
-  const ranked = allScholarships
-    .map((scholarship) => {
-      const searchableText = [
-        scholarship.title,
-        scholarship.description,
-        scholarship.type,
-        scholarship.provider,
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-
-      const score = words.reduce((total, word) => {
-        return total + (searchableText.includes(word) ? 1 : 0);
-      }, 0);
-
-      return { scholarship, score };
-    })
-    .sort((a, b) => b.score - a.score);
-
-  const matches = ranked
-    .filter((item) => item.score > 0)
-    .map((item) => item.scholarship);
-
-  // Always show available scholarships, even when no words match.
-  return matches.length ? matches : allScholarships;
+  return candidates.find(Array.isArray) || [];
 }
 
-// Fetch scholarships from Flask when the endpoint is available.
-async function findScholarships(query) {
-  try {
-    const response = await fetch(
-      `${API_URL}/api/scholarships/search?q=${encodeURIComponent(query)}`
-    );
-
-    if (response.ok) {
-      const data = await response.json();
-
-      const results = Array.isArray(data)
-        ? data
-        : data.scholarships ?? data.results ?? data.data ?? [];
-
-      if (Array.isArray(results) && results.length > 0) {
-        return results;
-      }
-    }
-  } catch (error) {
-    // Endpoint may not exist yet. Use dummy data below.
-    console.info(
-      "Scholarship API unavailable. Using local scholarship data."
-    );
+// Extract a reply from a plain string or JSON object
+function getReplyFromData(data) {
+  if (typeof data === "string" || typeof data === "number") {
+    return String(data);
   }
 
-  return searchDummyScholarships(query);
+  if (!data || typeof data !== "object") {
+    return "";
+  }
+
+  const reply =
+    data.reply ??
+    data.response ??
+    data.answer ??
+    data.message ??
+    data.msg ??
+    data.data?.reply ??
+    data.data?.response ??
+    data.data?.message;
+
+  if (typeof reply === "string" || typeof reply === "number") {
+    return String(reply);
+  }
+
+  return "";
 }
 
-// Get an AI/chatbot answer when the Flask chat endpoint is available.
-async function getChatReply(message) {
+/**
+ * Connect to Flask POST /chatbot.
+ *
+ * Expected request:
+ * {
+ *   message: "Hello",
+ *   profile: {
+ *     _pending_question: null,
+ *     _last_results: [],
+ *     _last_offset: 0,
+ *     _last_total: 0,
+ *     _last_filters: {}
+ *   }
+ * }
+ */
+async function getChatReply(message, profile) {
+  let response;
+
   try {
-    const response = await fetch(`${API_URL}/api/chat`, {
+    response = await fetch(`${API_URL}/chatbot`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json, text/plain, */*",
       },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({
+        message,
+        profile: profile ?? createInitialProfile(),
+      }),
     });
-
-    if (!response.ok) return null;
-
-    const data = await response.json();
-
-    return data.reply || data.response || data.answer || null;
   } catch {
-    return null;
+    throw new Error(
+      "Could not connect to the chatbot server. Check your internet connection and confirm that the backend is running."
+    );
   }
+
+  // Read as text first to support both plain text and JSON responses.
+  const raw = await response.text();
+
+  let data = raw;
+
+  if (raw.trim()) {
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      // The server may return plain text instead of JSON.
+      data = raw;
+    }
+  } else {
+    data = null;
+  }
+
+  if (!response.ok) {
+    const serverMessage = getReplyFromData(data);
+
+    throw new Error(
+      serverMessage ||
+        `Chatbot request failed (HTTP ${response.status}). Please try again.`
+    );
+  }
+
+  const reply = getReplyFromData(data).trim();
+
+  if (!reply) {
+    throw new Error(
+      "The chatbot server returned an empty reply. Please try another message."
+    );
+  }
+
+  const updatedProfile =
+    data &&
+    typeof data === "object" &&
+    !Array.isArray(data) &&
+    data.profile &&
+    typeof data.profile === "object"
+      ? data.profile
+      : profile ?? createInitialProfile();
+
+  return {
+    reply,
+    profile: updatedProfile,
+    scholarships: getScholarships(data, updatedProfile),
+  };
 }
 
 export default function ScholarshipChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
-  const [messages, setMessages] = useState(initialMessages);
+  const [messages, setMessages] = useState(createInitialMessages);
+  const [profile, setProfile] = useState(createInitialProfile);
 
   const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
 
+  // Scroll to the latest message when the conversation changes.
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -161,21 +184,29 @@ export default function ScholarshipChatbot() {
     });
   }, [messages, loading]);
 
+  // Reset the conversation.
   function handleNewChat() {
     if (loading) return;
 
-    setMessages(initialMessages);
+    setMessages(createInitialMessages());
     setQuestion("");
+    setProfile(createInitialProfile());
+
+    inputRef.current?.focus();
   }
 
+  // Send a message to the backend.
   async function sendMessage(text = question) {
-    const message = text.trim();
+    const message = String(text ?? "").trim();
 
     if (!message || loading) return;
 
     setMessages((previous) => [
       ...previous,
-      { role: "user", text: message },
+      {
+        role: "user",
+        text: message,
+      },
     ]);
 
     setQuestion("");
@@ -183,37 +214,31 @@ export default function ScholarshipChatbot() {
     setLoading(true);
 
     try {
-      // Search scholarships and request an assistant response together.
-      const [results, reply] = await Promise.all([
-        findScholarships(message),
-        getChatReply(message),
-      ]);
+      const result = await getChatReply(message, profile);
 
-      const answer =
-        reply ||
-        (results.length
-          ? `I found ${results.length} scholarship${
-              results.length === 1 ? "" : "s"
-            } that you can explore below. Check the eligibility criteria and deadlines before applying.`
-          : "I couldn't find any scholarships in the available data.");
+      setProfile(result.profile);
 
       setMessages((previous) => [
         ...previous,
         {
           role: "assistant",
-          text: answer,
-          scholarships: results,
+          text: result.reply,
+          scholarships: result.scholarships,
         },
       ]);
     } catch (error) {
+      console.error("Scholarship chatbot error:", error);
+
       setMessages((previous) => [
         ...previous,
         {
           role: "assistant",
           text:
-            error.message ||
-            "Something went wrong. Please try again.",
-          scholarships: searchDummyScholarships(message),
+            error instanceof Error
+              ? error.message
+              : "Unable to connect to the scholarship assistant. Please try again.",
+          scholarships: [],
+          isError: true,
         },
       ]);
     } finally {
@@ -228,10 +253,12 @@ export default function ScholarshipChatbot() {
         type="button"
         onClick={() => setIsOpen((previous) => !previous)}
         aria-label={
-          isOpen ? "Close scholarship assistant" : "Open scholarship assistant"
+          isOpen
+            ? "Close scholarship assistant"
+            : "Open scholarship assistant"
         }
         aria-expanded={isOpen}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#657A3F] text-white shadow-xl transition hover:scale-105 hover:bg-[#526532]"
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#9BB06D] text-white shadow-xl transition hover:scale-105 hover:bg-[#293127] focus:outline-none focus:ring-4 focus:ring-[#E8EEDB]"
       >
         {isOpen ? <X size={25} /> : <MessageCircle size={25} />}
       </button>
@@ -239,17 +266,17 @@ export default function ScholarshipChatbot() {
       {/* Chat window */}
       {isOpen && (
         <section
-          aria-label="AadiVidya AI scholarship assistant"
+          aria-label="Adivya AI scholarship assistant"
           className="fixed bottom-24 right-4 z-50 flex h-[min(650px,80vh)] w-[min(430px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-[#E8EEDB] bg-white shadow-2xl"
         >
           {/* Header */}
-          <div className="flex items-center gap-2 bg-[#657A3F] p-3 text-white">
+          <div className="flex items-center gap-2 bg-[#293127] p-3 text-white">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15">
               <Bot size={24} />
             </div>
 
             <div className="min-w-0 flex-1">
-              <h2 className="font-bold">AadiVidya AI</h2>
+              <h2 className="font-bold">Adivya AI</h2>
               <p className="text-xs text-[#E8EEDB]">
                 Your scholarship assistant
               </p>
@@ -278,7 +305,7 @@ export default function ScholarshipChatbot() {
 
           {/* Conversation */}
           <div
-            className="flex-1 space-y-4 overflow-y-auto bg-[#FFFDF7] p-3"
+            className="flex-1 space-y-4 overflow-y-auto bg-[#E8EEDB] p-3"
             aria-live="polite"
             aria-busy={loading}
           >
@@ -297,40 +324,55 @@ export default function ScholarshipChatbot() {
                   <div
                     className={`max-w-[92%] whitespace-pre-wrap break-words rounded-2xl px-3 py-3 text-sm leading-6 ${
                       item.role === "user"
-                        ? "rounded-br-sm bg-[#657A3F] text-white"
-                        : "rounded-bl-sm border border-[#E8EEDB] bg-white text-[#293127]"
+                        ? "rounded-br-sm bg-[#9BB06D] text-white"
+                        : item.isError
+                          ? "rounded-bl-sm border border-red-200 bg-red-50 text-red-800"
+                          : "rounded-bl-sm border border-[#E8EEDB] bg-white text-[#293127]"
                     }`}
                   >
                     {item.text}
                   </div>
                 </div>
 
-                {/* Scholarship cards returned for this question */}
+                {/* Scholarship cards returned by the backend */}
                 {item.role === "assistant" &&
                   item.scholarships?.length > 0 && (
                     <div className="space-y-3">
-                      <p className="text-xs font-semibold text-[#657A3F]">
-                        SCHOLARSHIPS FOR YOU ({item.scholarships.length})
+                      <p className="text-xs font-semibold text-[#293127]">
+                        SCHOLARSHIPS FOR YOU (
+                        {item.scholarships.length})
                       </p>
 
-                      {item.scholarships.map((scholarship) => (
-                        <ScholarshipCard
-                          key={scholarship.id}
-                          scholarship={scholarship}
-                        />
-                      ))}
+                      {item.scholarships.map(
+                        (scholarship, scholarshipIndex) => (
+                          <ScholarshipCard
+                            key={
+                              scholarship?.id ??
+                              scholarship?._id ??
+                              scholarship?.scholarship_id ??
+                              scholarshipIndex
+                            }
+                            scholarship={scholarship}
+                          />
+                        )
+                      )}
                     </div>
                   )}
               </div>
             ))}
 
+            {/* Loading indicator */}
             {loading && (
-              <div className="flex items-center gap-2 text-sm text-[#657A3F]">
+              <div
+                className="flex items-center gap-2 text-sm text-[#293127]"
+                role="status"
+              >
                 <Sparkles size={16} className="animate-pulse" />
-                Searching scholarships...
+                Thinking and searching scholarships...
               </div>
             )}
 
+            {/* Suggested questions */}
             {!loading && messages.length === 1 && (
               <div className="space-y-2 pt-1">
                 <p className="text-xs font-semibold text-[#293127]/60">
@@ -342,7 +384,7 @@ export default function ScholarshipChatbot() {
                     key={suggestion}
                     type="button"
                     onClick={() => sendMessage(suggestion)}
-                    className="block w-full rounded-xl border border-[#E8EEDB] bg-white px-3 py-2.5 text-left text-xs font-medium text-[#657A3F] transition hover:bg-[#E8EEDB]"
+                    className="block w-full rounded-xl border border-[#E8EEDB] bg-white px-3 py-2.5 text-left text-xs font-medium text-[#293127] transition hover:bg-[#E8EEDB]"
                   >
                     {suggestion}
                   </button>
@@ -353,7 +395,7 @@ export default function ScholarshipChatbot() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input */}
+          {/* Message input */}
           <form
             onSubmit={(event) => {
               event.preventDefault();
@@ -362,10 +404,15 @@ export default function ScholarshipChatbot() {
             className="flex items-end gap-2 border-t border-[#E8EEDB] bg-white p-3"
           >
             <textarea
+              ref={inputRef}
               value={question}
               onChange={(event) => setQuestion(event.target.value)}
               onKeyDown={(event) => {
-                if (event.key === "Enter" && !event.shiftKey) {
+                if (
+                  event.key === "Enter" &&
+                  !event.shiftKey &&
+                  !event.nativeEvent?.isComposing
+                ) {
                   event.preventDefault();
                   sendMessage();
                 }
@@ -381,7 +428,7 @@ export default function ScholarshipChatbot() {
               type="submit"
               disabled={!question.trim() || loading}
               aria-label="Send message"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#657A3F] text-white transition hover:bg-[#526532] disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#9BB06D] text-white transition hover:bg-[#293127] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Send size={18} />
             </button>
