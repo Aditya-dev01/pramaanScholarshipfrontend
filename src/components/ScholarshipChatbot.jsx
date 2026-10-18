@@ -83,18 +83,6 @@ function getReplyFromData(data) {
 
 /**
  * Connect to Flask POST /chatbot.
- *
- * Expected request:
- * {
- *   message: "Hello",
- *   profile: {
- *     _pending_question: null,
- *     _last_results: [],
- *     _last_offset: 0,
- *     _last_total: 0,
- *     _last_filters: {}
- *   }
- * }
  */
 async function getChatReply(message, profile) {
   let response;
@@ -258,7 +246,7 @@ export default function ScholarshipChatbot() {
             : "Open scholarship assistant"
         }
         aria-expanded={isOpen}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#9BB06D] text-white shadow-xl transition hover:scale-105 hover:bg-[#293127] focus:outline-none focus:ring-4 focus:ring-[#E8EEDB]"
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#657A3F] text-white shadow-xl transition hover:scale-105 hover:bg-[#526332] focus:outline-none focus:ring-4 focus:ring-[#E8EEDB]"
       >
         {isOpen ? <X size={25} /> : <MessageCircle size={25} />}
       </button>
@@ -270,14 +258,14 @@ export default function ScholarshipChatbot() {
           className="fixed bottom-24 right-4 z-50 flex h-[min(650px,80vh)] w-[min(430px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-[#E8EEDB] bg-white shadow-2xl"
         >
           {/* Header */}
-          <div className="flex items-center gap-2 bg-[#293127] p-3 text-white">
+          <div className="flex items-center gap-2 bg-[#657A3F] p-3 text-white">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15">
               <Bot size={24} />
             </div>
 
             <div className="min-w-0 flex-1">
               <h2 className="font-bold">Adivya AI</h2>
-              <p className="text-xs text-[#E8EEDB]">
+              <p className="text-xs text-[#FFF8E7]">
                 Your scholarship assistant
               </p>
             </div>
@@ -305,7 +293,7 @@ export default function ScholarshipChatbot() {
 
           {/* Conversation */}
           <div
-            className="flex-1 space-y-4 overflow-y-auto bg-[#E8EEDB] p-3"
+            className="flex-1 space-y-4 overflow-y-auto bg-[#FFF8E7] p-3"
             aria-live="polite"
             aria-busy={loading}
           >
@@ -324,7 +312,7 @@ export default function ScholarshipChatbot() {
                   <div
                     className={`max-w-[92%] whitespace-pre-wrap break-words rounded-2xl px-3 py-3 text-sm leading-6 ${
                       item.role === "user"
-                        ? "rounded-br-sm bg-[#9BB06D] text-white"
+                        ? "rounded-br-sm bg-[#657A3F] text-white"
                         : item.isError
                           ? "rounded-bl-sm border border-red-200 bg-red-50 text-red-800"
                           : "rounded-bl-sm border border-[#E8EEDB] bg-white text-[#293127]"
@@ -338,7 +326,7 @@ export default function ScholarshipChatbot() {
                 {item.role === "assistant" &&
                   item.scholarships?.length > 0 && (
                     <div className="space-y-3">
-                      <p className="text-xs font-semibold text-[#293127]">
+                      <p className="text-xs font-semibold text-[#657A3F]">
                         SCHOLARSHIPS FOR YOU (
                         {item.scholarships.length})
                       </p>
@@ -364,7 +352,7 @@ export default function ScholarshipChatbot() {
             {/* Loading indicator */}
             {loading && (
               <div
-                className="flex items-center gap-2 text-sm text-[#293127]"
+                className="flex items-center gap-2 text-sm text-[#657A3F]"
                 role="status"
               >
                 <Sparkles size={16} className="animate-pulse" />
@@ -384,7 +372,7 @@ export default function ScholarshipChatbot() {
                     key={suggestion}
                     type="button"
                     onClick={() => sendMessage(suggestion)}
-                    className="block w-full rounded-xl border border-[#E8EEDB] bg-white px-3 py-2.5 text-left text-xs font-medium text-[#293127] transition hover:bg-[#E8EEDB]"
+                    className="block w-full rounded-xl border border-[#E8EEDB] bg-white px-3 py-2.5 text-left text-xs font-medium text-[#657A3F] transition hover:bg-[#E8EEDB]"
                   >
                     {suggestion}
                   </button>
@@ -421,14 +409,14 @@ export default function ScholarshipChatbot() {
               rows={1}
               disabled={loading}
               aria-label="Your scholarship question"
-              className="max-h-28 min-w-0 flex-1 resize-y rounded-xl border border-[#E8EEDB] px-3 py-3 text-sm text-[#293127] outline-none focus:border-[#9BB06D] focus:ring-2 focus:ring-[#E8EEDB] disabled:opacity-60"
+              className="max-h-28 min-w-0 flex-1 resize-y rounded-xl border border-[#E8EEDB] px-3 py-3 text-sm text-[#293127] outline-none focus:border-[#657A3F] focus:ring-2 focus:ring-[#E8EEDB] disabled:opacity-60"
             />
 
             <button
               type="submit"
               disabled={!question.trim() || loading}
               aria-label="Send message"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#9BB06D] text-white transition hover:bg-[#293127] disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#657A3F] text-white transition hover:bg-[#526332] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Send size={18} />
             </button>
