@@ -44,7 +44,7 @@ function Navbar() {
 
           <nav className="hidden items-center gap-7 md:flex">
             <Link
-              to="/scholarships"
+              to="/"
               className="text-sm font-medium text-[#293127]/70 hover:text-[#9BB06D]"
             >
               Home
@@ -65,7 +65,7 @@ function Navbar() {
             </Link>
 
             <Link
-              to="/"
+              to="/scholarships"
               className="text-sm font-medium text-[#293127]/70 hover:text-[#9BB06D]"
             >
               Scholarships
