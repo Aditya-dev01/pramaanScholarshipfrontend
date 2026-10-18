@@ -11,29 +11,24 @@ import { Link } from "react-router-dom";
 import DashboardCard from "../../components/DashboardCard";
 import AnalyticsChart from "../../components/AnalyticsChart";
 import StatusBadge from "../../components/StatusBadge";
-import { getApplications } from "../../data/applications";
+import { fetchApplications } from "../../services/portalApi";
 
 function OfficerDashboard() {
   const [applications, setApplications] =
     useState([]);
 
   useEffect(() => {
-    const refresh = () => {
-      setApplications(getApplications());
+    const refresh = async () => {
+      try {
+        setApplications(await fetchApplications());
+      } catch (error) {
+        console.error("Unable to load applications:", error);
+        setApplications([]);
+      }
     };
 
     refresh();
 
-    window.addEventListener(
-      "applicationsUpdated",
-      refresh
-    );
-
-    return () =>
-      window.removeEventListener(
-        "applicationsUpdated",
-        refresh
-      );
   }, []);
 
   const pending = applications.filter(

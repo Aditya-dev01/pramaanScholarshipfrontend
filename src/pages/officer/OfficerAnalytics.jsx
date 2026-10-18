@@ -1,4 +1,5 @@
 
+import { useEffect, useState } from "react";
 import {
   FileText,
   Clock,
@@ -7,10 +8,21 @@ import {
   TrendingUp,
 } from "lucide-react";
 
-import { getApplications } from "../../data/applications";
+import { fetchApplications } from "../../services/portalApi";
 
 function OfficerAnalytics() {
-  const applications = getApplications();
+  const [applications, setApplications] = useState([]);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setApplications(await fetchApplications());
+      } catch (error) {
+        console.error("Unable to load applications:", error);
+      }
+    };
+    load();
+  }, []);
 
   const totalApplications = applications.length;
 

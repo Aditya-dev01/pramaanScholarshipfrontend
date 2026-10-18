@@ -6,7 +6,7 @@ import ScholarshipGrid from "../../components/ScholarshipGrid";
 import { useScholarships } from "../../context/ScholarshipContext";
 
 function Scholarships() {
-  const { scholarships } = useScholarships();
+  const { scholarships, loading, error } = useScholarships();
   const [search, setSearch] = useState("");
   const [type, setType] = useState("all");
 
@@ -83,10 +83,12 @@ function Scholarships() {
         scholarships
       </div>
 
+      {loading && <p className="text-sm text-[#293127]/60">Loading scholarships...</p>}
+      {error && <p className="rounded-xl bg-[#F7E7DF] p-4 text-sm text-[#B9684B]">{error}</p>}
 
-      <ScholarshipGrid
+      {!loading && !error && <ScholarshipGrid
         scholarships={filteredScholarships}
-      />
+      />}
 
     </div>
   );

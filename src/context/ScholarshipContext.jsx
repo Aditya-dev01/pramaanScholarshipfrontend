@@ -1,30 +1,45 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
-import {
-  addScholarship as saveScholarship,
-  scholarships as initialScholarships,
-} from "../data/scholarships";
+import { fetchScholarships } from "../services/portalApi";
 
 const ScholarshipContext = createContext(null);
 
 export function ScholarshipProvider({ children }) {
-  const [scholarships, setScholarships] = useState(
-    initialScholarships
-  );
+  const [scholarships, setScholarships] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const refreshScholarships = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      setScholarships(await fetchScholarships());
+    } catch (err) {
+      setError(err.message || "Unable to load scholarships.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    refreshScholarships();
+  }, []);
 
   function addScholarship(scholarship) {
-    const savedScholarship = saveScholarship(scholarship);
-    setScholarships([...initialScholarships]);
-    return savedScholarship;
+    // Creation is handled by the create-scholarship endpoint; refresh so the
+    // published database record is the source of truth.
+    refreshScholarships();
+    return scholarship;
   }
 
   return (
     <ScholarshipContext.Provider
-      value={{ scholarships, addScholarship }}
+      value={{ scholarships, addScholarship, loading, error, refreshScholarships }}
     >
       {children}
     </ScholarshipContext.Provider>

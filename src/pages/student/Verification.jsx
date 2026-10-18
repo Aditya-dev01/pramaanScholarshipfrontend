@@ -14,6 +14,7 @@ import {
   updateApplication,
 } from "../../data/applications";
 import { getScholarshipById } from "../../data/scholarships";
+import { createApplication } from "../../services/portalApi";
 
 function Verification() {
   const { applicationId } = useParams();
@@ -21,6 +22,8 @@ function Verification() {
 
   const [application, setApplication] =
     useState(() => getApplication(applicationId));
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
     const refresh = () => {
@@ -52,7 +55,8 @@ function Verification() {
   );
 
   const allVerified =
-    scholarship?.requiredDocuments?.every(
+    !scholarship?.requiredDocuments?.length ||
+    scholarship.requiredDocuments.every(
       (requiredDocument) =>
         application.documents?.some(
           (document) =>
@@ -62,19 +66,31 @@ function Verification() {
     );
 
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!allVerified) {
       return;
     }
 
-    updateApplication(applicationId, {
-      status: "Pending",
-      submittedAt: new Date().toLocaleString(),
-    });
-
-    navigate(
-      `/student/applications/${applicationId}`
-    );
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      await createApplication({
+        scholarship_id: application.scholarshipId,
+        education_level: application.formData?.course,
+        passing_percentage: application.formData?.passingPercentage,
+        income: application.formData?.annualIncome,
+        minority_category: application.formData?.category,
+      });
+      updateApplication(applicationId, {
+        status: "Pending",
+        submittedAt: new Date().toLocaleString(),
+      });
+      navigate("/student/applications");
+    } catch (error) {
+      setSubmitError(error.message || "Unable to submit application.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
 
@@ -208,6 +224,12 @@ function Verification() {
           </div>
         )}
 
+        {submitError && (
+          <div className="rounded-xl bg-[#F7E7DF] p-5 text-sm text-[#B9684B]">
+            {submitError}
+          </div>
+        )}
+
 
         <div className="rounded-2xl border border-[#E8EEDB] bg-[#E8EEDB] p-6">
 
@@ -227,10 +249,10 @@ function Verification() {
 
           <button
             onClick={handleSubmit}
-            disabled={!allVerified}
+            disabled={!allVerified || submitting}
             className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#9BB06D] px-6 py-3.5 font-bold text-white hover:bg-[#657A3F] disabled:cursor-not-allowed disabled:bg-[#E8EEDB] disabled:text-[#293127]/50"
           >
-            Submit Application
+            {submitting ? "Submitting..." : "Submit Application"}
             <ArrowRight size={18} />
           </button>
 

@@ -9,14 +9,15 @@ import {
   getApplications,
   updateApplication,
 } from "../../data/applications";
-import { getScholarshipById } from "../../data/scholarships";
+import { useScholarships } from "../../context/ScholarshipContext";
 
 function ApplicationForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { scholarships, loading } = useScholarships();
 
-  const scholarship = getScholarshipById(id);
+  const scholarship = scholarships.find((item) => item.id === id);
 
   const existing = getApplications().find(
     (application) =>
@@ -36,6 +37,7 @@ function ApplicationForm() {
       course: "",
       year: "",
       category: "",
+      passingPercentage: "",
       annualIncome: "",
       address: "",
       statement: "",
@@ -44,6 +46,10 @@ function ApplicationForm() {
   );
 
   const [error, setError] = useState("");
+
+  if (loading) {
+    return <div className="rounded-2xl bg-white p-10 text-center">Loading scholarship...</div>;
+  }
 
   if (!scholarship) {
     return (
@@ -285,6 +291,16 @@ function ApplicationForm() {
                 "Fourth Year",
                 "Postgraduate",
               ]}
+            />
+
+            <Field
+              label="Latest Passing Percentage"
+              name="passingPercentage"
+              type="number"
+              value={formData.passingPercentage}
+              onChange={handleChange}
+              placeholder="e.g. 78"
+              required
             />
 
             <Field

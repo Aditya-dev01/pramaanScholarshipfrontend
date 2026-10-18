@@ -8,16 +8,18 @@ import {
 } from "lucide-react";
 
 import ScholarshipGrid from "../../components/ScholarshipGrid";
-import { scholarships } from "../../data/scholarships";
 import ScholarshipChatbot from "../../components/ScholarshipChatbot";
+import { useScholarships } from "../../context/ScholarshipContext";
 
 function Home() {
+  const { scholarships, loading, error } = useScholarships();
+
   return (
     <div>
 
       {/* HERO */}
 
-      <section className="overflow-hidden bg-gradient-to-br from-[#657A3F] via-[#9BB06D] to-[#657A3F]">
+      <section className="overflow-hidden bg-linear-to-br from-[#657A3F] via-[#9BB06D] to-[#657A3F]">
 
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
 
@@ -94,12 +96,24 @@ function Home() {
 
             <div className="flex items-center gap-2 text-sm text-[#293127]/70">
               <Search size={17} />
-              {scholarships.length} opportunities available
+              {loading ? "Loading opportunities..." : `${scholarships.length} opportunities available`}
             </div>
 
           </div>
 
-          <ScholarshipGrid scholarships={scholarships} />
+          {loading && (
+            <p className="text-sm text-[#293127]/70">Loading scholarships...</p>
+          )}
+
+          {error && (
+            <p className="rounded-xl bg-[#F7E7DF] p-4 text-sm text-[#B9684B]">
+              {error}
+            </p>
+          )}
+
+          {!loading && !error && (
+            <ScholarshipGrid scholarships={scholarships} />
+          )}
 
         </div>
       </section>

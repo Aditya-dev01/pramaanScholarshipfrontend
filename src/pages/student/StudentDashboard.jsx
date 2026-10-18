@@ -12,36 +12,25 @@ import { Link } from "react-router-dom";
 import DashboardCard from "../../components/DashboardCard";
 import ApplicationCard from "../../components/ApplicationCard";
 import { useAuth } from "../../context/AuthContext";
-import { getApplications } from "../../data/applications";
+import { fetchApplications } from "../../services/portalApi";
 
 function StudentDashboard() {
   const { user } = useAuth();
   const [applications, setApplications] = useState([]);
 
   useEffect(() => {
-    const refresh = () => {
-      const all = getApplications();
-
-      setApplications(
-        all.filter(
-          (app) => app.studentEmail === user.email
-        )
-      );
+    const refresh = async () => {
+      try {
+        setApplications(await fetchApplications());
+      } catch (error) {
+        console.error("Unable to load applications:", error);
+        setApplications([]);
+      }
     };
 
     refresh();
 
-    window.addEventListener(
-      "applicationsUpdated",
-      refresh
-    );
-
-    return () =>
-      window.removeEventListener(
-        "applicationsUpdated",
-        refresh
-      );
-  }, [user.email]);
+  }, []);
 
   const pending = applications.filter(
     (app) =>

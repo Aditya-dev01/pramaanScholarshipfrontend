@@ -1,15 +1,20 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { CheckCircle, XCircle } from "lucide-react";
 import Stepper from "../../components/Stepper";
-import { scholarships } from "../../data/scholarships";
+import { useScholarships } from "../../context/ScholarshipContext";
 
 export default function Eligibility() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { scholarships, loading } = useScholarships();
 
   const scholarship = scholarships.find(
-    (item) => item.id === Number(id)
+    (item) => item.id === id
   );
+
+  if (loading) {
+    return <h2>Loading scholarship...</h2>;
+  }
 
   if (!scholarship) {
     return <h2>Scholarship not found.</h2>;
@@ -47,7 +52,7 @@ export default function Eligibility() {
 
         <p className="text-[#293127]/60">
           Check whether you meet the requirements for
-          <strong className="text-[#293127]"> {scholarship.name}</strong>.
+          <strong className="text-[#293127]"> {scholarship.title}</strong>.
         </p>
 
         <div className="eligibility-list">

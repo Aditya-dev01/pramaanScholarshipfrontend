@@ -3,7 +3,7 @@ import { Search, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import StatusBadge from "../../components/StatusBadge";
-import { getApplications } from "../../data/applications";
+import { fetchApplications } from "../../services/portalApi";
 
 function Applications() {
   const [applications, setApplications] =
@@ -13,22 +13,17 @@ function Applications() {
   const [status, setStatus] = useState("all");
 
   useEffect(() => {
-    const refresh = () => {
-      setApplications(getApplications());
+    const refresh = async () => {
+      try {
+        setApplications(await fetchApplications());
+      } catch (error) {
+        console.error("Unable to load applications:", error);
+        setApplications([]);
+      }
     };
 
     refresh();
 
-    window.addEventListener(
-      "applicationsUpdated",
-      refresh
-    );
-
-    return () =>
-      window.removeEventListener(
-        "applicationsUpdated",
-        refresh
-      );
   }, []);
 
   const filtered = useMemo(() => {

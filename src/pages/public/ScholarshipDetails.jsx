@@ -8,11 +8,16 @@ import {
   FileText,
 } from "lucide-react";
 
-import { getScholarshipById } from "../../data/scholarships";
+import { useScholarships } from "../../context/ScholarshipContext";
 
 function ScholarshipDetails() {
   const { id } = useParams();
-  const scholarship = getScholarshipById(id);
+  const { scholarships, loading } = useScholarships();
+  const scholarship = scholarships.find((item) => item.id === id);
+
+  if (loading) {
+    return <div className="mx-auto max-w-4xl px-4 py-20 text-center">Loading scholarship...</div>;
+  }
 
   if (!scholarship) {
     return (

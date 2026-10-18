@@ -2,37 +2,27 @@ import { useEffect, useState } from "react";
 import { FileText } from "lucide-react";
 
 import ApplicationCard from "../../components/ApplicationCard";
-import { useAuth } from "../../context/AuthContext";
-import { getApplications } from "../../data/applications";
+import { fetchApplications } from "../../services/portalApi";
 
 function MyApplications() {
-  const { user } = useAuth();
   const [applications, setApplications] =
     useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const refresh = () => {
-      setApplications(
-        getApplications().filter(
-          (application) =>
-            application.studentEmail === user.email
-        )
-      );
+    const load = async () => {
+      setLoading(true);
+      try {
+        setApplications(await fetchApplications());
+      } catch (err) {
+        setError(err.message || "Unable to load applications.");
+      } finally {
+        setLoading(false);
+      }
     };
-
-    refresh();
-
-    window.addEventListener(
-      "applicationsUpdated",
-      refresh
-    );
-
-    return () =>
-      window.removeEventListener(
-        "applicationsUpdated",
-        refresh
-      );
-  }, [user.email]);
+    load();
+  }, []);
 
   return (
     <div className="mx-auto max-w-6xl">
@@ -54,7 +44,7 @@ function MyApplications() {
       </div>
 
 
-      {applications.length ? (
+      {loading ? <p className="text-sm text-[#293127]/60">Loading applications...</p> : error ? <p className="rounded-xl bg-[#F7E7DF] p-4 text-sm text-[#B9684B]">{error}</p> : applications.length ? (
         <div className="space-y-4">
 
           {applications.map(
