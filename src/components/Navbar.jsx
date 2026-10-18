@@ -44,7 +44,7 @@ function Navbar() {
 
           <nav className="hidden items-center gap-7 md:flex">
             <Link
-              to="/"
+              to="/scholarships"
               className="text-sm font-medium text-[#293127]/70 hover:text-[#9BB06D]"
             >
               Home
@@ -149,7 +149,7 @@ function Navbar() {
               </Link>
 
               <Link
-                to="/scholarships/sch-001"
+                to="/scholarships"
                 onClick={closeMenu}
                 className="rounded-lg px-4 py-3 text-sm font-medium hover:bg-[#E8EEDB]"
               >

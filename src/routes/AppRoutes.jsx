@@ -79,6 +79,8 @@ function AppRoutes() {
 
         <Route path="/" element={<Home />} />
 
+        <Route path="/scholarships" element={<Scholarships />} />
+
         <Route
           path="/scholarships/:id"
           element={<ScholarshipDetails />}
