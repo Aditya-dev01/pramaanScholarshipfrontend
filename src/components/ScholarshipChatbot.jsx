@@ -9,21 +9,23 @@ import {
   RotateCcw,
 } from "lucide-react";
 
-import ScholarshipCard from "./ScholarshipCard";
-
 // Backend API URL
 const API_URL = (
   import.meta.env.VITE_API_URL ||
   "https://scholarship-management-system-0hfy.onrender.com"
 ).replace(/\/+$/, "");
 
+// Local storage key
+const PROFILE_STORAGE_KEY = "adivya_chatbot_profile";
+
+// Suggested questions
 const suggestions = [
   "Find scholarships for me",
   "What documents are required?",
   "How do I check my eligibility?",
 ];
 
-// Required chatbot profile fields
+// Default chatbot profile
 const createInitialProfile = () => ({
   _pending_question: null,
   _last_results: [],
@@ -32,29 +34,69 @@ const createInitialProfile = () => ({
   _last_filters: {},
 });
 
+// Safely read the saved profile
+function getSavedProfile() {
+  try {
+    const saved = localStorage.getItem(PROFILE_STORAGE_KEY);
+
+    if (!saved) {
+      return createInitialProfile();
+    }
+
+    const parsed = JSON.parse(saved);
+
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return createInitialProfile();
+    }
+
+    return {
+      ...createInitialProfile(),
+      ...parsed,
+    };
+  } catch (error) {
+    console.error("Could not read chatbot profile:", error);
+    return createInitialProfile();
+  }
+}
+
+// Save the updated profile
+function saveProfile(profile) {
+  try {
+    localStorage.setItem(
+      PROFILE_STORAGE_KEY,
+      JSON.stringify(profile)
+    );
+  } catch (error) {
+    console.error("Could not save chatbot profile:", error);
+  }
+}
+
+// Reset saved chatbot state
+function resetSavedProfile() {
+  const initialProfile = createInitialProfile();
+
+  try {
+    localStorage.setItem(
+      PROFILE_STORAGE_KEY,
+      JSON.stringify(initialProfile)
+    );
+  } catch (error) {
+    console.error("Could not reset chatbot profile:", error);
+  }
+
+  return initialProfile;
+}
+
+// Initial assistant message
 const createInitialMessages = () => [
   {
     role: "assistant",
     text: "Hello! Welcome to Adivya. 🎓 Ask me about scholarships, eligibility, application documents, or financial assistance.",
-    scholarships: [],
   },
 ];
 
-// Extract scholarship results from different response formats
-function getScholarships(data, fallbackProfile) {
-  const candidates = [
-    data?.scholarships,
-    data?.results,
-    data?.data?.scholarships,
-    data?.data?.results,
-    data?.profile?._last_results,
-    fallbackProfile?._last_results,
-  ];
-
-  return candidates.find(Array.isArray) || [];
-}
-
-// Extract a reply from a plain string or JSON object
+// Extract the actual assistant response.
+// chat_response has priority over generic message fields.
 function getReplyFromData(data) {
   if (typeof data === "string" || typeof data === "number") {
     return String(data);
@@ -64,26 +106,79 @@ function getReplyFromData(data) {
     return "";
   }
 
-  const reply =
-    data.reply ??
-    data.response ??
-    data.answer ??
-    data.message ??
-    data.msg ??
-    data.data?.reply ??
-    data.data?.response ??
-    data.data?.message;
+  const candidates = [
+    data?.details?.chat_response,
+    data?.chat_response,
+    data?.data?.details?.chat_response,
+    data?.data?.chat_response,
 
-  if (typeof reply === "string" || typeof reply === "number") {
-    return String(reply);
+    data?.reply,
+    data?.response,
+    data?.answer,
+    data?.data?.reply,
+    data?.data?.response,
+    data?.data?.answer,
+
+    data?.details?.reply,
+    data?.details?.response,
+    data?.details?.answer,
+  ];
+
+  const reply = candidates.find(
+    (value) =>
+      typeof value === "string" &&
+      value.trim().length > 0
+  );
+
+  if (reply) {
+    return reply;
   }
 
-  return "";
+  // Use generic messages only as a final fallback.
+  const fallback = [
+    data?.message,
+    data?.msg,
+    data?.data?.message,
+    data?.details?.message,
+    data?.details?.msg,
+  ].find(
+    (value) =>
+      typeof value === "string" &&
+      value.trim().length > 0
+  );
+
+  return fallback || "";
 }
 
-/**
- * Connect to Flask POST /chatbot.
- */
+// Extract the updated profile from the backend response
+function getUpdatedProfile(data, currentProfile) {
+  const details = data?.details;
+
+  const updatedProfile =
+    details?.updated_profile ??
+    data?.updated_profile ??
+    details?.profile ??
+    data?.profile ??
+    data?.data?.details?.updated_profile ??
+    data?.data?.updated_profile ??
+    data?.data?.profile;
+
+  if (
+    updatedProfile &&
+    typeof updatedProfile === "object" &&
+    !Array.isArray(updatedProfile)
+  ) {
+    return {
+      ...createInitialProfile(),
+      ...(currentProfile || {}),
+      ...updatedProfile,
+    };
+  }
+
+  return currentProfile || createInitialProfile();
+}
+
+// Connect to Flask POST /chatbot
 async function getChatReply(message, profile) {
   let response;
 
@@ -99,22 +194,20 @@ async function getChatReply(message, profile) {
         profile: profile ?? createInitialProfile(),
       }),
     });
-  } catch {
+  } catch (error) {
     throw new Error(
       "Could not connect to the chatbot server. Check your internet connection and confirm that the backend is running."
     );
   }
 
-  // Read as text first to support both plain text and JSON responses.
   const raw = await response.text();
-
   let data = raw;
 
   if (raw.trim()) {
     try {
       data = JSON.parse(raw);
     } catch {
-      // The server may return plain text instead of JSON.
+      // Support plain-text backend responses.
       data = raw;
     }
   } else {
@@ -130,6 +223,7 @@ async function getChatReply(message, profile) {
     );
   }
 
+  // Read chat_response before generic message fields.
   const reply = getReplyFromData(data).trim();
 
   if (!reply) {
@@ -138,19 +232,11 @@ async function getChatReply(message, profile) {
     );
   }
 
-  const updatedProfile =
-    data &&
-    typeof data === "object" &&
-    !Array.isArray(data) &&
-    data.profile &&
-    typeof data.profile === "object"
-      ? data.profile
-      : profile ?? createInitialProfile();
+  const updatedProfile = getUpdatedProfile(data, profile);
 
   return {
     reply,
     profile: updatedProfile,
-    scholarships: getScholarships(data, updatedProfile),
   };
 }
 
@@ -159,12 +245,14 @@ export default function ScholarshipChatbot() {
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState(createInitialMessages);
-  const [profile, setProfile] = useState(createInitialProfile);
+
+  // Restore the latest backend profile from localStorage.
+  const [profile, setProfile] = useState(getSavedProfile);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Scroll to the latest message when the conversation changes.
+  // Scroll to the latest message.
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -172,15 +260,29 @@ export default function ScholarshipChatbot() {
     });
   }, [messages, loading]);
 
-  // Reset the conversation.
+  // Start a fresh conversation and reset the profile.
   function handleNewChat() {
     if (loading) return;
 
+    const initialProfile = resetSavedProfile();
+
     setMessages(createInitialMessages());
     setQuestion("");
-    setProfile(createInitialProfile());
+    setProfile(initialProfile);
 
     inputRef.current?.focus();
+  }
+
+  // Close the chatbot and reset its conversation state.
+  function handleCloseChat() {
+    if (loading) return;
+
+    const initialProfile = resetSavedProfile();
+
+    setProfile(initialProfile);
+    setMessages(createInitialMessages());
+    setQuestion("");
+    setIsOpen(false);
   }
 
   // Send a message to the backend.
@@ -188,6 +290,9 @@ export default function ScholarshipChatbot() {
     const message = String(text ?? "").trim();
 
     if (!message || loading) return;
+
+    // Capture the current profile for this request.
+    const currentProfile = profile;
 
     setMessages((previous) => [
       ...previous,
@@ -202,16 +307,18 @@ export default function ScholarshipChatbot() {
     setLoading(true);
 
     try {
-      const result = await getChatReply(message, profile);
+      const result = await getChatReply(message, currentProfile);
 
+      // Save the profile returned by the backend.
+      saveProfile(result.profile);
       setProfile(result.profile);
 
+      // Display only the assistant's text response.
       setMessages((previous) => [
         ...previous,
         {
           role: "assistant",
           text: result.reply,
-          scholarships: result.scholarships,
         },
       ]);
     } catch (error) {
@@ -225,7 +332,6 @@ export default function ScholarshipChatbot() {
             error instanceof Error
               ? error.message
               : "Unable to connect to the scholarship assistant. Please try again.",
-          scholarships: [],
           isError: true,
         },
       ]);
@@ -239,7 +345,13 @@ export default function ScholarshipChatbot() {
       {/* Floating chatbot button */}
       <button
         type="button"
-        onClick={() => setIsOpen((previous) => !previous)}
+        onClick={() => {
+          if (isOpen) {
+            handleCloseChat();
+          } else {
+            setIsOpen(true);
+          }
+        }}
         aria-label={
           isOpen
             ? "Close scholarship assistant"
@@ -283,15 +395,16 @@ export default function ScholarshipChatbot() {
 
             <button
               type="button"
-              onClick={() => setIsOpen(false)}
+              onClick={handleCloseChat}
+              disabled={loading}
               aria-label="Close chatbot"
-              className="shrink-0 rounded-lg p-2 transition hover:bg-white/10"
+              className="shrink-0 rounded-lg p-2 transition hover:bg-white/10 disabled:opacity-50"
             >
               <X size={20} />
             </button>
           </div>
 
-          {/* Conversation */}
+          {/* Conversation: text messages only */}
           <div
             className="flex-1 space-y-4 overflow-y-auto bg-[#FFF8E7] p-3"
             aria-live="polite"
@@ -321,42 +434,17 @@ export default function ScholarshipChatbot() {
                     {item.text}
                   </div>
                 </div>
-
-                {/* Scholarship cards returned by the backend */}
-                {item.role === "assistant" &&
-                  item.scholarships?.length > 0 && (
-                    <div className="space-y-3">
-                      <p className="text-xs font-semibold text-[#657A3F]">
-                        SCHOLARSHIPS FOR YOU (
-                        {item.scholarships.length})
-                      </p>
-
-                      {item.scholarships.map(
-                        (scholarship, scholarshipIndex) => (
-                          <ScholarshipCard
-                            key={
-                              scholarship?.id ??
-                              scholarship?._id ??
-                              scholarship?.scholarship_id ??
-                              scholarshipIndex
-                            }
-                            scholarship={scholarship}
-                          />
-                        )
-                      )}
-                    </div>
-                  )}
               </div>
             ))}
 
             {/* Loading indicator */}
             {loading && (
               <div
-                className="flex items-center gap-2 text-sm text-[#657A3F]"
+                className="flex items-center gap-2 text-sm text-[#526332]"
                 role="status"
               >
                 <Sparkles size={16} className="animate-pulse" />
-                Thinking and searching scholarships...
+                Thinking and preparing your response...
               </div>
             )}
 
@@ -372,7 +460,7 @@ export default function ScholarshipChatbot() {
                     key={suggestion}
                     type="button"
                     onClick={() => sendMessage(suggestion)}
-                    className="block w-full rounded-xl border border-[#E8EEDB] bg-white px-3 py-2.5 text-left text-xs font-medium text-[#657A3F] transition hover:bg-[#E8EEDB]"
+                    className="block w-full rounded-xl border border-[#E8EEDB] bg-white px-3 py-2.5 text-left text-xs font-medium text-[#526332] transition hover:bg-[#E8EEDB]"
                   >
                     {suggestion}
                   </button>
@@ -422,7 +510,7 @@ export default function ScholarshipChatbot() {
             </button>
           </form>
 
-          <p className="bg-white px-3 pb-3 text-center text-[10px] text-slate-500">
+          <p className="bg-white px-3 pb-3 text-center text-[10px] text-[#293127]/60">
             Verify scholarship requirements with the official provider.
           </p>
         </section>
