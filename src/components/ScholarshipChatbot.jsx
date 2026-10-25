@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import {
   Bot,
@@ -45,7 +44,11 @@ function getSavedProfile() {
 
     const parsed = JSON.parse(saved);
 
-    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    if (
+      !parsed ||
+      typeof parsed !== "object" ||
+      Array.isArray(parsed)
+    ) {
       return createInitialProfile();
     }
 
@@ -74,16 +77,7 @@ function saveProfile(profile) {
 // Reset saved chatbot state
 function resetSavedProfile() {
   const initialProfile = createInitialProfile();
-
-  try {
-    localStorage.setItem(
-      PROFILE_STORAGE_KEY,
-      JSON.stringify(initialProfile)
-    );
-  } catch (error) {
-    console.error("Could not reset chatbot profile:", error);
-  }
-
+  saveProfile(initialProfile);
   return initialProfile;
 }
 
@@ -96,7 +90,7 @@ const createInitialMessages = () => [
 ];
 
 // Extract the actual assistant response.
-// chat_response has priority over generic message fields.
+// Your backend uses details.chat_response_msg.
 function getReplyFromData(data) {
   if (typeof data === "string" || typeof data === "number") {
     return String(data);
@@ -107,21 +101,26 @@ function getReplyFromData(data) {
   }
 
   const candidates = [
+    data?.details?.chat_response_msg,
+    data?.details?.chat_response_followup,
     data?.details?.chat_response,
+    data?.chat_response_msg,
     data?.chat_response,
+    data?.data?.details?.chat_response_msg,
+    data?.data?.details?.chat_response_followup,
     data?.data?.details?.chat_response,
+    data?.data?.chat_response_msg,
     data?.data?.chat_response,
 
+    data?.details?.reply,
+    data?.details?.response,
+    data?.details?.answer,
     data?.reply,
     data?.response,
     data?.answer,
     data?.data?.reply,
     data?.data?.response,
     data?.data?.answer,
-
-    data?.details?.reply,
-    data?.details?.response,
-    data?.details?.answer,
   ];
 
   const reply = candidates.find(
@@ -131,33 +130,60 @@ function getReplyFromData(data) {
   );
 
   if (reply) {
-    return reply;
+    return reply.trim();
   }
 
-  // Use generic messages only as a final fallback.
-  const fallback = [
-    data?.message,
-    data?.msg,
-    data?.data?.message,
+  // Generic API messages are a last resort.
+  const fallbackCandidates = [
     data?.details?.message,
     data?.details?.msg,
-  ].find(
+    data?.message,
+    data?.msg,
+    data?.data?.details?.message,
+    data?.data?.details?.msg,
+    data?.data?.message,
+    data?.data?.msg,
+  ];
+
+  const fallback = fallbackCandidates.find(
     (value) =>
       typeof value === "string" &&
       value.trim().length > 0
   );
 
-  return fallback || "";
+  return fallback ? fallback.trim() : "";
 }
 
-// Extract the updated profile from the backend response
-function getUpdatedProfile(data, currentProfile) {
-  const details = data?.details;
+// Extract scholarships from the backend response
+function getScholarshipsFromData(data) {
+  const scholarships =
+    data?.details?.chat_response_scholarships ??
+    data?.chat_response_scholarships ??
+    data?.data?.details?.chat_response_scholarships ??
+    [];
 
+  return Array.isArray(scholarships) ? scholarships : [];
+}
+
+// Extract the next question from the backend response
+function getFollowupFromData(data) {
+  const followup =
+    data?.details?.chat_response_followup ??
+    data?.chat_response_followup ??
+    data?.data?.details?.chat_response_followup ??
+    "";
+
+  return typeof followup === "string"
+    ? followup.trim()
+    : "";
+}
+
+// Extract the updated profile
+function getUpdatedProfile(data, currentProfile) {
   const updatedProfile =
-    details?.updated_profile ??
+    data?.details?.updated_profile ??
     data?.updated_profile ??
-    details?.profile ??
+    data?.details?.profile ??
     data?.profile ??
     data?.data?.details?.updated_profile ??
     data?.data?.updated_profile ??
@@ -176,6 +202,38 @@ function getUpdatedProfile(data, currentProfile) {
   }
 
   return currentProfile || createInitialProfile();
+}
+
+// Format scholarship amounts in Indian currency
+function formatAmount(amount) {
+  if (
+    amount === null ||
+    amount === undefined ||
+    amount === ""
+  ) {
+    return "Not specified";
+  }
+
+  const value = Number(amount);
+
+  if (!Number.isFinite(value)) {
+    return "Not specified";
+  }
+
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+// Format nullable values
+function displayValue(value) {
+  if (value === null || value === undefined || value === "") {
+    return "Not specified";
+  }
+
+  return String(value);
 }
 
 // Connect to Flask POST /chatbot
@@ -223,8 +281,8 @@ async function getChatReply(message, profile) {
     );
   }
 
-  // Read chat_response before generic message fields.
-  const reply = getReplyFromData(data).trim();
+  // Extract the actual chatbot response, not the generic API message.
+  const reply = getReplyFromData(data);
 
   if (!reply) {
     throw new Error(
@@ -232,11 +290,11 @@ async function getChatReply(message, profile) {
     );
   }
 
-  const updatedProfile = getUpdatedProfile(data, profile);
-
   return {
     reply,
-    profile: updatedProfile,
+    followup: getFollowupFromData(data),
+    scholarships: getScholarshipsFromData(data),
+    profile: getUpdatedProfile(data, profile),
   };
 }
 
@@ -245,14 +303,12 @@ export default function ScholarshipChatbot() {
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState(createInitialMessages);
-
-  // Restore the latest backend profile from localStorage.
   const [profile, setProfile] = useState(getSavedProfile);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Scroll to the latest message.
+  // Scroll to the latest message
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -260,7 +316,7 @@ export default function ScholarshipChatbot() {
     });
   }, [messages, loading]);
 
-  // Start a fresh conversation and reset the profile.
+  // Start a fresh conversation
   function handleNewChat() {
     if (loading) return;
 
@@ -273,7 +329,7 @@ export default function ScholarshipChatbot() {
     inputRef.current?.focus();
   }
 
-  // Close the chatbot and reset its conversation state.
+  // Close the chatbot and reset the conversation
   function handleCloseChat() {
     if (loading) return;
 
@@ -285,13 +341,12 @@ export default function ScholarshipChatbot() {
     setIsOpen(false);
   }
 
-  // Send a message to the backend.
+  // Send a message to the backend
   async function sendMessage(text = question) {
     const message = String(text ?? "").trim();
 
     if (!message || loading) return;
 
-    // Capture the current profile for this request.
     const currentProfile = profile;
 
     setMessages((previous) => [
@@ -307,18 +362,23 @@ export default function ScholarshipChatbot() {
     setLoading(true);
 
     try {
-      const result = await getChatReply(message, currentProfile);
+      const result = await getChatReply(
+        message,
+        currentProfile
+      );
 
-      // Save the profile returned by the backend.
+      // Save the latest profile returned by the backend
       saveProfile(result.profile);
       setProfile(result.profile);
 
-      // Display only the assistant's text response.
+      // Display the summary, scholarship results, and follow-up
       setMessages((previous) => [
         ...previous,
         {
           role: "assistant",
           text: result.reply,
+          followup: result.followup,
+          scholarships: result.scholarships,
         },
       ]);
     } catch (error) {
@@ -404,7 +464,7 @@ export default function ScholarshipChatbot() {
             </button>
           </div>
 
-          {/* Conversation: text messages only */}
+          {/* Conversation */}
           <div
             className="flex-1 space-y-4 overflow-y-auto bg-[#FFF8E7] p-3"
             aria-live="polite"
@@ -434,6 +494,150 @@ export default function ScholarshipChatbot() {
                     {item.text}
                   </div>
                 </div>
+
+                {/* Actual scholarships returned by Flask */}
+                {item.role === "assistant" &&
+                  Array.isArray(item.scholarships) &&
+                  item.scholarships.length > 0 && (
+                    <div className="space-y-3">
+                      {item.scholarships.map(
+                        (scholarship, scholarshipIndex) => (
+                          <article
+                            key={
+                              scholarship.scholarship_id ??
+                              `${scholarship.name}-${scholarshipIndex}`
+                            }
+                            className="overflow-hidden rounded-xl border border-[#E8EEDB] bg-white shadow-sm"
+                          >
+                            <div className="border-b border-[#E8EEDB] bg-[#E8EEDB]/60 p-3">
+                              <h3 className="text-sm font-bold text-[#526332]">
+                                {scholarship.name ||
+                                  "Scholarship"}
+                              </h3>
+
+                              <p className="mt-2 text-xl font-bold text-[#293127]">
+                                {formatAmount(
+                                  scholarship.benefit_amount
+                                )}
+                              </p>
+
+                              <p className="text-xs text-[#293127]/60">
+                                Scholarship benefit
+                              </p>
+                            </div>
+
+                            <div className="space-y-2 p-3 text-xs text-[#293127]">
+                              <div className="flex justify-between gap-3">
+                                <span className="font-semibold">
+                                  Minimum education
+                                </span>
+                                <span className="text-right">
+                                  {displayValue(
+                                    scholarship.min_education_level
+                                  )}
+                                </span>
+                              </div>
+
+                              <div className="flex justify-between gap-3">
+                                <span className="font-semibold">
+                                  Maximum age
+                                </span>
+                                <span>
+                                  {displayValue(
+                                    scholarship.max_age
+                                  )}
+                                </span>
+                              </div>
+
+                              <div className="flex justify-between gap-3">
+                                <span className="font-semibold">
+                                  Income limit
+                                </span>
+                                <span className="text-right">
+                                  {formatAmount(
+                                    scholarship.max_income
+                                  )}
+                                </span>
+                              </div>
+
+                              <div className="flex justify-between gap-3">
+                                <span className="font-semibold">
+                                  Minimum marks
+                                </span>
+                                <span>
+                                  {scholarship.min_passing_percentage != null
+                                    ? `${scholarship.min_passing_percentage}%`
+                                    : "Not specified"}
+                                </span>
+                              </div>
+
+                              {scholarship.deadline && (
+                                <div className="flex justify-between gap-3">
+                                  <span className="font-semibold">
+                                    Deadline
+                                  </span>
+                                  <span>
+                                    {scholarship.deadline}
+                                  </span>
+                                </div>
+                              )}
+
+                              {scholarship.minority_category_req && (
+                                <div className="flex justify-between gap-3">
+                                  <span className="font-semibold">
+                                    Required category
+                                  </span>
+                                  <span>
+                                    {scholarship.minority_category_req}
+                                  </span>
+                                </div>
+                              )}
+
+                              <div className="flex justify-between gap-3">
+                                <span className="font-semibold">
+                                  Status
+                                </span>
+                                <span className="rounded-full bg-[#E8EEDB] px-2 py-1 font-semibold capitalize text-[#526332]">
+                                  {scholarship.status ||
+                                    "Possible"}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Eligibility reasons from the backend */}
+                            {Array.isArray(scholarship.reasons) &&
+                              scholarship.reasons.length > 0 && (
+                                <div className="mx-3 mb-3 rounded-lg border border-[#E8EEDB] p-3">
+                                  <h4 className="mb-2 text-xs font-bold text-[#526332]">
+                                    Eligibility information
+                                  </h4>
+
+                                  <ul className="list-inside list-disc space-y-1 text-xs leading-5 text-[#293127]">
+                                    {scholarship.reasons.map(
+                                      (reason, reasonIndex) => (
+                                        <li
+                                          key={`${scholarship.scholarship_id ?? scholarshipIndex}-reason-${reasonIndex}`}
+                                        >
+                                          {reason}
+                                        </li>
+                                      )
+                                    )}
+                                  </ul>
+                                </div>
+                              )}
+                          </article>
+                        )
+                      )}
+                    </div>
+                  )}
+
+                {/* Follow-up question from the backend */}
+                {item.role === "assistant" &&
+                  item.followup && (
+                    <div className="max-w-[92%] rounded-xl border border-[#E8EEDB] bg-[#E8EEDB] p-3 text-sm leading-6 text-[#293127]">
+                      {item.followup}
+                    </div>
+                  )}
               </div>
             ))}
 
@@ -443,7 +647,10 @@ export default function ScholarshipChatbot() {
                 className="flex items-center gap-2 text-sm text-[#526332]"
                 role="status"
               >
-                <Sparkles size={16} className="animate-pulse" />
+                <Sparkles
+                  size={16}
+                  className="animate-pulse"
+                />
                 Thinking and preparing your response...
               </div>
             )}
@@ -482,7 +689,9 @@ export default function ScholarshipChatbot() {
             <textarea
               ref={inputRef}
               value={question}
-              onChange={(event) => setQuestion(event.target.value)}
+              onChange={(event) =>
+                setQuestion(event.target.value)
+              }
               onKeyDown={(event) => {
                 if (
                   event.key === "Enter" &&
