@@ -360,6 +360,7 @@ function AddScholarship() {
               <option value="" disabled>
                 Select a category
               </option>
+              <option value="NA">Not Applicable</option>
               <option value="Muslim">Muslim</option>
               <option value="Christian">Christian</option>
               <option value="Sikh">Sikh</option>
