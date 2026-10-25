@@ -72,5 +72,9 @@ export async function fetchApplications({ offset = 0, limit = 20 } = {}) {
 
 export async function createApplication(application) {
   const data = await post("/createApplication", application, { authenticated: true });
-  return normaliseApplication(data.details?.row ?? {});
+  const applicationId = data.details?.application_id;
+  if (applicationId == null) {
+    throw new Error("Application was created, but the server did not return its ID.");
+  }
+  return { id: String(applicationId) };
 }

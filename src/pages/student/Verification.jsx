@@ -9,10 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import Stepper from "../../components/Stepper";
 import StatusBadge from "../../components/StatusBadge";
-import {
-  getApplication,
-  updateApplication,
-} from "../../data/applications";
+import { getApplication } from "../../data/applications";
 import { getScholarshipById } from "../../data/scholarships";
 import { createApplication } from "../../services/portalApi";
 
@@ -81,10 +78,9 @@ function Verification() {
         income: application.formData?.annualIncome,
         minority_category: application.formData?.category,
       });
-      updateApplication(applicationId, {
-        status: "Pending",
-        submittedAt: new Date().toLocaleString(),
-      });
+
+      // The database is now the source of truth. My Applications reloads the
+      // JWT-scoped list from /applications after navigation.
       navigate("/student/applications");
     } catch (error) {
       setSubmitError(error.message || "Unable to submit application.");
