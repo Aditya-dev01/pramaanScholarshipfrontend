@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AlertCircle, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 
 import Stepper from "../../components/Stepper";
 import { useAuth } from "../../context/AuthContext";
@@ -10,6 +10,14 @@ import {
   updateApplication,
 } from "../../data/applications";
 import { useScholarships } from "../../context/ScholarshipContext";
+
+const nullableConstraintFields = new Set([
+  "gender",
+  "category",
+  "year",
+  "passingPercentage",
+  "annualIncome",
+]);
 
 function ApplicationForm() {
   const { id } = useParams();
@@ -26,26 +34,31 @@ function ApplicationForm() {
       application.status === "Draft"
   );
 
-  const [formData, setFormData] = useState(
-    existing?.formData || {
+  const [formData, setFormData] = useState(() => {
+    const initialData = existing?.formData || {
       fullName: user.name || "",
       email: user.email || "",
       phone: "",
       dob: "",
-      gender: "",
+      gender: null,
       institution: "",
       course: "",
-      year: "",
-      category: "",
-      passingPercentage: "",
-      annualIncome: "",
+      year: null,
+      category: null,
+      passingPercentage: null,
+      annualIncome: null,
       address: "",
       statement: "",
       eligibilityConfirmed: false,
-    }
-  );
+    };
 
-  const [error, setError] = useState("");
+    return Object.fromEntries(
+      Object.entries(initialData).map(([field, value]) => [
+        field,
+        nullableConstraintFields.has(field) && value === "" ? null : value,
+      ])
+    );
+  });
 
   if (loading) {
     return <div className="rounded-2xl bg-white p-10 text-center">Loading scholarship...</div>;
@@ -68,21 +81,14 @@ function ApplicationForm() {
       [name]:
         type === "checkbox"
           ? checked
-          : value,
+          : nullableConstraintFields.has(name) && value === ""
+            ? null
+            : value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!formData.eligibilityConfirmed) {
-      setError(
-        "Please confirm that you meet the eligibility criteria."
-      );
-      return;
-    }
-
-    setError("");
 
     if (existing) {
       updateApplication(existing.id, {
@@ -162,17 +168,6 @@ function ApplicationForm() {
       </div>
 
 
-      {error && (
-        <div className="mb-6 flex items-start gap-3 rounded-xl bg-[#F7E7DF] p-4 text-sm text-[#B9684B]">
-          <AlertCircle
-            size={18}
-            className="mt-0.5"
-          />
-          {error}
-        </div>
-      )}
-
-
       <form
         onSubmit={handleSubmit}
         className="space-y-7"
@@ -193,7 +188,6 @@ function ApplicationForm() {
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
-              required
             />
 
             <Field
@@ -202,7 +196,6 @@ function ApplicationForm() {
               type="email"
               value={formData.email}
               onChange={handleChange}
-              required
             />
 
             <Field
@@ -210,7 +203,6 @@ function ApplicationForm() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              required
             />
 
             <Field
@@ -219,13 +211,12 @@ function ApplicationForm() {
               type="date"
               value={formData.dob}
               onChange={handleChange}
-              required
             />
 
             <SelectField
               label="Gender"
               name="gender"
-              value={formData.gender}
+              value={formData.gender ?? ""}
               onChange={handleChange}
               options={[
                 "Male",
@@ -237,7 +228,7 @@ function ApplicationForm() {
             <SelectField
               label="Category"
               name="category"
-              value={formData.category}
+              value={formData.category ?? ""}
               onChange={handleChange}
               options={[
                 "General",
@@ -268,7 +259,6 @@ function ApplicationForm() {
               name="institution"
               value={formData.institution}
               onChange={handleChange}
-              required
             />
 
             <Field
@@ -276,13 +266,12 @@ function ApplicationForm() {
               name="course"
               value={formData.course}
               onChange={handleChange}
-              required
             />
 
             <SelectField
               label="Current Year"
               name="year"
-              value={formData.year}
+              value={formData.year ?? ""}
               onChange={handleChange}
               options={[
                 "First Year",
@@ -297,20 +286,18 @@ function ApplicationForm() {
               label="Latest Passing Percentage"
               name="passingPercentage"
               type="number"
-              value={formData.passingPercentage}
+              value={formData.passingPercentage ?? ""}
               onChange={handleChange}
               placeholder="e.g. 78"
-              required
             />
 
             <Field
               label="Annual Family Income"
               name="annualIncome"
               type="number"
-              value={formData.annualIncome}
+              value={formData.annualIncome ?? ""}
               onChange={handleChange}
               placeholder="₹"
-              required
             />
 
           </div>
@@ -330,7 +317,6 @@ function ApplicationForm() {
             name="address"
             value={formData.address}
             onChange={handleChange}
-            required
             rows={4}
             placeholder="Enter your complete address"
             className="mt-5 w-full rounded-xl border border-[#E8EEDB] px-4 py-3 text-sm focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB]"
@@ -351,7 +337,6 @@ function ApplicationForm() {
             name="statement"
             value={formData.statement}
             onChange={handleChange}
-            required
             rows={5}
             placeholder="Why should you receive this scholarship?"
             className="mt-5 w-full rounded-xl border border-[#E8EEDB] px-4 py-3 text-sm focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB]"
@@ -405,7 +390,6 @@ function Field({
   type = "text",
   value,
   onChange,
-  required,
   placeholder,
 }) {
   return (
@@ -419,7 +403,6 @@ function Field({
         type={type}
         value={value}
         onChange={onChange}
-        required={required}
         placeholder={placeholder}
         className="w-full rounded-xl border border-[#E8EEDB] px-4 py-3 text-sm focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB]"
       />
@@ -445,7 +428,6 @@ function SelectField({
         name={name}
         value={value}
         onChange={onChange}
-        required
         className="w-full rounded-xl border border-[#E8EEDB] bg-white px-4 py-3 text-sm focus:border-[#9BB06D] focus:ring-4 focus:ring-[#E8EEDB]"
       >
         <option value="">
